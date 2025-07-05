@@ -1,0 +1,4 @@
+module GoogleUtilities_NSData {
+umbrella "/Users/hectoralv/Library/Developer/Xcode/DerivedData/Firefighting_system-auatkwjvvcreqobmyitkigmwdokj/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/NSData+zlib/Public"
+export *
+}

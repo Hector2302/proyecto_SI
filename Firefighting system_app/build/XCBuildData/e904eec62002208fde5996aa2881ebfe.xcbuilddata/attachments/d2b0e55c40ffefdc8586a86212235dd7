@@ -1,0 +1,78 @@
+{
+  "" : {
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting system-master.dia",
+    "emit-module-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting system-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting system-master-emit-module.dia",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting system-master.swiftdeps"
+  },
+  "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/Firefighting system/ContentView.swift" : {
+    "const-values" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/Firefighting system/DashboardView.swift" : {
+    "const-values" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView.swiftconstvalues",
+    "dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView.d",
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView.dia",
+    "index-unit-output-path" : "/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView.o",
+    "llvm-bc" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView.bc",
+    "object" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView.o",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView.swiftdeps",
+    "swiftmodule" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/DashboardView~partial.swiftmodule"
+  },
+  "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/Firefighting system/FirebaseService.swift" : {
+    "const-values" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService.swiftconstvalues",
+    "dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService.d",
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService.dia",
+    "index-unit-output-path" : "/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService.o",
+    "llvm-bc" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService.bc",
+    "object" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService.o",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService.swiftdeps",
+    "swiftmodule" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/FirebaseService~partial.swiftmodule"
+  },
+  "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/Firefighting system/Firefighting_systemApp.swift" : {
+    "const-values" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp.swiftconstvalues",
+    "dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp.d",
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp.dia",
+    "index-unit-output-path" : "/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp.o",
+    "llvm-bc" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp.bc",
+    "object" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp.o",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp.swiftdeps",
+    "swiftmodule" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Firefighting_systemApp~partial.swiftmodule"
+  },
+  "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/Firefighting system/LoginView.swift" : {
+    "const-values" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView.swiftconstvalues",
+    "dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView.d",
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView.dia",
+    "index-unit-output-path" : "/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView.o",
+    "llvm-bc" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView.bc",
+    "object" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView.o",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView.swiftdeps",
+    "swiftmodule" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/LoginView~partial.swiftmodule"
+  },
+  "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/Firefighting system/Models.swift" : {
+    "const-values" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models.swiftconstvalues",
+    "dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models.d",
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models.dia",
+    "index-unit-output-path" : "/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models.o",
+    "llvm-bc" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models.bc",
+    "object" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models.o",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models.swiftdeps",
+    "swiftmodule" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/Models~partial.swiftmodule"
+  },
+  "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/hectoralv/Library/CloudStorage/OneDrive-Personal/Escritorio/Sistemas Embebidos/Firefighting system/build/Firefighting system.build/Debug-iphoneos/Firefighting system.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

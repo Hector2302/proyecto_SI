@@ -1,0 +1,13 @@
+Clave API: AIzaSyBTAH1REzAs4EGt2K6_c6KcA85dBXzAArQ 
+URL Firebase Real-Time: https://firefighting-system-fed2c-default-rtdb.firebaseio.com/
+
+
+UID de Usuario: U76NAr30AFcoHk6llFy9byI4BUi2
+
+
+gocryptfs ~/proyecto/secure/firebase_encrypted ~/proyecto/secure/firebase_decrypted
+contraseña de carpeta segura Ubuntu: zonrux-qusxaw-bUkfy0
+  (795ca5bc-23944ea0-8bafb0b9-2fdf7c78-b40052cc-5efe0c54-10e81d10-29754e2c)
+
+
+

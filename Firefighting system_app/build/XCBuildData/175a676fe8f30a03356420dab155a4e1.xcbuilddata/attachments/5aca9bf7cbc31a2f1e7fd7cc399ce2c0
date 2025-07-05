@@ -1,0 +1,4 @@
+module GoogleUtilities_Logger {
+umbrella "/Users/hectoralv/Library/Developer/Xcode/DerivedData/Firefighting_system-auatkwjvvcreqobmyitkigmwdokj/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Logger/Public"
+export *
+}

@@ -1,0 +1,4 @@
+module GoogleUtilities_Environment {
+umbrella "/Users/hectoralv/Library/Developer/Xcode/DerivedData/Firefighting_system-auatkwjvvcreqobmyitkigmwdokj/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public"
+export *
+}

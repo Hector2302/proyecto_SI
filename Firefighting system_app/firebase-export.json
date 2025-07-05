@@ -1,0 +1,49 @@
+{
+  "commands": {
+    "last_command": {
+      "author": "admin",
+      "timestamp": "2025-06-25 06:15:55",
+      "type": "trigger_test"
+    },
+    "shutdown_system": false,
+    "trigger_test": true
+  },
+  "history": {
+    "event_120948": {
+      "timestamp": 124250,
+      "type": "fire"
+    },
+    "event_123626": {
+      "start_co": 11.2,
+      "start_fi": 62.8,
+      "start_temp": 23.4,
+      "start_time": 124250,
+      "timestamp": 0,
+      "type": "fire_end",
+      "water_used": 0
+    }
+  },
+  "sensor_data": {
+    "actuators": {
+      "alarm_active": false,
+      "pump_active": false
+    },
+    "flow": {
+      "current_rate": 0,
+      "total": 0
+    },
+    "sensors": {
+      "co_ppm": 11.2,
+      "flame_detected": false,
+      "flame_intensity": 0,
+      "temperature": 23.4
+    },
+    "status": {
+      "fire_alarm": false
+    },
+    "timestamp": "2025-06-25 06:17:42"
+  },
+  "system": {
+    "status": "online"
+  }
+}

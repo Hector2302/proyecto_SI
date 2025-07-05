@@ -1,0 +1,131 @@
+{
+  "system": {
+    "sensors": {
+      "temperature": {
+        "value": 25.0,
+        "unit": "Celsius",
+        "status": "ok"
+      },
+      "co_level": {
+        "ppm": 5,
+        "status": "ok"
+      },
+      "flame": {
+        "detected": false,
+        "intensity": 20,
+        "status": "ok"
+      },
+      "water_flow": {
+        "rate_lpm": 0.0,
+        "total_liters": 0.0,
+        "status": "ok"
+      }
+    },
+    "actuators": {
+      "alarm": {
+        "active": false,
+        "duration_sec": 0
+      },
+      "pump": {
+        "active": false,
+        "runtime_sec": 0
+      }
+    },
+    "status": {
+      "mode": "normal",
+      "last_update": "2023-11-15T12:00:00.000Z",
+      "system_active": true
+    },
+    "commands": {
+      "trigger_test": false,
+      "shutdown_system": false,
+      "last_command": {
+        "type": "",
+        "author": "",
+        "timestamp": ""
+      }
+    },
+    "history": [
+      {
+        "event_type": "system_startup",
+        "timestamp": "2023-11-15T12:00:00.000Z",
+        "data": {
+          "initiated_by": "system"
+        }
+      }
+    ],
+    "notifications": {
+      "active": false,
+      "last_updated": "2023-11-15T12:00:00.000Z",
+      "queue": {
+        "notification_id": {
+          "type": "system_startup",
+          "title": "Sistema activado",
+          "message": "El sistema ha sido iniciado correctamente",
+          "priority": "normal",
+          "timestamp": "2023-11-15T12:00:00.000Z",
+          "read": false
+        }
+      }
+    },
+    "statistics": {
+      "total_fires_detected": 0,
+      "total_co_alerts": 0,
+      "total_tests_performed": 0,
+      "total_water_used": 0.0,
+      "last_maintenance": "2023-11-15T12:00:00.000Z"
+    },
+    "configuration": {
+      "alarm_threshold": {
+        "temperature": 60.0,
+        "co_level": 100,
+        "flame_intensity": 500
+      },
+      "notification_settings": {
+        "email_alerts": true,
+        "push_notifications": true,
+        "sms_alerts": false
+      },
+      "maintenance": {
+        "next_scheduled": "2024-01-15T12:00:00.000Z",
+        "interval_days": 60
+      }
+    }
+  }
+}
+
+
+/*Reglas de base de datos*/
+
+{
+  "rules": {
+    "system": {
+      "sensors": {
+        ".read": "auth != null",                            
+        ".write": "false"                                   
+      },
+      "actuators": {
+        ".read": "auth != null",
+        ".write": "false"
+      },
+      "status": {
+        ".read": "auth != null",
+        ".write": "false"
+      },
+      "commands": {
+        ".read": "auth != null",
+        ".write": "auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1'"  
+      },
+      "logs": {
+        ".read": "auth != null",
+        ".write": "false"
+      },
+      "config": {
+        ".read": "auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1'", 
+        ".write": "auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1'"
+      }
+    }
+  }
+}
+
+

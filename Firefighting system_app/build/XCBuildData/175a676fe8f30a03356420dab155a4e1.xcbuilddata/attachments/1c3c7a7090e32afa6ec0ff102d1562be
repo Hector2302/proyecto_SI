@@ -1,0 +1,4 @@
+module GTMSessionFetcherCore {
+umbrella "/Users/hectoralv/Library/Developer/Xcode/DerivedData/Firefighting_system-auatkwjvvcreqobmyitkigmwdokj/SourcePackages/checkouts/gtm-session-fetcher/Sources/Core/Public"
+export *
+}

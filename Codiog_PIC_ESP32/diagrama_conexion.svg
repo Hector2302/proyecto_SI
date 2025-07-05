@@ -1,0 +1,139 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Título -->
+  <text x="400" y="30" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Diagrama de Conexión PIC18F4550 - ESP32</text>
+  
+  <!-- PIC18F4550 -->
+  <rect x="50" y="100" width="150" height="200" fill="#e6f3ff" stroke="#0066cc" stroke-width="2"/>
+  <text x="125" y="120" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">PIC18F4550</text>
+  
+  <!-- Pines del PIC -->
+  <text x="60" y="140" font-family="Arial" font-size="12">RC6 (TX)</text>
+  <circle cx="190" cy="135" r="3" fill="red"/>
+  
+  <text x="60" y="160" font-family="Arial" font-size="12">RC7 (RX)</text>
+  <circle cx="190" cy="155" r="3" fill="blue"/>
+  
+  <text x="60" y="180" font-family="Arial" font-size="12">RB0 (LED)</text>
+  <circle cx="190" cy="175" r="3" fill="green"/>
+  
+  <text x="60" y="200" font-family="Arial" font-size="12">VDD (+5V)</text>
+  <circle cx="190" cy="195" r="3" fill="orange"/>
+  
+  <text x="60" y="220" font-family="Arial" font-size="12">VSS (GND)</text>
+  <circle cx="190" cy="215" r="3" fill="black"/>
+  
+  <!-- Convertidor Lógico M001 -->
+  <rect x="300" y="120" width="200" height="160" fill="#fff2e6" stroke="#cc6600" stroke-width="2"/>
+  <text x="400" y="140" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">Convertidor Lógico M001</text>
+  
+  <!-- Lado HV (5V) -->
+  <text x="310" y="160" font-family="Arial" font-size="12" font-weight="bold">Lado HV (5V)</text>
+  <text x="310" y="175" font-family="Arial" font-size="10">HV1</text>
+  <circle cx="290" cy="170" r="3" fill="red"/>
+  
+  <text x="310" y="190" font-family="Arial" font-size="10">HV2</text>
+  <circle cx="290" cy="185" r="3" fill="blue"/>
+  
+  <text x="310" y="205" font-family="Arial" font-size="10">HV</text>
+  <circle cx="290" cy="200" r="3" fill="orange"/>
+  
+  <text x="310" y="220" font-family="Arial" font-size="10">GND</text>
+  <circle cx="290" cy="215" r="3" fill="black"/>
+  
+  <!-- Lado LV (3.3V) -->
+  <text x="410" y="160" font-family="Arial" font-size="12" font-weight="bold">Lado LV (3.3V)</text>
+  <text x="470" y="175" font-family="Arial" font-size="10">LV1</text>
+  <circle cx="510" cy="170" r="3" fill="red"/>
+  
+  <text x="470" y="190" font-family="Arial" font-size="10">LV2</text>
+  <circle cx="510" cy="185" r="3" fill="blue"/>
+  
+  <text x="470" y="205" font-family="Arial" font-size="10">LV</text>
+  <circle cx="510" cy="200" r="3" fill="purple"/>
+  
+  <text x="470" y="220" font-family="Arial" font-size="10">GND</text>
+  <circle cx="510" cy="215" r="3" fill="black"/>
+  
+  <!-- ESP32 -->
+  <rect x="600" y="100" width="150" height="200" fill="#f0f8e6" stroke="#009900" stroke-width="2"/>
+  <text x="675" y="120" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold">ESP32</text>
+  
+  <!-- Pines del ESP32 -->
+  <text x="610" y="140" font-family="Arial" font-size="12">GPIO16 (RX)</text>
+  <circle cx="610" cy="135" r="3" fill="red"/>
+  
+  <text x="610" y="160" font-family="Arial" font-size="12">GPIO17 (TX)</text>
+  <circle cx="610" cy="155" r="3" fill="blue"/>
+  
+  <text x="610" y="180" font-family="Arial" font-size="12">3.3V</text>
+  <circle cx="610" cy="175" r="3" fill="purple"/>
+  
+  <text x="610" y="200" font-family="Arial" font-size="12">GND</text>
+  <circle cx="610" cy="195" r="3" fill="black"/>
+  
+  <!-- LED y Resistencia -->
+  <rect x="120" y="350" width="60" height="20" fill="#ffcccc" stroke="#cc0000" stroke-width="1"/>
+  <text x="150" y="365" text-anchor="middle" font-family="Arial" font-size="12">220Ω</text>
+  
+  <circle cx="220" cy="360" r="8" fill="yellow" stroke="#cc6600" stroke-width="2"/>
+  <text x="220" y="365" text-anchor="middle" font-family="Arial" font-size="10">LED</text>
+  
+  <!-- Conexiones -->
+  <!-- PIC TX a Convertidor HV1 -->
+  <line x1="190" y1="135" x2="290" y2="170" stroke="red" stroke-width="2"/>
+  
+  <!-- PIC RX a Convertidor HV2 -->
+  <line x1="190" y1="155" x2="290" y2="185" stroke="blue" stroke-width="2"/>
+  
+  <!-- PIC VDD a Convertidor HV -->
+  <line x1="190" y1="195" x2="290" y2="200" stroke="orange" stroke-width="2"/>
+  
+  <!-- PIC GND a Convertidor GND -->
+  <line x1="190" y1="215" x2="290" y2="215" stroke="black" stroke-width="2"/>
+  
+  <!-- Convertidor LV1 a ESP32 RX -->
+  <line x1="510" y1="170" x2="610" y2="135" stroke="red" stroke-width="2"/>
+  
+  <!-- Convertidor LV2 a ESP32 TX -->
+  <line x1="510" y1="185" x2="610" y2="155" stroke="blue" stroke-width="2"/>
+  
+  <!-- Convertidor LV a ESP32 3.3V -->
+  <line x1="510" y1="200" x2="610" y2="175" stroke="purple" stroke-width="2"/>
+  
+  <!-- Convertidor GND a ESP32 GND -->
+  <line x1="510" y1="215" x2="610" y2="195" stroke="black" stroke-width="2"/>
+  
+  <!-- PIC RB0 a LED -->
+  <line x1="190" y1="175" x2="120" y2="360" stroke="green" stroke-width="2"/>
+  
+  <!-- Resistencia a LED -->
+  <line x1="180" y1="360" x2="212" y2="360" stroke="green" stroke-width="2"/>
+  
+  <!-- LED a GND -->
+  <line x1="228" y1="360" x2="290" y2="360" stroke="black" stroke-width="2"/>
+  <line x1="290" y1="360" x2="290" y2="215" stroke="black" stroke-width="2"/>
+  
+  <!-- Leyenda -->
+  <text x="50" y="450" font-family="Arial" font-size="16" font-weight="bold">Leyenda de colores:</text>
+  <line x1="50" y1="470" x2="80" y2="470" stroke="red" stroke-width="3"/>
+  <text x="90" y="475" font-family="Arial" font-size="12">TX/RX (Datos)</text>
+  
+  <line x1="200" y1="470" x2="230" y2="470" stroke="orange" stroke-width="3"/>
+  <text x="240" y="475" font-family="Arial" font-size="12">+5V</text>
+  
+  <line x1="300" y1="470" x2="330" y2="470" stroke="purple" stroke-width="3"/>
+  <text x="340" y="475" font-family="Arial" font-size="12">+3.3V</text>
+  
+  <line x1="420" y1="470" x2="450" y2="470" stroke="black" stroke-width="3"/>
+  <text x="460" y="475" font-family="Arial" font-size="12">GND</text>
+  
+  <line x1="520" y1="470" x2="550" y2="470" stroke="green" stroke-width="3"/>
+  <text x="560" y="475" font-family="Arial" font-size="12">LED Control</text>
+  
+  <!-- Notas importantes -->
+  <text x="50" y="520" font-family="Arial" font-size="14" font-weight="bold">Notas importantes:</text>
+  <text x="50" y="540" font-family="Arial" font-size="12">• El convertidor lógico es necesario para adaptar niveles de 5V (PIC) a 3.3V (ESP32)</text>
+  <text x="50" y="555" font-family="Arial" font-size="12">• Todas las conexiones GND deben estar unidas</text>
+  <text x="50" y="570" font-family="Arial" font-size="12">• La resistencia de 220Ω limita la corriente del LED</text>
+  <text x="50" y="585" font-family="Arial" font-size="12">• Velocidad UART: 9600 baudios</text>
+</svg>
