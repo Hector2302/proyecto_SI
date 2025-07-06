@@ -172,7 +172,13 @@ void parseSensorData(const char* jsonData) {
   pump_active = doc["p"];
   alarm_active = doc["a"];
   trigger_test = doc["cmd"]["test"];
+  bool previous_shutdown = shutdown_system;
   shutdown_system = doc["cmd"]["shutdown"];
+  
+  // Si el estado de apagado cambió, actualizar el estado del sistema en Firebase
+  if (previous_shutdown != shutdown_system) {
+    Firebase.RTDB.setString(&fbdo, "/system/status", shutdown_system ? "standby" : "online");
+  }
   
   Serial.printf("Sensors: T=%.1fC, Flame=%d(%.1f%%), CO=%.1fppm, Flow=%.2fL/min, Total=%.2fL, Pump=%d, Alarm=%d, Test=%d, Shutdown=%d\n",
                temperature, flame_detected, flame_intensity, co_ppm, flow_rate, 
@@ -180,7 +186,7 @@ void parseSensorData(const char* jsonData) {
 }
 
 void processEvent(const char* jsonData) {
-    StaticJsonDocument<300> doc;
+    StaticJsonDocument<512> doc;
     DeserializationError error = deserializeJson(doc, jsonData);
     
     if(error) {
@@ -213,6 +219,13 @@ void processEvent(const char* jsonData) {
         event_json.set("start_fi", start_fi);
         event_json.set("start_co", start_co);
         event_json.set("water_used", water_used);
+        
+        // NUEVA LÓGICA: Resetear trigger_test cuando la prueba termina
+        if(event_type == "test_end") {
+            Firebase.RTDB.setBool(&fbdo, "/commands/trigger_test", false);
+            Serial.println("Test completed - trigger_test reset to false");
+            last_trigger_test = false; // Actualizar variable local también
+        }
     }
     
     // Crear path único
@@ -313,9 +326,13 @@ void checkFirebaseCommands() {
       if(current_shutdown) {
         PIC_SERIAL.write('S');
         Serial.println("Sent SHUTDOWN command to PIC");
+        // Actualizar el estado del sistema en Firebase
+        Firebase.RTDB.setString(&fbdo, "/system/status", "standby");
       } else {
         PIC_SERIAL.write('R');
         Serial.println("Sent RESUME command to PIC");
+        // Actualizar el estado del sistema en Firebase
+        Firebase.RTDB.setString(&fbdo, "/system/status", "online");
       }
       logCommand(current_shutdown ? "shutdown" : "resume", "admin");
     }

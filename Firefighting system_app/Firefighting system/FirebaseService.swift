@@ -291,7 +291,10 @@ class FirebaseService: NSObject, ObservableObject {
     func toggleSystemShutdown() {
         guard isAuthenticated, let currentData = systemData else { return }
         
-        let newShutdownState = !(currentData.system?.status == "online")
+        // Corrección: Si el estado actual es "online", entonces shutdown_system debe ser true
+        // Si el estado actual es "standby" u otro, entonces shutdown_system debe ser false
+        let currentStatus = currentData.system?.status ?? "offline"
+        let newShutdownState = (currentStatus == "online")
         
         let commandsRef = databaseRef.child("commands")
         commandsRef.updateChildValues([
