@@ -3,14 +3,6 @@
 [d edition pro ]
 [d chip 18F4550 ]
 [d frameptr 4065 ]
-"98 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
-[e E4149 . `uc
-EVENT_NONE 0
-EVENT_FIRE 1
-EVENT_TEST 2
-EVENT_SHUTDOWN 3
-EVENT_SYSTEM_START 4
-]
 "4 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\__fpclassifyf.c
 [v ___fpclassifyf __fpclassifyf `(i  1 e 2 0 ]
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\__lldiv.c
@@ -95,53 +87,39 @@ EVENT_SYSTEM_START 4
 [v ___omul __omul `(uo  1 e 8 0 ]
 "10 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\xxtofl.c
 [v ___xxtofl __xxtofl `(d  1 e 4 0 ]
-"127 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
+"91 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
 [v _HighISR HighISR `IIH(v  1 e 1 0 ]
-"134
+"98
 [v _main main `(v  1 e 1 0 ]
-"241
-[v _Send_Event_Data Send_Event_Data `(v  1 e 1 0 ]
-"263
-[v _Start_Event Start_Event `(v  1 e 1 0 ]
-"277
-[v _End_Event End_Event `(v  1 e 1 0 ]
-"317
-[v _Check_Flow_Reset Check_Flow_Reset `(v  1 e 1 0 ]
-"327
-[v _Handle_Test_Command Handle_Test_Command `(v  1 e 1 0 ]
-"352
-[v _Interrupt_Init Interrupt_Init `(v  1 e 1 0 ]
+"158
+[v _Handle_Commands Handle_Commands `(v  1 e 1 0 ]
+"202
+[v _Handle_Fire_Events Handle_Fire_Events `(v  1 e 1 0 ]
+"244
+[v _Handle_Test_Events Handle_Test_Events `(v  1 e 1 0 ]
+"269
+[v _Handle_Shutdown_Events Handle_Shutdown_Events `(v  1 e 1 0 ]
+"285
+[v _Send_History_Event Send_History_Event `(v  1 e 1 0 ]
+"297
+[v _Read_Sensors Read_Sensors `(v  1 e 1 0 ]
+"353
+[v _Apply_Filter Apply_Filter `(f  1 e 4 0 ]
 "363
-[v _ADC_Init ADC_Init `(v  1 e 1 0 ]
-"370
-[v _ADC_Read ADC_Read `(ui  1 e 2 0 ]
-"378
-[v _ADC_Read_Average ADC_Read_Average `(ui  1 e 2 0 ]
-"387
-[v _Calibrate_Flame_Sensor Calibrate_Flame_Sensor `(v  1 e 1 0 ]
-"400
-[v _Calibrate_MQ2 Calibrate_MQ2 `(v  1 e 1 0 ]
-"412
-[v _Read_LM35 Read_LM35 `(v  1 e 1 0 ]
-"424
-[v _Read_Flame_Sensor Read_Flame_Sensor `(v  1 e 1 0 ]
-"451
-[v _Read_MQ2_Sensor Read_MQ2_Sensor `(v  1 e 1 0 ]
-"485
-[v _Calculate_Flow Calculate_Flow `(v  1 e 1 0 ]
-"500
 [v _Update_Actuators Update_Actuators `(v  1 e 1 0 ]
-"533
-[v _Send_Sensor_Data Send_Sensor_Data `(v  1 e 1 0 ]
-"553
+"388
+[v _Send_Data Send_Data `(v  1 e 1 0 ]
+"402
+[v _ADC_Init ADC_Init `(v  1 e 1 0 ]
+"409
+[v _ADC_Read ADC_Read `(ui  1 e 2 0 ]
+"417
+[v _Interrupt_Init Interrupt_Init `(v  1 e 1 0 ]
+"427
 [v _UART_Init UART_Init `(v  1 e 1 0 ]
-"564
-[v _UART_Read UART_Read `(uc  1 e 1 0 ]
-"571
-[v _UART_Data_Ready UART_Data_Ready `(uc  1 e 1 0 ]
 "2453 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
-[s S81 . 1 `uc 1 RB0 1 0 :1:0 
+[s S67 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -151,7 +129,7 @@ EVENT_SYSTEM_START 4
 `uc 1 RB7 1 0 :1:7 
 ]
 "2483
-[s S90 . 1 `uc 1 INT0 1 0 :1:0 
+[s S76 . 1 `uc 1 INT0 1 0 :1:0 
 `uc 1 INT1 1 0 :1:1 
 `uc 1 INT2 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
@@ -159,14 +137,14 @@ EVENT_SYSTEM_START 4
 `uc 1 PGC 1 0 :1:6 
 `uc 1 PGD 1 0 :1:7 
 ]
-[s S98 . 1 `uc 1 . 1 0 :3:0 
+[s S84 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP2_PA2 1 0 :1:3 
 ]
-[u S101 . 1 `S81 1 . 1 0 `S90 1 . 1 0 `S98 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES101  1 e 1 @3969 ]
+[u S87 . 1 `S67 1 . 1 0 `S76 1 . 1 0 `S84 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES87  1 e 1 @3969 ]
 "3625
 [v _TRISB TRISB `VEuc  1 e 1 @3987 ]
-[s S265 . 1 `uc 1 TRISB0 1 0 :1:0 
+[s S357 . 1 `uc 1 TRISB0 1 0 :1:0 
 `uc 1 TRISB1 1 0 :1:1 
 `uc 1 TRISB2 1 0 :1:2 
 `uc 1 TRISB3 1 0 :1:3 
@@ -176,9 +154,9 @@ EVENT_SYSTEM_START 4
 `uc 1 TRISB7 1 0 :1:7 
 ]
 "3657
-[u S283 . 1 `S265 1 . 1 0 `S81 1 . 1 0 ]
-[v _TRISBbits TRISBbits `VES283  1 e 1 @3987 ]
-[s S610 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[u S375 . 1 `S357 1 . 1 0 `S67 1 . 1 0 ]
+[v _TRISBbits TRISBbits `VES375  1 e 1 @3987 ]
+[s S163 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 CCP1IF 1 0 :1:2 
 `uc 1 SSPIF 1 0 :1:3 
@@ -188,15 +166,15 @@ EVENT_SYSTEM_START 4
 `uc 1 SPPIF 1 0 :1:7 
 ]
 "4492
-[s S619 . 1 `uc 1 . 1 0 :4:0 
+[s S172 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 TX1IF 1 0 :1:4 
 `uc 1 RC1IF 1 0 :1:5 
 `uc 1 . 1 0 :1:6 
 `uc 1 PSPIF 1 0 :1:7 
 ]
-[u S625 . 1 `S610 1 . 1 0 `S619 1 . 1 0 ]
-[v _PIR1bits PIR1bits `VES625  1 e 1 @3998 ]
-[s S556 . 1 `uc 1 RX9D 1 0 :1:0 
+[u S178 . 1 `S163 1 . 1 0 `S172 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES178  1 e 1 @3998 ]
+[s S566 . 1 `uc 1 RX9D 1 0 :1:0 
 `uc 1 OERR 1 0 :1:1 
 `uc 1 FERR 1 0 :1:2 
 `uc 1 ADDEN 1 0 :1:3 
@@ -206,23 +184,23 @@ EVENT_SYSTEM_START 4
 `uc 1 SPEN 1 0 :1:7 
 ]
 "4977
-[s S565 . 1 `uc 1 . 1 0 :3:0 
+[s S575 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 ADEN 1 0 :1:3 
 ]
-[s S568 . 1 `uc 1 . 1 0 :5:0 
+[s S578 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 SRENA 1 0 :1:5 
 ]
-[s S571 . 1 `uc 1 . 1 0 :6:0 
+[s S581 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 RC8_9 1 0 :1:6 
 ]
-[s S574 . 1 `uc 1 . 1 0 :6:0 
+[s S584 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 RC9 1 0 :1:6 
 ]
-[s S577 . 1 `uc 1 RCD8 1 0 :1:0 
+[s S587 . 1 `uc 1 RCD8 1 0 :1:0 
 ]
-[u S579 . 1 `S556 1 . 1 0 `S565 1 . 1 0 `S568 1 . 1 0 `S571 1 . 1 0 `S574 1 . 1 0 `S577 1 . 1 0 ]
-[v _RCSTAbits RCSTAbits `VES579  1 e 1 @4011 ]
-[s S212 . 1 `uc 1 TX9D 1 0 :1:0 
+[u S589 . 1 `S566 1 . 1 0 `S575 1 . 1 0 `S578 1 . 1 0 `S581 1 . 1 0 `S584 1 . 1 0 `S587 1 . 1 0 ]
+[v _RCSTAbits RCSTAbits `VES589  1 e 1 @4011 ]
+[s S216 . 1 `uc 1 TX9D 1 0 :1:0 
 `uc 1 TRMT 1 0 :1:1 
 `uc 1 BRGH 1 0 :1:2 
 `uc 1 SENDB 1 0 :1:3 
@@ -232,7 +210,7 @@ EVENT_SYSTEM_START 4
 `uc 1 CSRC 1 0 :1:7 
 ]
 "5185
-[s S221 . 1 `uc 1 TX9D1 1 0 :1:0 
+[s S225 . 1 `uc 1 TX9D1 1 0 :1:0 
 `uc 1 TRMT1 1 0 :1:1 
 `uc 1 BRGH1 1 0 :1:2 
 `uc 1 SENDB1 1 0 :1:3 
@@ -241,13 +219,13 @@ EVENT_SYSTEM_START 4
 `uc 1 TX91 1 0 :1:6 
 `uc 1 CSRC1 1 0 :1:7 
 ]
-[s S230 . 1 `uc 1 . 1 0 :6:0 
+[s S234 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 TX8_9 1 0 :1:6 
 ]
-[s S233 . 1 `uc 1 TXD8 1 0 :1:0 
+[s S237 . 1 `uc 1 TXD8 1 0 :1:0 
 ]
-[u S235 . 1 `S212 1 . 1 0 `S221 1 . 1 0 `S230 1 . 1 0 `S233 1 . 1 0 ]
-[v _TXSTAbits TXSTAbits `VES235  1 e 1 @4012 ]
+[u S239 . 1 `S216 1 . 1 0 `S225 1 . 1 0 `S234 1 . 1 0 `S237 1 . 1 0 ]
+[v _TXSTAbits TXSTAbits `VES239  1 e 1 @4012 ]
 "5402
 [v _TXREG TXREG `VEuc  1 e 1 @4013 ]
 "5414
@@ -258,58 +236,58 @@ EVENT_SYSTEM_START 4
 [v _ADCON2 ADCON2 `VEuc  1 e 1 @4032 ]
 "6581
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
-[s S474 . 1 `uc 1 . 1 0 :1:0 
+[s S285 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_NOT_DONE 1 0 :1:1 
 ]
 "6710
-[s S477 . 1 `uc 1 ADON 1 0 :1:0 
+[s S288 . 1 `uc 1 ADON 1 0 :1:0 
 `uc 1 GO_nDONE 1 0 :1:1 
 `uc 1 CHS 1 0 :4:2 
 ]
-[s S481 . 1 `uc 1 . 1 0 :1:0 
+[s S292 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_DONE 1 0 :1:1 
 `uc 1 CHS0 1 0 :1:2 
 `uc 1 CHS1 1 0 :1:3 
 `uc 1 CHS2 1 0 :1:4 
 `uc 1 CHS3 1 0 :1:5 
 ]
-[s S488 . 1 `uc 1 . 1 0 :1:0 
+[s S299 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 DONE 1 0 :1:1 
 ]
-[s S491 . 1 `uc 1 . 1 0 :1:0 
+[s S302 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO 1 0 :1:1 
 ]
-[s S494 . 1 `uc 1 . 1 0 :1:0 
+[s S305 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 NOT_DONE 1 0 :1:1 
 ]
-[s S497 . 1 `uc 1 . 1 0 :1:0 
+[s S308 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 nDONE 1 0 :1:1 
 ]
-[s S500 . 1 `uc 1 . 1 0 :1:0 
+[s S311 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GODONE 1 0 :1:1 
 ]
-[u S503 . 1 `S474 1 . 1 0 `S477 1 . 1 0 `S481 1 . 1 0 `S488 1 . 1 0 `S491 1 . 1 0 `S494 1 . 1 0 `S497 1 . 1 0 `S500 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES503  1 e 1 @4034 ]
+[u S314 . 1 `S285 1 . 1 0 `S288 1 . 1 0 `S292 1 . 1 0 `S299 1 . 1 0 `S302 1 . 1 0 `S305 1 . 1 0 `S308 1 . 1 0 `S311 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES314  1 e 1 @4034 ]
 "6792
 [v _ADRESL ADRESL `VEuc  1 e 1 @4035 ]
 "6799
 [v _ADRESH ADRESH `VEuc  1 e 1 @4036 ]
-[s S344 . 1 `uc 1 NOT_BOR 1 0 :1:0 
+[s S436 . 1 `uc 1 NOT_BOR 1 0 :1:0 
 ]
 "7588
-[s S346 . 1 `uc 1 . 1 0 :1:0 
+[s S438 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 NOT_POR 1 0 :1:1 
 ]
-[s S349 . 1 `uc 1 . 1 0 :2:0 
+[s S441 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_PD 1 0 :1:2 
 ]
-[s S352 . 1 `uc 1 . 1 0 :3:0 
+[s S444 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 NOT_TO 1 0 :1:3 
 ]
-[s S355 . 1 `uc 1 . 1 0 :4:0 
+[s S447 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 NOT_RI 1 0 :1:4 
 ]
-[s S358 . 1 `uc 1 nBOR 1 0 :1:0 
+[s S450 . 1 `uc 1 nBOR 1 0 :1:0 
 `uc 1 nPOR 1 0 :1:1 
 `uc 1 nPD 1 0 :1:2 
 `uc 1 nTO 1 0 :1:3 
@@ -318,10 +296,10 @@ EVENT_SYSTEM_START 4
 `uc 1 SBOREN 1 0 :1:6 
 `uc 1 IPEN 1 0 :1:7 
 ]
-[s S367 . 1 `uc 1 . 1 0 :7:0 
+[s S459 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 NOT_IPEN 1 0 :1:7 
 ]
-[s S370 . 1 `uc 1 BOR 1 0 :1:0 
+[s S462 . 1 `uc 1 BOR 1 0 :1:0 
 `uc 1 POR 1 0 :1:1 
 `uc 1 PD 1 0 :1:2 
 `uc 1 TO 1 0 :1:3 
@@ -329,11 +307,11 @@ EVENT_SYSTEM_START 4
 `uc 1 . 1 0 :2:5 
 `uc 1 nIPEN 1 0 :1:7 
 ]
-[u S378 . 1 `S344 1 . 1 0 `S346 1 . 1 0 `S349 1 . 1 0 `S352 1 . 1 0 `S355 1 . 1 0 `S358 1 . 1 0 `S367 1 . 1 0 `S370 1 . 1 0 ]
-[v _RCONbits RCONbits `VES378  1 e 1 @4048 ]
+[u S470 . 1 `S436 1 . 1 0 `S438 1 . 1 0 `S441 1 . 1 0 `S444 1 . 1 0 `S447 1 . 1 0 `S450 1 . 1 0 `S459 1 . 1 0 `S462 1 . 1 0 ]
+[v _RCONbits RCONbits `VES470  1 e 1 @4048 ]
 "7986
 [v _OSCCON OSCCON `VEuc  1 e 1 @4051 ]
-[s S38 . 1 `uc 1 INT1IF 1 0 :1:0 
+[s S24 . 1 `uc 1 INT1IF 1 0 :1:0 
 `uc 1 INT2IF 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 INT1IE 1 0 :1:3 
@@ -343,7 +321,7 @@ EVENT_SYSTEM_START 4
 `uc 1 INT2IP 1 0 :1:7 
 ]
 "8440
-[s S47 . 1 `uc 1 INT1F 1 0 :1:0 
+[s S33 . 1 `uc 1 INT1F 1 0 :1:0 
 `uc 1 INT2F 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 INT1E 1 0 :1:3 
@@ -352,13 +330,13 @@ EVENT_SYSTEM_START 4
 `uc 1 INT1P 1 0 :1:6 
 `uc 1 INT2P 1 0 :1:7 
 ]
-[u S56 . 1 `S38 1 . 1 0 `S47 1 . 1 0 ]
-[v _INTCON3bits INTCON3bits `VES56  1 e 1 @4080 ]
-[s S305 . 1 `uc 1 . 1 0 :7:0 
+[u S42 . 1 `S24 1 . 1 0 `S33 1 . 1 0 ]
+[v _INTCON3bits INTCON3bits `VES42  1 e 1 @4080 ]
+[s S397 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 NOT_RBPU 1 0 :1:7 
 ]
 "8532
-[s S308 . 1 `uc 1 RBIP 1 0 :1:0 
+[s S400 . 1 `uc 1 RBIP 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 TMR0IP 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -367,14 +345,14 @@ EVENT_SYSTEM_START 4
 `uc 1 INTEDG0 1 0 :1:6 
 `uc 1 nRBPU 1 0 :1:7 
 ]
-[s S317 . 1 `uc 1 . 1 0 :2:0 
+[s S409 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 T0IP 1 0 :1:2 
 `uc 1 . 1 0 :4:3 
 `uc 1 RBPU 1 0 :1:7 
 ]
-[u S322 . 1 `S305 1 . 1 0 `S308 1 . 1 0 `S317 1 . 1 0 ]
-[v _INTCON2bits INTCON2bits `VES322  1 e 1 @4081 ]
-[s S422 . 1 `uc 1 RBIF 1 0 :1:0 
+[u S414 . 1 `S397 1 . 1 0 `S400 1 . 1 0 `S409 1 . 1 0 ]
+[v _INTCON2bits INTCON2bits `VES414  1 e 1 @4081 ]
+[s S514 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INT0IF 1 0 :1:1 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -384,7 +362,7 @@ EVENT_SYSTEM_START 4
 `uc 1 GIE_GIEH 1 0 :1:7 
 ]
 "8614
-[s S431 . 1 `uc 1 . 1 0 :1:0 
+[s S523 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 INT0F 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -393,12 +371,12 @@ EVENT_SYSTEM_START 4
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
-[s S440 . 1 `uc 1 . 1 0 :6:0 
+[s S532 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 GIEL 1 0 :1:6 
 `uc 1 GIEH 1 0 :1:7 
 ]
-[u S444 . 1 `S422 1 . 1 0 `S431 1 . 1 0 `S440 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES444  1 e 1 @4082 ]
+[u S536 . 1 `S514 1 . 1 0 `S523 1 . 1 0 `S532 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES536  1 e 1 @4082 ]
 "10881
 [v _TRISA0 TRISA0 `VEb  1 e 0 @31888 ]
 "10884
@@ -424,71 +402,76 @@ EVENT_SYSTEM_START 4
 [v _dp_h dp_h `C[2]f  1 s 8 dp_h ]
 "22
 [v _dp_l dp_l `C[2]f  1 s 8 dp_l ]
-"37 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
+"36 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
 [v _temperature temperature `f  1 e 4 0 ]
-"38
+"37
 [v _flame_intensity flame_intensity `f  1 e 4 0 ]
-"39
+"38
 [v _flame_base_voltage flame_base_voltage `f  1 e 4 0 ]
-"40
-[v _flame_calibrated flame_calibrated `uc  1 e 1 0 ]
-"41
+"39
 [v _flame_detected flame_detected `uc  1 e 1 0 ]
-"42
+"40
 [v _co_ppm co_ppm `f  1 e 4 0 ]
-"43
+"41
 [v _MQ2_Ro MQ2_Ro `f  1 e 4 0 ]
-"44
+"42
 [v _flow_rate flow_rate `f  1 e 4 0 ]
-"45
+"43
 [v _total_flow total_flow `f  1 e 4 0 ]
-"46
+"44
 [v _pulse_count pulse_count `VEui  1 e 2 0 ]
-"47
+"45
 [v _pump_active pump_active `uc  1 e 1 0 ]
-"48
+"46
 [v _alarm_active alarm_active `uc  1 e 1 0 ]
-"49
+"47
 [v _fire_alarm fire_alarm `uc  1 e 1 0 ]
-"50
+"48
 [v _prev_fire_alarm prev_fire_alarm `uc  1 e 1 0 ]
+"52
+[v _temp_samples temp_samples `[5]f  1 e 20 0 ]
+"53
+[v _co_samples co_samples `[5]f  1 e 20 0 ]
 "54
-[v _temp_filter temp_filter `[7]f  1 e 28 0 ]
-"55
-[v _co_filter co_filter `[7]f  1 e 28 0 ]
-"56
-[v _filter_index filter_index `uc  1 e 1 0 ]
-"61
-[v _calibrationCounter calibrationCounter `ul  1 e 4 0 ]
-"64
+[v _sample_index sample_index `uc  1 e 1 0 ]
+"57
 [v _shutdown_system shutdown_system `uc  1 e 1 0 ]
-"65
+"58
 [v _trigger_test trigger_test `uc  1 e 1 0 ]
-"66
+"59
 [v _test_start_time test_start_time `ul  1 e 4 0 ]
-"67
-[v _test_last_toggle test_last_toggle `ul  1 e 4 0 ]
-"72
+"63
 [v _system_millis system_millis `ul  1 e 4 0 ]
-[s S30 . 25 `E4149 1 type 1 0 `ul 1 start_time 4 1 `f 1 start_temperature 4 5 `f 1 start_flame_intensity 4 9 `f 1 start_co_ppm 4 13 `f 1 start_total_flow 4 17 `f 1 water_used 4 21 ]
+"66
+[v _fire_start_time fire_start_time `ul  1 e 4 0 ]
+"67
+[v _fire_start_temp fire_start_temp `f  1 e 4 0 ]
+"68
+[v _fire_start_flame fire_start_flame `f  1 e 4 0 ]
+"69
+[v _fire_start_co fire_start_co `f  1 e 4 0 ]
+"70
+[v _fire_start_flow fire_start_flow `f  1 e 4 0 ]
+"71
+[v _fire_trigger_sensor fire_trigger_sensor `[20]uc  1 e 20 0 ]
+"73
+[v _test_start_flow test_start_flow `ul  1 e 4 0 ]
 "98
-[v _current_event current_event `S30  1 e 25 0 ]
-"99
-[v _event_active event_active `uc  1 e 1 0 ]
-"100
-[v _last_flow_reset_time last_flow_reset_time `ul  1 e 4 0 ]
-"101
-[v _system_started system_started `uc  1 e 1 0 ]
-"134
 [v _main main `(v  1 e 1 0 ]
 {
-"167
-[v main@cmd cmd `uc  1 a 1 0 ]
-"142
-[v main@i i `i  1 a 2 3 ]
-"158
-[v main@sensor_counter sensor_counter `ui  1 a 2 1 ]
-"238
+"122
+[v main@voltage voltage `f  1 a 4 10 ]
+"121
+[v main@adc_value_677 adc_value `ui  1 a 2 6 ]
+"113
+[v main@adc_value adc_value `ui  1 a 2 4 ]
+"120
+[v main@i_676 i `i  1 a 2 16 ]
+"112
+[v main@i i `i  1 a 2 14 ]
+"128
+[v main@cycle_count cycle_count `ui  1 a 2 8 ]
+"156
 } 0
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
@@ -501,125 +484,98 @@ EVENT_SYSTEM_START 4
 [v ___awmod@divisor divisor `i  1 p 2 2 ]
 "34
 } 0
-"500 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
+"363 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
 [v _Update_Actuators Update_Actuators `(v  1 e 1 0 ]
 {
-"504
-[v Update_Actuators@co_alarm co_alarm `uc  1 a 1 80 ]
-"503
-[v Update_Actuators@temp_alarm temp_alarm `uc  1 a 1 79 ]
-"519
+"374
 [v Update_Actuators@last_blink last_blink `ul  1 s 4 last_blink ]
-"531
+"386
 } 0
-"564
-[v _UART_Read UART_Read `(uc  1 e 1 0 ]
-{
-"569
-} 0
-"553
+"427
 [v _UART_Init UART_Init `(v  1 e 1 0 ]
 {
-"562
+"436
 } 0
-"571
-[v _UART_Data_Ready UART_Data_Ready `(uc  1 e 1 0 ]
+"388
+[v _Send_Data Send_Data `(v  1 e 1 0 ]
 {
-"573
+"396
+[v Send_Data@i i `i  1 a 2 150 ]
+"389
+[v Send_Data@buffer buffer `[150]uc  1 a 150 0 ]
+"400
 } 0
-"263
-[v _Start_Event Start_Event `(v  1 e 1 0 ]
+"297
+[v _Read_Sensors Read_Sensors `(v  1 e 1 0 ]
 {
-[v Start_Event@type type `E4149  1 p 1 wreg ]
-[v Start_Event@type type `E4149  1 p 1 wreg ]
-[v Start_Event@type type `E4149  1 p 1 134 ]
-"275
-} 0
-"241
-[v _Send_Event_Data Send_Event_Data `(v  1 e 1 0 ]
-{
-[v Send_Event_Data@type type `E4149  1 p 1 wreg ]
-"257
-[v Send_Event_Data@i i `i  1 a 2 101 ]
-"251
-[v Send_Event_Data@event_buffer event_buffer `[100]uc  1 a 100 0 ]
-"242
-[v Send_Event_Data@event_type_str event_type_str `*.32Cuc  1 a 2 103 ]
-"241
-[v Send_Event_Data@type type `E4149  1 p 1 wreg ]
-[v Send_Event_Data@type type `E4149  1 p 1 100 ]
-"261
-} 0
-"533
-[v _Send_Sensor_Data Send_Sensor_Data `(v  1 e 1 0 ]
-{
-"547
-[v Send_Sensor_Data@i i `i  1 a 2 200 ]
-"534
-[v Send_Sensor_Data@buffer buffer `[200]uc  1 a 200 0 ]
-"551
-} 0
-"451
-[v _Read_MQ2_Sensor Read_MQ2_Sensor `(v  1 e 1 0 ]
-{
-"479
-[v Read_MQ2_Sensor@i i `i  1 a 2 43 ]
-"466
-[v Read_MQ2_Sensor@ppm ppm `f  1 a 4 49 ]
-"465
-[v Read_MQ2_Sensor@rs_ro_ratio rs_ro_ratio `f  1 a 4 45 ]
-"460
-[v Read_MQ2_Sensor@Rs Rs `f  1 a 4 35 ]
-"459
-[v Read_MQ2_Sensor@voltage voltage `f  1 a 4 31 ]
-"462
-[v Read_MQ2_Sensor@temp_factor temp_factor `f  1 a 4 17 ]
-"458
-[v Read_MQ2_Sensor@adc_value adc_value `ui  1 a 2 25 ]
-"452
-[v Read_MQ2_Sensor@calibrated calibrated `uc  1 s 1 calibrated ]
-"483
+"344
+[v Read_Sensors@pulses pulses `ui  1 a 2 59 ]
+"328
+[v Read_Sensors@raw_co raw_co `f  1 a 4 73 ]
+"321
+[v Read_Sensors@Rs Rs `f  1 a 4 69 ]
+"327
+[v Read_Sensors@rs_ro_ratio rs_ro_ratio `f  1 a 4 65 ]
+"320
+[v Read_Sensors@mq2_voltage mq2_voltage `f  1 a 4 61 ]
+"324
+[v Read_Sensors@temp_factor temp_factor `f  1 a 4 37 ]
+"305
+[v Read_Sensors@flame_voltage flame_voltage `f  1 a 4 33 ]
+"300
+[v Read_Sensors@raw_temp raw_temp `f  1 a 4 29 ]
+"319
+[v Read_Sensors@mq2_adc mq2_adc `ui  1 a 2 57 ]
+"304
+[v Read_Sensors@flame_adc flame_adc `ui  1 a 2 55 ]
+"299
+[v Read_Sensors@temp_adc temp_adc `ui  1 a 2 53 ]
+"340
+[v Read_Sensors@last_pulse last_pulse `ui  1 s 2 last_pulse ]
+"341
+[v Read_Sensors@last_flow_time last_flow_time `ul  1 s 4 last_flow_time ]
+"351
 } 0
 "55 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\powf.c
 [v _powf powf `JJ(f  1 e 4 0 ]
 {
 "203
 [v powf@s2 s2 `f  1 a 4 144 ]
-[u S1552 fui 4 `f 1 f 4 0 `ul 1 u 4 0 `l 1 i 4 0 ]
+[u S1500 fui 4 `f 1 f 4 0 `ul 1 u 4 0 `l 1 i 4 0 ]
 "202
-[v powf@s_h s_h `S1552  1 a 4 116 ]
-[v powf@t_h t_h `S1552  1 a 4 112 ]
+[v powf@s_h s_h `S1500  1 a 4 116 ]
+[v powf@t_h t_h `S1500  1 a 4 112 ]
 "203
 [v powf@t_l t_l `f  1 a 4 52 ]
 [v powf@s_l s_l `f  1 a 4 48 ]
-[u S1552 fui 4 `f 1 f 4 0 `ul 1 u 4 0 `l 1 i 4 0 ]
+[u S1500 fui 4 `f 1 f 4 0 `ul 1 u 4 0 `l 1 i 4 0 ]
 "65
-[v powf@z z `S1552  1 a 4 180 ]
-[v powf@t t `S1552  1 a 4 176 ]
-[v powf@ix ix `S1552  1 a 4 172 ]
+[v powf@z z `S1500  1 a 4 180 ]
+[v powf@t t `S1500  1 a 4 176 ]
+[v powf@ix ix `S1500  1 a 4 172 ]
 "59
 [v powf@j j `l  1 a 4 168 ]
 [v powf@k k `l  1 a 4 164 ]
 "65
-[v powf@p_h p_h `S1552  1 a 4 160 ]
-[v powf@is is `S1552  1 a 4 152 ]
+[v powf@p_h p_h `S1500  1 a 4 160 ]
+[v powf@is is `S1500  1 a 4 152 ]
 "59
 [v powf@iy iy `l  1 a 4 148 ]
 "65
-[v powf@t1 t1 `S1552  1 a 4 140 ]
+[v powf@t1 t1 `S1500  1 a 4 140 ]
 "59
 [v powf@n n `l  1 a 4 136 ]
 "65
-[v powf@hy hy `S1552  1 a 4 132 ]
+[v powf@hy hy `S1500  1 a 4 132 ]
 "58
 [v powf@v v `f  1 a 4 128 ]
 [v powf@u u `f  1 a 4 124 ]
 "65
-[v powf@ax ax `S1552  1 a 4 120 ]
+[v powf@ax ax `S1500  1 a 4 120 ]
 "57
 [v powf@p_l p_l `f  1 a 4 108 ]
 "65
-[v powf@hx hx `S1552  1 a 4 104 ]
+[v powf@hx hx `S1500  1 a 4 104 ]
 "61
 [v powf@sn sn `ul  1 a 4 100 ]
 "58
@@ -630,7 +586,7 @@ EVENT_SYSTEM_START 4
 [v powf@r r `f  1 a 4 80 ]
 [v powf@w w `f  1 a 4 68 ]
 "65
-[v powf@y1 y1 `S1552  1 a 4 44 ]
+[v powf@y1 y1 `S1500  1 a 4 44 ]
 "59
 [v powf@i i `l  1 a 4 40 ]
 "57
@@ -639,16 +595,16 @@ EVENT_SYSTEM_START 4
 "58
 [v powf@t2 t2 `f  1 a 4 28 ]
 "55
-[v powf@x x `f  1 p 4 0 ]
-[v powf@y y `f  1 p 4 4 ]
+[v powf@x x `f  1 p 4 8 ]
+[v powf@y y `f  1 p 4 12 ]
 "348
 } 0
 "24 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sqrtf.c
 [v _sqrtf sqrtf `(f  1 e 4 0 ]
 {
-[u S1677 . 4 `f 1 f 4 0 `l 1 i 4 0 ]
+[u S1625 . 4 `f 1 f 4 0 `l 1 i 4 0 ]
 "29
-[v sqrtf@ix ix `S1677  1 a 4 33 ]
+[v sqrtf@ix ix `S1625  1 a 4 33 ]
 "28
 [v sqrtf@r r `ul  1 a 4 29 ]
 "27
@@ -665,150 +621,140 @@ EVENT_SYSTEM_START 4
 [v _scalbnf scalbnf `(f  1 e 4 0 ]
 {
 "7
-[v scalbnf@y y `f  1 a 4 69 ]
-[u S1477 . 4 `f 1 f 4 0 `ul 1 i 4 0 ]
+[v scalbnf@y y `f  1 a 4 53 ]
+[u S1425 . 4 `f 1 f 4 0 `ul 1 i 4 0 ]
 "6
-[v scalbnf@u u `S1477  1 a 4 65 ]
+[v scalbnf@u u `S1425  1 a 4 49 ]
 "4
-[v scalbnf@x x `f  1 p 4 55 ]
-[v scalbnf@n n `i  1 p 2 59 ]
+[v scalbnf@x x `f  1 p 4 39 ]
+[v scalbnf@n n `i  1 p 2 43 ]
 "31
 } 0
-"400 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
-[v _Calibrate_MQ2 Calibrate_MQ2 `(v  1 e 1 0 ]
+"353 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
+[v _Apply_Filter Apply_Filter `(f  1 e 4 0 ]
 {
-"404
-[v Calibrate_MQ2@voltage voltage `f  1 a 4 6 ]
-"405
-[v Calibrate_MQ2@Rs Rs `f  1 a 4 0 ]
-"403
-[v Calibrate_MQ2@adc_value adc_value `ui  1 a 2 4 ]
-"402
-[v Calibrate_MQ2@i i `uc  1 a 1 14 ]
-"401
-[v Calibrate_MQ2@sum sum `f  1 a 4 10 ]
-"410
+"357
+[v Apply_Filter@i i `i  1 a 2 4 ]
+"356
+[v Apply_Filter@sum sum `f  1 a 4 0 ]
+"353
+[v Apply_Filter@new_value new_value `f  1 p 4 80 ]
+[v Apply_Filter@samples samples `*.39f  1 p 2 84 ]
+"361
 } 0
-"412
-[v _Read_LM35 Read_LM35 `(v  1 e 1 0 ]
-{
-"418
-[v Read_LM35@i i `i  1 a 2 10 ]
-"414
-[v Read_LM35@raw_temp raw_temp `f  1 a 4 0 ]
-"413
-[v Read_LM35@adc_value adc_value `ui  1 a 2 8 ]
-"422
-} 0
-"424
-[v _Read_Flame_Sensor Read_Flame_Sensor `(v  1 e 1 0 ]
-{
-"432
-[v Read_Flame_Sensor@intensity intensity `f  1 a 4 17 ]
-"431
-[v Read_Flame_Sensor@voltage voltage `f  1 a 4 7 ]
-"430
-[v Read_Flame_Sensor@adc_value adc_value `ui  1 a 2 11 ]
-"437
-[v Read_Flame_Sensor@last_detected last_detected `uc  1 s 1 last_detected ]
-"449
-} 0
-"387
-[v _Calibrate_Flame_Sensor Calibrate_Flame_Sensor `(v  1 e 1 0 ]
-{
-"390
-[v Calibrate_Flame_Sensor@adc_value adc_value `ui  1 a 2 0 ]
-"389
-[v Calibrate_Flame_Sensor@i i `uc  1 a 1 6 ]
-"388
-[v Calibrate_Flame_Sensor@sum sum `f  1 a 4 2 ]
-"398
-} 0
-"378
-[v _ADC_Read_Average ADC_Read_Average `(ui  1 e 2 0 ]
-{
-[v ADC_Read_Average@channel channel `uc  1 p 1 wreg ]
-"380
-[v ADC_Read_Average@i i `uc  1 a 1 20 ]
-"379
-[v ADC_Read_Average@sum sum `ul  1 a 4 16 ]
-"378
-[v ADC_Read_Average@channel channel `uc  1 p 1 wreg ]
-[v ADC_Read_Average@samples samples `uc  1 p 1 13 ]
-[v ADC_Read_Average@channel channel `uc  1 p 1 15 ]
-"385
-} 0
-"370
+"409
 [v _ADC_Read ADC_Read `(ui  1 e 2 0 ]
 {
 [v ADC_Read@channel channel `uc  1 p 1 wreg ]
 [v ADC_Read@channel channel `uc  1 p 1 wreg ]
 [v ADC_Read@channel channel `uc  1 p 1 4 ]
-"376
+"415
 } 0
-"352
+"417
 [v _Interrupt_Init Interrupt_Init `(v  1 e 1 0 ]
 {
-"361
+"425
 } 0
-"327
-[v _Handle_Test_Command Handle_Test_Command `(v  1 e 1 0 ]
+"244
+[v _Handle_Test_Events Handle_Test_Events `(v  1 e 1 0 ]
 {
-"350
+"256
+[v Handle_Test_Events@test_data test_data `[50]uc  1 a 50 202 ]
+"254
+[v Handle_Test_Events@water_used water_used `f  1 a 4 252 ]
+"245
+[v Handle_Test_Events@prev_test prev_test `uc  1 s 1 prev_test ]
+"267
 } 0
-"277
-[v _End_Event End_Event `(v  1 e 1 0 ]
+"10 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\xxtofl.c
+[v ___xxtofl __xxtofl `(d  1 e 4 0 ]
 {
-"304
-[v End_Event@i i `i  1 a 2 202 ]
-"284
-[v End_Event@event_buffer event_buffer `[200]uc  1 a 200 0 ]
+[v ___xxtofl@sign sign `uc  1 p 1 wreg ]
+"13
+[v ___xxtofl@arg arg `ul  1 a 4 10 ]
+"12
+[v ___xxtofl@exp exp `uc  1 a 1 9 ]
+"10
+[v ___xxtofl@sign sign `uc  1 p 1 wreg ]
+[v ___xxtofl@val val `l  1 p 4 0 ]
+"15
+[v ___xxtofl@sign sign `uc  1 p 1 8 ]
+"44
+} 0
+"269 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
+[v _Handle_Shutdown_Events Handle_Shutdown_Events `(v  1 e 1 0 ]
+{
+"270
+[v Handle_Shutdown_Events@prev_shutdown prev_shutdown `uc  1 s 1 prev_shutdown ]
+"283
+} 0
+"202
+[v _Handle_Fire_Events Handle_Fire_Events `(v  1 e 1 0 ]
+{
+"231
+[v Handle_Fire_Events@end_data end_data `[150]uc  1 a 150 0 ]
+"229
+[v Handle_Fire_Events@water_used water_used `f  1 a 4 136 ]
+"228
+[v Handle_Fire_Events@duration duration `ul  1 a 4 132 ]
+"221
+[v Handle_Fire_Events@start_data start_data `[100]uc  1 a 100 150 ]
+"242
+} 0
 "285
-[v End_Event@event_type_str event_type_str `*.32Cuc  1 a 2 200 ]
-"315
+[v _Send_History_Event Send_History_Event `(v  1 e 1 0 ]
+{
+"291
+[v Send_History_Event@i i `i  1 a 2 200 ]
+"286
+[v Send_History_Event@buffer buffer `[200]uc  1 a 200 0 ]
+"285
+[v Send_History_Event@event_type event_type `*.32Cuc  1 p 2 126 ]
+[v Send_History_Event@extra_data extra_data `*.35Cuc  1 p 2 128 ]
+"295
 } 0
 "9 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\nf_sprintf.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
-[u S1286 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[u S1239 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
 "13
-[s S1289 _IO_FILE 11 `S1286 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v sprintf@f f `S1289  1 a 11 121 ]
+[s S1242 _IO_FILE 11 `S1239 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v sprintf@f f `S1242  1 a 11 115 ]
 "12
-[v sprintf@ap ap `[1]*.30v  1 a 1 120 ]
+[v sprintf@ap ap `[1]*.30v  1 a 1 114 ]
 "9
-[v sprintf@s s `*.39uc  1 p 2 86 ]
-[v sprintf@fmt fmt `*.32Cuc  1 p 2 88 ]
+[v sprintf@s s `*.39uc  1 p 2 80 ]
+[v sprintf@fmt fmt `*.32Cuc  1 p 2 82 ]
 "23
 } 0
 "1817 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\doprnt.c
 [v _vfprintf vfprintf `(i  1 e 2 0 ]
 {
 "1820
-[v vfprintf@cfmt cfmt `*.32uc  1 a 2 84 ]
-[s S1321 _IO_FILE 0 ]
+[v vfprintf@cfmt cfmt `*.32uc  1 a 2 78 ]
+[s S1274 _IO_FILE 0 ]
 "1817
-[v vfprintf@fp fp `*.30S1321  1 p 1 80 ]
-[v vfprintf@fmt fmt `*.32Cuc  1 p 2 81 ]
-[v vfprintf@ap ap `*.30*.30v  1 p 1 83 ]
+[v vfprintf@fp fp `*.30S1274  1 p 1 74 ]
+[v vfprintf@fmt fmt `*.32Cuc  1 p 2 75 ]
+[v vfprintf@ap ap `*.30*.30v  1 p 1 77 ]
 "1840
 } 0
 "1177
 [v _vfpfcnvrt vfpfcnvrt `(v  1 s 1 vfpfcnvrt ]
 {
-[u S1376 . 4 `l 1 sint 4 0 `ul 1 uint 4 0 `d 1 f 4 0 ]
+[u S1324 . 4 `l 1 sint 4 0 `ul 1 uint 4 0 `d 1 f 4 0 ]
 "1188
-[v vfpfcnvrt@convarg convarg `S1376  1 a 4 73 ]
+[v vfpfcnvrt@convarg convarg `S1324  1 a 4 67 ]
 "1179
-[v vfpfcnvrt@cp cp `*.32uc  1 a 2 78 ]
-[v vfpfcnvrt@c c `uc  1 a 1 77 ]
+[v vfpfcnvrt@cp cp `*.32uc  1 a 2 72 ]
+[v vfpfcnvrt@c c `uc  1 a 1 71 ]
 "1180
-[v vfpfcnvrt@done done `a  1 a 1 72 ]
-[s S1321 _IO_FILE 0 ]
+[v vfpfcnvrt@done done `a  1 a 1 66 ]
+[s S1274 _IO_FILE 0 ]
 "1177
-[v vfpfcnvrt@fp fp `*.30S1321  1 p 1 66 ]
-[v vfpfcnvrt@fmt fmt `*.30*.32uc  1 p 1 67 ]
-[v vfpfcnvrt@ap ap `*.39*.30v  1 p 2 68 ]
+[v vfpfcnvrt@fp fp `*.30S1274  1 p 1 60 ]
+[v vfpfcnvrt@fmt fmt `*.30*.32uc  1 p 1 61 ]
+[v vfpfcnvrt@ap ap `*.39*.30v  1 p 2 62 ]
 "1814
 } 0
 "1001
@@ -820,9 +766,9 @@ EVENT_SYSTEM_START 4
 [v utoa@p p `i  1 a 2 29 ]
 "1003
 [v utoa@w w `i  1 a 2 27 ]
-[s S1321 _IO_FILE 0 ]
+[s S1274 _IO_FILE 0 ]
 "1001
-[v utoa@fp fp `*.30S1321  1 p 1 22 ]
+[v utoa@fp fp `*.30S1274  1 p 1 22 ]
 [v utoa@d d `ul  1 p 4 23 ]
 "1047
 } 0
@@ -857,9 +803,9 @@ EVENT_SYSTEM_START 4
 [v stoa@cp cp `*.35uc  1 a 2 15 ]
 "945
 [v stoa@p p `i  1 a 2 13 ]
-[s S1321 _IO_FILE 0 ]
+[s S1274 _IO_FILE 0 ]
 "942
-[v stoa@fp fp `*.30S1321  1 p 1 8 ]
+[v stoa@fp fp `*.30S1274  1 p 1 8 ]
 [v stoa@s s `*.35uc  1 p 2 9 ]
 "997
 } 0
@@ -878,35 +824,35 @@ EVENT_SYSTEM_START 4
 "587
 [v _efgtoa efgtoa `(v  1 s 1 efgtoa ]
 {
-[u S1339 flui 4 `d 1 f 4 0 `l 1 u 4 0 ]
+[u S1292 flui 4 `d 1 f 4 0 `l 1 u 4 0 ]
 "592
-[v efgtoa@u u `S1339  1 a 4 62 ]
-[v efgtoa@g g `S1339  1 a 4 56 ]
+[v efgtoa@u u `S1292  1 a 4 56 ]
+[v efgtoa@g g `S1292  1 a 4 50 ]
 "591
-[v efgtoa@l l `d  1 a 4 51 ]
-[v efgtoa@h h `d  1 a 4 47 ]
+[v efgtoa@l l `d  1 a 4 45 ]
+[v efgtoa@h h `d  1 a 4 41 ]
 "592
-[v efgtoa@ou ou `S1339  1 a 4 41 ]
+[v efgtoa@ou ou `S1292  1 a 4 35 ]
 "590
-[v efgtoa@n n `i  1 a 2 60 ]
-[v efgtoa@i i `i  1 a 2 45 ]
-[v efgtoa@w w `i  1 a 2 39 ]
-[v efgtoa@e e `i  1 a 2 37 ]
-[v efgtoa@m m `i  1 a 2 35 ]
-[v efgtoa@d d `i  1 a 2 33 ]
-[v efgtoa@t t `i  1 a 2 26 ]
-[v efgtoa@p p `i  1 a 2 24 ]
-[v efgtoa@ne ne `i  1 a 2 22 ]
+[v efgtoa@n n `i  1 a 2 54 ]
+[v efgtoa@i i `i  1 a 2 39 ]
+[v efgtoa@w w `i  1 a 2 33 ]
+[v efgtoa@e e `i  1 a 2 31 ]
+[v efgtoa@m m `i  1 a 2 29 ]
+[v efgtoa@d d `i  1 a 2 27 ]
+[v efgtoa@t t `i  1 a 2 20 ]
+[v efgtoa@p p `i  1 a 2 18 ]
+[v efgtoa@ne ne `i  1 a 2 16 ]
 "589
-[v efgtoa@sign sign `uc  1 a 1 55 ]
-[v efgtoa@nmode nmode `uc  1 a 1 32 ]
-[v efgtoa@mode mode `uc  1 a 1 31 ]
-[v efgtoa@pp pp `uc  1 a 1 30 ]
-[s S1321 _IO_FILE 0 ]
+[v efgtoa@sign sign `uc  1 a 1 49 ]
+[v efgtoa@nmode nmode `uc  1 a 1 26 ]
+[v efgtoa@mode mode `uc  1 a 1 25 ]
+[v efgtoa@pp pp `uc  1 a 1 24 ]
+[s S1274 _IO_FILE 0 ]
 "587
-[v efgtoa@fp fp `*.30S1321  1 p 1 16 ]
-[v efgtoa@f f `d  1 p 4 17 ]
-[v efgtoa@c c `uc  1 p 1 21 ]
+[v efgtoa@fp fp `*.30S1274  1 p 1 8 ]
+[v efgtoa@f f `d  1 p 4 9 ]
+[v efgtoa@c c `uc  1 p 1 13 ]
 "868
 } 0
 "3 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\strcpy.c
@@ -943,49 +889,55 @@ EVENT_SYSTEM_START 4
 "3 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\floorf.c
 [v _floorf floorf `(f  1 e 4 0 ]
 {
-[u S1477 . 4 `f 1 f 4 0 `ul 1 i 4 0 ]
+[u S1425 . 4 `f 1 f 4 0 `ul 1 i 4 0 ]
 "5
-[v floorf@u u `S1477  1 a 4 12 ]
+[v floorf@u u `S1425  1 a 4 80 ]
 "7
-[v floorf@m m `ul  1 a 4 6 ]
+[v floorf@m m `ul  1 a 4 74 ]
 "6
-[v floorf@e e `i  1 a 2 10 ]
+[v floorf@e e `i  1 a 2 78 ]
 "3
-[v floorf@x x `f  1 p 4 88 ]
+[v floorf@x x `f  1 p 4 64 ]
 "4
-[v floorf@F521 F521 `S1477  1 s 4 F521 ]
+[v floorf@F521 F521 `S1425  1 s 4 F521 ]
 "27
 } 0
 "4 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\__fpclassifyf.c
 [v ___fpclassifyf __fpclassifyf `(i  1 e 2 0 ]
 {
-[u S1477 . 4 `f 1 f 4 0 `ul 1 i 4 0 ]
+[u S1425 . 4 `f 1 f 4 0 `ul 1 i 4 0 ]
 "6
-[v ___fpclassifyf@u u `S1477  1 a 4 10 ]
+[v ___fpclassifyf@u u `S1425  1 a 4 10 ]
 "7
 [v ___fpclassifyf@e e `i  1 a 2 8 ]
 "4
 [v ___fpclassifyf@x x `f  1 p 4 0 ]
 "5
-[v ___fpclassifyf@F465 F465 `S1477  1 s 4 F465 ]
+[v ___fpclassifyf@F465 F465 `S1425  1 s 4 F465 ]
 "11
-} 0
-"43 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\fltol.c
-[v ___fltol __fltol `(l  1 e 4 0 ]
-{
-"45
-[v ___fltol@exp1 exp1 `uc  1 a 1 9 ]
-[v ___fltol@sign1 sign1 `uc  1 a 1 8 ]
-"43
-[v ___fltol@f1 f1 `d  1 p 4 0 ]
-"70
 } 0
 "245 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sprcadd.c
 [v ___flsub __flsub `(d  1 e 4 0 ]
 {
-[v ___flsub@b b `d  1 p 4 55 ]
-[v ___flsub@a a `d  1 p 4 59 ]
+[v ___flsub@b b `d  1 p 4 80 ]
+[v ___flsub@a a `d  1 p 4 84 ]
 "250
+} 0
+"10
+[v ___fladd __fladd `(d  1 e 4 0 ]
+{
+"17
+[v ___fladd@grs grs `uc  1 a 1 79 ]
+"15
+[v ___fladd@bexp bexp `uc  1 a 1 78 ]
+"16
+[v ___fladd@aexp aexp `uc  1 a 1 77 ]
+"13
+[v ___fladd@signs signs `uc  1 a 1 76 ]
+"10
+[v ___fladd@b b `d  1 p 4 64 ]
+[v ___fladd@a a `d  1 p 4 68 ]
+"237
 } 0
 "15 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\flneg.c
 [v ___flneg __flneg `(d  1 e 4 0 ]
@@ -993,11 +945,36 @@ EVENT_SYSTEM_START 4
 [v ___flneg@f1 f1 `d  1 p 4 0 ]
 "20
 } 0
+"8 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+{
+[s S1104 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
+"13
+[s S1109 . 4 `s 1 wordA 2 0 `s 1 wordB 2 2 ]
+[u S1112 . 4 `l 1 i 4 0 `d 1 f 4 0 `S1104 1 fAsBytes 4 0 `S1109 1 fAsWords 4 0 ]
+[v ___flmul@prod prod `S1112  1 a 4 33 ]
+"12
+[v ___flmul@grs grs `ul  1 a 4 28 ]
+[s S1180 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
+"14
+[u S1183 . 2 `s 1 i 2 0 `us 1 n 2 0 `S1180 1 nAsBytes 2 0 ]
+[v ___flmul@temp temp `S1183  1 a 2 37 ]
+"10
+[v ___flmul@bexp bexp `uc  1 a 1 32 ]
+"11
+[v ___flmul@aexp aexp `uc  1 a 1 27 ]
+"9
+[v ___flmul@sign sign `uc  1 a 1 26 ]
+"8
+[v ___flmul@b b `d  1 p 4 14 ]
+[v ___flmul@a a `d  1 p 4 18 ]
+"205
+} 0
 "4 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\flge.c
 [v ___flge __flge `(b  1 e 0 0 ]
 {
-[v ___flge@ff1 ff1 `d  1 p 4 63 ]
-[v ___flge@ff2 ff2 `d  1 p 4 67 ]
+[v ___flge@ff1 ff1 `d  1 p 4 0 ]
+[v ___flge@ff2 ff2 `d  1 p 4 4 ]
 "19
 } 0
 "4 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\fleq.c
@@ -1006,6 +983,26 @@ EVENT_SYSTEM_START 4
 [v ___fleq@ff1 ff1 `d  1 p 4 0 ]
 [v ___fleq@ff2 ff2 `d  1 p 4 4 ]
 "12
+} 0
+"11 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+{
+"21
+[v ___fldiv@grs grs `ul  1 a 4 58 ]
+"22
+[v ___fldiv@rem rem `ul  1 a 4 51 ]
+"20
+[v ___fldiv@new_exp new_exp `s  1 a 2 56 ]
+"19
+[v ___fldiv@aexp aexp `uc  1 a 1 63 ]
+"18
+[v ___fldiv@bexp bexp `uc  1 a 1 62 ]
+"16
+[v ___fldiv@sign sign `uc  1 a 1 55 ]
+"11
+[v ___fldiv@b b `d  1 p 4 39 ]
+[v ___fldiv@a a `d  1 p 4 43 ]
+"185
 } 0
 "513 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\doprnt.c
 [v _dtoa dtoa `(v  1 s 1 dtoa ]
@@ -1018,9 +1015,9 @@ EVENT_SYSTEM_START 4
 [v dtoa@w w `i  1 a 2 29 ]
 "515
 [v dtoa@s s `uc  1 a 1 33 ]
-[s S1321 _IO_FILE 0 ]
+[s S1274 _IO_FILE 0 ]
 "513
-[v dtoa@fp fp `*.30S1321  1 p 1 22 ]
+[v dtoa@fp fp `*.30S1274  1 p 1 22 ]
 [v dtoa@d d `l  1 p 4 23 ]
 "583
 } 0
@@ -1029,9 +1026,9 @@ EVENT_SYSTEM_START 4
 {
 "195
 [v pad@i i `i  1 a 2 20 ]
-[s S1321 _IO_FILE 0 ]
+[s S1274 _IO_FILE 0 ]
 "193
-[v pad@fp fp `*.30S1321  1 p 1 14 ]
+[v pad@fp fp `*.30S1274  1 p 1 14 ]
 [v pad@buf buf `*.39uc  1 p 2 15 ]
 [v pad@p p `i  1 p 2 17 ]
 "226
@@ -1045,18 +1042,18 @@ EVENT_SYSTEM_START 4
 [v fputs@c c `uc  1 a 1 11 ]
 "8
 [v fputs@s s `*.39Cuc  1 p 2 8 ]
-[u S1286 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
-[s S1289 _IO_FILE 11 `S1286 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v fputs@fp fp `*.30S1289  1 p 1 10 ]
+[u S1239 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[s S1242 _IO_FILE 11 `S1239 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v fputs@fp fp `*.30S1242  1 p 1 10 ]
 "19
 } 0
 "8 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\nf_fputc.c
 [v _fputc fputc `(i  1 e 2 0 ]
 {
 [v fputc@c c `i  1 p 2 0 ]
-[u S1286 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
-[s S1289 _IO_FILE 11 `S1286 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v fputc@fp fp `*.30S1289  1 p 1 2 ]
+[u S1239 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[s S1242 _IO_FILE 11 `S1239 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v fputc@fp fp `*.30S1242  1 p 1 2 ]
 "24
 } 0
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\putch.c
@@ -1094,105 +1091,32 @@ EVENT_SYSTEM_START 4
 [v ___aldiv@divisor divisor `l  1 p 4 4 ]
 "41
 } 0
-"317 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
-[v _Check_Flow_Reset Check_Flow_Reset `(v  1 e 1 0 ]
+"158 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
+[v _Handle_Commands Handle_Commands `(v  1 e 1 0 ]
 {
-"324
+"160
+[v Handle_Commands@cmd cmd `uc  1 a 1 14 ]
+"184
+[v Handle_Commands@last_blink last_blink `ul  1 s 4 last_blink ]
+"200
 } 0
-"485
-[v _Calculate_Flow Calculate_Flow `(v  1 e 1 0 ]
+"43 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\fltol.c
+[v ___fltol __fltol `(l  1 e 4 0 ]
 {
-"491
-[v Calculate_Flow@pulses pulses `ui  1 a 2 92 ]
-"486
-[v Calculate_Flow@last_pulse_count last_pulse_count `ui  1 s 2 last_pulse_count ]
-"487
-[v Calculate_Flow@last_calc_time last_calc_time `ul  1 s 4 last_calc_time ]
-"498
+"45
+[v ___fltol@exp1 exp1 `uc  1 a 1 9 ]
+[v ___fltol@sign1 sign1 `uc  1 a 1 8 ]
+"43
+[v ___fltol@f1 f1 `d  1 p 4 0 ]
+"70
 } 0
-"10 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\xxtofl.c
-[v ___xxtofl __xxtofl `(d  1 e 4 0 ]
-{
-[v ___xxtofl@sign sign `uc  1 p 1 wreg ]
-"13
-[v ___xxtofl@arg arg `ul  1 a 4 10 ]
-"12
-[v ___xxtofl@exp exp `uc  1 a 1 9 ]
-"10
-[v ___xxtofl@sign sign `uc  1 p 1 wreg ]
-[v ___xxtofl@val val `l  1 p 4 0 ]
-"15
-[v ___xxtofl@sign sign `uc  1 p 1 8 ]
-"44
-} 0
-"8 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sprcmul.c
-[v ___flmul __flmul `(d  1 e 4 0 ]
-{
-[s S1151 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
-"13
-[s S1156 . 4 `s 1 wordA 2 0 `s 1 wordB 2 2 ]
-[u S1159 . 4 `l 1 i 4 0 `d 1 f 4 0 `S1151 1 fAsBytes 4 0 `S1156 1 fAsWords 4 0 ]
-[v ___flmul@prod prod `S1159  1 a 4 49 ]
-"12
-[v ___flmul@grs grs `ul  1 a 4 44 ]
-[s S1227 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
-"14
-[u S1230 . 2 `s 1 i 2 0 `us 1 n 2 0 `S1227 1 nAsBytes 2 0 ]
-[v ___flmul@temp temp `S1230  1 a 2 53 ]
-"10
-[v ___flmul@bexp bexp `uc  1 a 1 48 ]
-"11
-[v ___flmul@aexp aexp `uc  1 a 1 43 ]
-"9
-[v ___flmul@sign sign `uc  1 a 1 42 ]
-"8
-[v ___flmul@b b `d  1 p 4 30 ]
-[v ___flmul@a a `d  1 p 4 34 ]
-"205
-} 0
-"11 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sprcdiv.c
-[v ___fldiv __fldiv `(d  1 e 4 0 ]
-{
-"21
-[v ___fldiv@grs grs `ul  1 a 4 82 ]
-"22
-[v ___fldiv@rem rem `ul  1 a 4 75 ]
-"20
-[v ___fldiv@new_exp new_exp `s  1 a 2 80 ]
-"19
-[v ___fldiv@aexp aexp `uc  1 a 1 87 ]
-"18
-[v ___fldiv@bexp bexp `uc  1 a 1 86 ]
-"16
-[v ___fldiv@sign sign `uc  1 a 1 79 ]
-"11
-[v ___fldiv@b b `d  1 p 4 63 ]
-[v ___fldiv@a a `d  1 p 4 67 ]
-"185
-} 0
-"10 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sprcadd.c
-[v ___fladd __fladd `(d  1 e 4 0 ]
-{
-"17
-[v ___fladd@grs grs `uc  1 a 1 29 ]
-"15
-[v ___fladd@bexp bexp `uc  1 a 1 28 ]
-"16
-[v ___fladd@aexp aexp `uc  1 a 1 27 ]
-"13
-[v ___fladd@signs signs `uc  1 a 1 26 ]
-"10
-[v ___fladd@b b `d  1 p 4 14 ]
-[v ___fladd@a a `d  1 p 4 18 ]
-"237
-} 0
-"363 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
+"402 C:\Mac\Home\Desktop\Sistemas Embebidos\Proyecto\Codiog_PIC_ESP32\Proyecto_Code.X\newmain.c
 [v _ADC_Init ADC_Init `(v  1 e 1 0 ]
 {
-"368
+"407
 } 0
-"127
+"91
 [v _HighISR HighISR `IIH(v  1 e 1 0 ]
 {
-"132
+"96
 } 0

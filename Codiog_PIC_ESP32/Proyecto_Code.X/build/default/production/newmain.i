@@ -11,6 +11,7 @@
 
 
 
+
 # 1 "C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include/xc.h" 1 3
 # 18 "C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -5642,7 +5643,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include/xc.h" 2 3
-# 6 "newmain.c" 2
+# 7 "newmain.c" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/stdio.h" 1 3
 # 24 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/stdio.h" 3
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 1 3
@@ -5795,7 +5796,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 7 "newmain.c" 2
+# 8 "newmain.c" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/string.h" 1 3
 # 25 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/string.h" 3
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 1 3
@@ -5853,7 +5854,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 8 "newmain.c" 2
+# 9 "newmain.c" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/math.h" 1 3
 # 10 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/math.h" 3
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/stdint.h" 1 3
@@ -6315,7 +6316,7 @@ double jn(int, double);
 double y0(double);
 double y1(double);
 double yn(int, double);
-# 9 "newmain.c" 2
+# 10 "newmain.c" 2
 
 #pragma config FOSC = INTOSCIO_EC, WDT = OFF, PWRT = ON, MCLRE = ON, LVP = OFF, XINST = OFF
 
@@ -6327,11 +6328,10 @@ double yn(int, double);
 
 
 typedef unsigned char bool;
-# 37 "newmain.c"
+# 36 "newmain.c"
 float temperature = 0.0;
 float flame_intensity = 0.0;
 float flame_base_voltage = 0.0;
-bool flame_calibrated = 0;
 bool flame_detected = 0;
 float co_ppm = 0.0;
 float MQ2_Ro = 10.0;
@@ -6345,77 +6345,43 @@ bool prev_fire_alarm = 0;
 
 
 
-float temp_filter[7] = {0};
-float co_filter[7] = {0};
-unsigned char filter_index = 0;
-
-
-
-
-unsigned long calibrationCounter = 0;
+float temp_samples[5] = {25.0, 25.0, 25.0, 25.0, 25.0};
+float co_samples[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+unsigned char sample_index = 0;
 
 
 bool shutdown_system = 0;
 bool trigger_test = 0;
 unsigned long test_start_time = 0;
-unsigned long test_last_toggle = 0;
 const unsigned long TEST_DURATION = 10000;
-const unsigned long TEST_BLINK_INTERVAL = 500;
 
 
 unsigned long system_millis = 0;
 
 
+unsigned long fire_start_time = 0;
+float fire_start_temp = 0.0;
+float fire_start_flame = 0.0;
+float fire_start_co = 0.0;
+float fire_start_flow = 0.0;
+char fire_trigger_sensor[20] = "";
 
-
-
-typedef enum {
-    EVENT_NONE,
-    EVENT_FIRE,
-    EVENT_TEST,
-    EVENT_SHUTDOWN,
-    EVENT_SYSTEM_START
-} EventType;
-
-
-typedef struct {
-    EventType type;
-    unsigned long start_time;
-    float start_temperature;
-    float start_flame_intensity;
-    float start_co_ppm;
-    float start_total_flow;
-    float water_used;
-} EventHistory;
-
-
-EventHistory current_event = {EVENT_NONE};
-bool event_active = 0;
-unsigned long last_flow_reset_time = 0;
-bool system_started = 0;
-
+unsigned long test_start_flow = 0.0;
 
 
 void ADC_Init(void);
 unsigned int ADC_Read(unsigned char channel);
-unsigned int ADC_Read_Average(unsigned char channel, unsigned char samples);
-void Calibrate_Flame_Sensor(void);
-void Calibrate_MQ2(void);
-void Read_LM35(void);
-void Read_Flame_Sensor(void);
-void Read_MQ2_Sensor(void);
-void Calculate_Flow(void);
-void Send_Sensor_Data(void);
-void UART_Init(void);
+void Read_Sensors(void);
 void Update_Actuators(void);
+void Send_Data(void);
+void UART_Init(void);
 void Interrupt_Init(void);
-void Handle_Test_Command(void);
-char UART_Read(void);
-char UART_Data_Ready(void);
-void Start_Event(EventType type);
-void End_Event();
-void Check_Flow_Reset();
-void Send_Event_Data(EventType type);
+void Handle_Commands(void);
+void Handle_Fire_Events(void);
+void Handle_Test_Events(void);
+void Handle_Shutdown_Events(void);
+void Send_History_Event(const char* event_type, const char* extra_data);
+float Apply_Filter(float new_value, float* samples);
 
 
 void __attribute__((picinterrupt(("high_priority")))) HighISR(void) {
@@ -6426,16 +6392,12 @@ void __attribute__((picinterrupt(("high_priority")))) HighISR(void) {
 }
 
 void main(void) {
+
     OSCCON = 0x70;
     TRISB = 0x02;
     PORTB = 0x00;
     PORTBbits.RB5 = 1;
     PORTBbits.RB0 = 0;
-
-
-    for(int i = 0; i < 7; i++) {
-        temp_filter[i] = co_filter[i] = 25.0;
-    }
 
     _delay((unsigned long)((2000)*(8000000/4000.0)));
     UART_Init();
@@ -6443,367 +6405,262 @@ void main(void) {
     Interrupt_Init();
 
 
-    Send_Event_Data(EVENT_SYSTEM_START);
-    system_started = 1;
+    for(int i = 0; i < 50; i++) {
+        unsigned int adc_value = ADC_Read(1);
+        flame_base_voltage += (adc_value * 5.0) / 1024.0;
+        _delay((unsigned long)((100)*(8000000/4000.0)));
+    }
+    flame_base_voltage /= 50.0;
 
-    Calibrate_Flame_Sensor();
-    Calibrate_MQ2();
 
-    unsigned int sensor_counter = 0;
-    pulse_count = 0;
+    for(int i = 0; i < 50; i++) {
+        unsigned int adc_value = ADC_Read(2);
+        float voltage = (adc_value * 5.0) / 1024.0;
+        MQ2_Ro += (5.0 - voltage) / voltage;
+        _delay((unsigned long)((100)*(8000000/4000.0)));
+    }
+    MQ2_Ro /= 50.0;
+
+    unsigned int cycle_count = 0;
 
     while(1) {
-
         system_millis += 250;
 
-
-        if(UART_Data_Ready()) {
-            char cmd = UART_Read();
-            switch(cmd) {
-                case 'T':
-                    if(!trigger_test) {
-                        trigger_test = 1;
-                        test_start_time = system_millis;
-                        test_last_toggle = system_millis;
-                    }
-                    break;
-                case 'S':
-                    shutdown_system = 1;
-                    break;
-                case 'R':
-                    shutdown_system = 0;
-                    break;
-            }
-        }
-
-
-        if(trigger_test) {
-            Handle_Test_Command();
-        }
-
+        Handle_Commands();
 
         if(!shutdown_system) {
-            Read_LM35();
-            Read_Flame_Sensor();
-            Read_MQ2_Sensor();
-            Calculate_Flow();
-
+            Read_Sensors();
             if(!trigger_test) {
                 Update_Actuators();
             }
         }
 
+        Handle_Fire_Events();
+        Handle_Test_Events();
+        Handle_Shutdown_Events();
 
-        if (fire_alarm && !event_active) {
-            Start_Event(EVENT_FIRE);
-        }
-        else if (trigger_test && !event_active) {
-            Start_Event(EVENT_TEST);
-        }
-        else if (shutdown_system && !event_active) {
-            Start_Event(EVENT_SHUTDOWN);
-        }
-        else if (!fire_alarm && !trigger_test && !shutdown_system && event_active) {
-            End_Event();
+
+        if(cycle_count >= 4) {
+            Send_Data();
+            cycle_count = 0;
         }
 
-
-        Check_Flow_Reset();
-
-        filter_index = (filter_index + 1) % 7;
-
-        if(sensor_counter >= 4) {
-            Send_Sensor_Data();
-            sensor_counter = 0;
-
-            calibrationCounter += 1000;
-            if(calibrationCounter >= 300000) {
-                Calibrate_MQ2();
-            }
-            if(calibrationCounter >= 600000) {
-                Calibrate_Flame_Sensor();
-                calibrationCounter = 0;
-            }
-        }
-
-        sensor_counter++;
+        cycle_count++;
+        sample_index = (sample_index + 1) % 5;
         _delay((unsigned long)((250)*(8000000/4000.0)));
     }
 }
 
-
-void Send_Event_Data(EventType type) {
-    const char* event_type_str = "";
-    switch(type) {
-        case EVENT_FIRE: event_type_str = "fire"; break;
-        case EVENT_TEST: event_type_str = "test"; break;
-        case EVENT_SHUTDOWN: event_type_str = "shutdown"; break;
-        case EVENT_SYSTEM_START: event_type_str = "system_start"; break;
-        default: event_type_str = "unknown";
+void Handle_Commands(void) {
+    if(PIR1bits.RCIF) {
+        char cmd = RCREG;
+        switch(cmd) {
+            case 'T':
+                if(!trigger_test) {
+                    trigger_test = 1;
+                    test_start_time = system_millis;
+                    test_start_flow = total_flow;
+                }
+                break;
+            case 'S':
+                shutdown_system = 1;
+                break;
+            case 'R':
+                shutdown_system = 0;
+                break;
+        }
     }
 
-    char event_buffer[100];
-    sprintf(event_buffer, "{\"event\":\"%s\",\"time\":%lu}\r\n",
-            event_type_str, system_millis);
+
+    if(trigger_test) {
+        PORTBbits.RB0 = 1;
+        pump_active = 1;
 
 
-    while(!TXSTAbits.TRMT);
-    for(int i = 0; event_buffer[i]; i++) {
-        TXREG = event_buffer[i];
-        while(!TXSTAbits.TRMT);
+        static unsigned long last_blink = 0;
+        if(system_millis - last_blink >= 500) {
+            PORTBbits.RB5 = !PORTBbits.RB5;
+            last_blink = system_millis;
+        }
+        alarm_active = 1;
+
+
+        if((system_millis - test_start_time) >= TEST_DURATION) {
+            trigger_test = 0;
+            PORTBbits.RB0 = 0;
+            PORTBbits.RB5 = 1;
+            pump_active = 0;
+            alarm_active = 0;
+        }
     }
 }
 
-void Start_Event(EventType type) {
-    current_event.type = type;
-    current_event.start_time = system_millis;
-    current_event.start_temperature = temperature;
-    current_event.start_flame_intensity = flame_intensity;
-    current_event.start_co_ppm = co_ppm;
-    current_event.start_total_flow = total_flow;
-    current_event.water_used = 0.0;
-    event_active = 1;
+void Handle_Fire_Events(void) {
+
+    if(fire_alarm && !prev_fire_alarm) {
+        fire_start_time = system_millis;
+        fire_start_temp = temperature;
+        fire_start_flame = flame_intensity;
+        fire_start_co = co_ppm;
+        fire_start_flow = total_flow;
 
 
-    Send_Event_Data(type);
-}
-
-void End_Event() {
-    if (!event_active) return;
-
-
-    current_event.water_used = total_flow - current_event.start_total_flow;
-
-
-    char event_buffer[200];
-    const char* event_type_str = "";
-    switch(current_event.type) {
-        case EVENT_FIRE: event_type_str = "fire_end"; break;
-        case EVENT_TEST: event_type_str = "test_end"; break;
-        case EVENT_SHUTDOWN: event_type_str = "shutdown_end"; break;
-        default: event_type_str = "unknown";
-    }
-
-    sprintf(event_buffer,
-        "{\"event\":\"%s\",\"start_time\":%lu,\"t0\":%.1f,\"fi0\":%.1f,\"co0\":%.1f,\"water\":%.2f}\r\n",
-        event_type_str,
-        current_event.start_time,
-        current_event.start_temperature,
-        current_event.start_flame_intensity,
-        current_event.start_co_ppm,
-        current_event.water_used);
+        if(flame_detected) {
+            strcpy(fire_trigger_sensor, "flame_sensor");
+        } else if(temperature >= 40.0) {
+            strcpy(fire_trigger_sensor, "temperature_sensor");
+        } else if(co_ppm >= 50.0) {
+            strcpy(fire_trigger_sensor, "co_sensor");
+        }
 
 
-    while(!TXSTAbits.TRMT);
-    for(int i = 0; event_buffer[i]; i++) {
-        TXREG = event_buffer[i];
-        while(!TXSTAbits.TRMT);
+        char start_data[100];
+        sprintf(start_data, ",\"sensor\":\"%s\"", fire_trigger_sensor);
+        Send_History_Event("fire_start", start_data);
     }
 
 
-    event_active = 0;
-    current_event.type = EVENT_NONE;
+    if(!fire_alarm && prev_fire_alarm) {
+        unsigned long duration = (system_millis - fire_start_time) / 1000;
+        float water_used = total_flow - fire_start_flow;
+
+        char end_data[150];
+        sprintf(end_data, ",\"duration\":%lu,\"water\":%.2f", duration, water_used);
+        Send_History_Event("fire_end", end_data);
 
 
-    last_flow_reset_time = system_millis;
-}
-
-void Check_Flow_Reset() {
-    if (last_flow_reset_time > 0 &&
-        (system_millis - last_flow_reset_time) >= 5000) {
+        _delay((unsigned long)((5000)*(8000000/4000.0)));
         total_flow = 0.0;
         pulse_count = 0;
-        last_flow_reset_time = 0;
+    }
+
+    prev_fire_alarm = fire_alarm;
+}
+
+void Handle_Test_Events(void) {
+    static bool prev_test = 0;
+
+
+    if(trigger_test && !prev_test) {
+        Send_History_Event("test_start", "");
+    }
+
+
+    if(!trigger_test && prev_test) {
+        float water_used = total_flow - test_start_flow;
+
+        char test_data[50];
+        sprintf(test_data, ",\"water\":%.2f", water_used);
+        Send_History_Event("test_end", test_data);
+
+
+        _delay((unsigned long)((3000)*(8000000/4000.0)));
+        total_flow = 0.0;
+        pulse_count = 0;
+    }
+
+    prev_test = trigger_test;
+}
+
+void Handle_Shutdown_Events(void) {
+    static bool prev_shutdown = 0;
+
+
+    if(shutdown_system && !prev_shutdown) {
+        Send_History_Event("shutdown", "");
+    }
+
+
+    if(!shutdown_system && prev_shutdown) {
+        Send_History_Event("resume", "");
+    }
+
+    prev_shutdown = shutdown_system;
+}
+
+void Send_History_Event(const char* event_type, const char* extra_data) {
+    char buffer[200];
+    sprintf(buffer, "{\"event\":\"%s\",\"time\":%lu%s}\r\n",
+            event_type, system_millis, extra_data);
+
+    while(!TXSTAbits.TRMT);
+    for(int i = 0; buffer[i]; i++) {
+        TXREG = buffer[i];
+        while(!TXSTAbits.TRMT);
     }
 }
 
+void Read_Sensors(void) {
 
-void Handle_Test_Command(void) {
-
-    trigger_test = 1;
-
-
-    PORTBbits.RB0 = 1;
-    pump_active = 1;
+    unsigned int temp_adc = ADC_Read(0);
+    float raw_temp = (temp_adc * 5.0 / 1024.0) / 0.01;
+    temperature = Apply_Filter(raw_temp, temp_samples);
 
 
-    if(system_millis - test_last_toggle >= TEST_BLINK_INTERVAL) {
-        PORTBbits.RB5 = !PORTBbits.RB5;
-        test_last_toggle = system_millis;
-    }
-    alarm_active = 1;
+    unsigned int flame_adc = ADC_Read(1);
+    float flame_voltage = (flame_adc * 5.0) / 1024.0;
+    flame_intensity = (flame_base_voltage - flame_voltage) * 100.0 / flame_base_voltage;
+
+    if(flame_intensity < 0) flame_intensity = 0;
+    if(flame_intensity > 100) flame_intensity = 100;
 
 
-    if((system_millis - test_start_time) >= TEST_DURATION) {
-        trigger_test = 0;
-        PORTBbits.RB0 = 0;
-        PORTBbits.RB5 = 1;
-        pump_active = 0;
-        alarm_active = 0;
-    }
-}
-
-void Interrupt_Init(void) {
-    TRISBbits.TRISB1 = 1;
-    INTCON2bits.INTEDG1 = 0;
-    INTCON3bits.INT1IE = 1;
-    INTCON3bits.INT1IP = 1;
-
-    RCONbits.IPEN = 1;
-    INTCONbits.GIEH = 1;
-    INTCONbits.GIEL = 1;
-}
-
-void ADC_Init(void) {
-    TRISA0 = TRISA1 = TRISA2 = 1;
-    ADCON0bits.ADON = 1;
-    ADCON1 = 0x0C;
-    ADCON2 = 0xBE;
-}
-
-unsigned int ADC_Read(unsigned char channel) {
-    ADCON0bits.CHS = channel;
-    _delay((unsigned long)((30)*(8000000/4000000.0)));
-    ADCON0bits.GO = 1;
-    while(ADCON0bits.GO);
-    return (ADRESH << 8) | ADRESL;
-}
-
-unsigned int ADC_Read_Average(unsigned char channel, unsigned char samples) {
-    unsigned long sum = 0;
-    for(unsigned char i = 0; i < samples; i++) {
-        sum += ADC_Read(channel);
-        _delay((unsigned long)((25)*(8000000/4000000.0)));
-    }
-    return (unsigned int)(sum / samples);
-}
-
-void Calibrate_Flame_Sensor() {
-    float sum = 0;
-    for(unsigned char i = 0; i < 20; i++) {
-        unsigned int adc_value = ADC_Read(1);
-        sum += (adc_value * 5.0) / 1024.0;
-        _delay((unsigned long)((150)*(8000000/4000.0)));
-    }
-    flame_base_voltage = sum / 20.0;
-    flame_calibrated = 1;
-    flame_detected = 0;
-    flame_intensity = 0.0;
-}
-
-void Calibrate_MQ2() {
-    float sum = 0;
-    for(unsigned char i = 0; i < 70; i++) {
-        unsigned int adc_value = ADC_Read(2);
-        float voltage = (adc_value * 5.0) / 1024.0;
-        float Rs = (5.0 - voltage) / voltage;
-        sum += Rs;
-        _delay((unsigned long)((200)*(8000000/4000.0)));
-    }
-    MQ2_Ro = sum / 70.0;
-}
-
-void Read_LM35(void) {
-    unsigned int adc_value = ADC_Read_Average(0, 10);
-    float raw_temp = (adc_value * 5.0 / 1024.0) / 0.01;
-
-    temp_filter[filter_index] = raw_temp;
-    temperature = 0;
-    for(int i = 0; i < 7; i++) {
-        temperature += temp_filter[i];
-    }
-    temperature /= 7;
-}
-
-void Read_Flame_Sensor(void) {
-    if(!flame_calibrated) {
-        Calibrate_Flame_Sensor();
-        return;
-    }
-
-    unsigned int adc_value = ADC_Read_Average(1, 10);
-    float voltage = (adc_value * 5.0) / 1024.0;
-    float intensity = (flame_base_voltage - voltage) * 100.0 / flame_base_voltage;
-
-    if(intensity < 0) intensity = 0;
-    if(intensity > 100) intensity = 100;
-
-    static bool last_detected = 0;
-
-    if (!last_detected && intensity >= 18.0) {
+    if(!flame_detected && flame_intensity >= 15.0) {
         flame_detected = 1;
-        last_detected = 1;
-    }
-    else if (last_detected && intensity <= 12.0) {
+    } else if(flame_detected && flame_intensity <= (15.0 - 3.0)) {
         flame_detected = 0;
-        last_detected = 0;
     }
 
-    flame_intensity = flame_detected ? intensity : 0.0;
-}
 
-void Read_MQ2_Sensor(void) {
-    static bool calibrated = 0;
-    if(!calibrated) {
-        Calibrate_MQ2();
-        calibrated = 1;
-    }
+    unsigned int mq2_adc = ADC_Read(2);
+    float mq2_voltage = (mq2_adc * 5.0) / 1024.0;
+    float Rs = (5.0 - mq2_voltage) / mq2_voltage;
 
-    unsigned int adc_value = ADC_Read_Average(2, 10);
-    float voltage = (adc_value * 5.0) / 1024.0;
-    float Rs = (5.0 - voltage) / voltage;
 
-    float temp_factor = 1.0 + 0.025 * (temperature - 25.0);
+    float temp_factor = 1.0 + 0.02 * (temperature - 25.0);
     Rs /= temp_factor;
 
     float rs_ro_ratio = Rs / MQ2_Ro;
-    float ppm = 0.0;
+    float raw_co = 0.0;
 
-    if(rs_ro_ratio > 0.15) {
-        ppm = 12.0 * powf(rs_ro_ratio,-1.8);
-    }
-    if(rs_ro_ratio > 0.05 && rs_ro_ratio <= 0.15) {
-        ppm = 80.0 * powf(rs_ro_ratio,-3.2);
+    if(rs_ro_ratio > 0.1) {
+        raw_co = 15.0 * powf(rs_ro_ratio,-1.5);
     }
 
-    ppm = ppm < 0 ? 0 : (ppm > 10000 ? 10000 : ppm);
+    if(raw_co < 0) raw_co = 0;
+    if(raw_co > 1000) raw_co = 1000;
 
-    co_filter[filter_index] = ppm;
-    co_ppm = 0;
-    for(int i = 0; i < 7; i++) {
-        co_ppm += co_filter[i];
-    }
-    co_ppm /= 7;
-}
-
-void Calculate_Flow(void) {
-    static unsigned int last_pulse_count = 0;
-    static unsigned long last_calc_time = 0;
+    co_ppm = Apply_Filter(raw_co, co_samples);
 
 
-    if(system_millis - last_calc_time >= 1000) {
-        unsigned int pulses = pulse_count - last_pulse_count;
+    static unsigned int last_pulse = 0;
+    static unsigned long last_flow_time = 0;
+
+    if(system_millis - last_flow_time >= 1000) {
+        unsigned int pulses = pulse_count - last_pulse;
         flow_rate = (pulses / (float)450) * 60.0;
         total_flow += flow_rate / 60.0;
 
-        last_pulse_count = pulse_count;
-        last_calc_time = system_millis;
+        last_pulse = pulse_count;
+        last_flow_time = system_millis;
     }
 }
 
-void Update_Actuators(void) {
-    prev_fire_alarm = fire_alarm;
+float Apply_Filter(float new_value, float* samples) {
+    samples[sample_index] = new_value;
 
-    bool temp_alarm = temperature >= 42.0;
-    bool co_alarm = co_ppm >= 55.0;
-
-    fire_alarm = flame_detected || temp_alarm || co_alarm;
-
-    if (!fire_alarm &&
-        (temperature > 38.0 ||
-         co_ppm > 45.0)) {
-        fire_alarm = 1;
+    float sum = 0;
+    for(int i = 0; i < 5; i++) {
+        sum += samples[i];
     }
+    return sum / 5;
+}
+
+void Update_Actuators(void) {
+
+    fire_alarm = flame_detected ||
+                 (temperature >= 40.0) ||
+                 (co_ppm >= 50.0);
 
     if(fire_alarm) {
         PORTBbits.RB0 = 1;
@@ -6824,24 +6681,43 @@ void Update_Actuators(void) {
     }
 }
 
-void Send_Sensor_Data(void) {
-    char buffer[200];
-    sprintf(buffer, "{\"t\":%.1f,\"fd\":%d,\"fi\":%.1f,\"co\":%.1f,\"fr\":%.2f,\"tf\":%.2f,\"p\":%d,\"a\":%d,\"cmd\":{\"test\":%d,\"shutdown\":%d}}\r\n",
-            temperature,
-            flame_detected,
-            flame_intensity,
-            co_ppm,
-            flow_rate,
-            total_flow,
-            pump_active,
-            alarm_active,
-            trigger_test,
-            shutdown_system);
+void Send_Data(void) {
+    char buffer[150];
+    sprintf(buffer,
+        "{\"t\":%.1f,\"fd\":%d,\"fi\":%.1f,\"co\":%.1f,\"fr\":%.2f,\"tf\":%.2f,\"p\":%d,\"a\":%d,\"cmd\":{\"test\":%d,\"shutdown\":%d}}\r\n",
+        temperature, flame_detected, flame_intensity, co_ppm, flow_rate, total_flow,
+        pump_active, alarm_active, trigger_test, shutdown_system);
+
     while(!TXSTAbits.TRMT);
     for(int i = 0; buffer[i]; i++) {
         TXREG = buffer[i];
         while(!TXSTAbits.TRMT);
     }
+}
+
+void ADC_Init(void) {
+    TRISA0 = TRISA1 = TRISA2 = 1;
+    ADCON0bits.ADON = 1;
+    ADCON1 = 0x0C;
+    ADCON2 = 0xBE;
+}
+
+unsigned int ADC_Read(unsigned char channel) {
+    ADCON0bits.CHS = channel;
+    _delay((unsigned long)((30)*(8000000/4000000.0)));
+    ADCON0bits.GO = 1;
+    while(ADCON0bits.GO);
+    return (ADRESH << 8) | ADRESL;
+}
+
+void Interrupt_Init(void) {
+    TRISBbits.TRISB1 = 1;
+    INTCON2bits.INTEDG1 = 0;
+    INTCON3bits.INT1IE = 1;
+    INTCON3bits.INT1IP = 1;
+    RCONbits.IPEN = 1;
+    INTCONbits.GIEH = 1;
+    INTCONbits.GIEL = 1;
 }
 
 void UART_Init(void) {
@@ -6853,15 +6729,4 @@ void UART_Init(void) {
     TXSTAbits.TXEN = 1;
     RCSTAbits.SPEN = 1;
     RCSTAbits.CREN = 1;
-}
-
-char UART_Read(void) {
-    if(PIR1bits.RCIF) {
-        return RCREG;
-    }
-    return 0;
-}
-
-char UART_Data_Ready(void) {
-    return PIR1bits.RCIF;
 }

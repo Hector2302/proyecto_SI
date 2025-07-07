@@ -1,12 +1,4 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"98 newmain.c
-[; ;newmain.c: 98: EventHistory current_event = {EVENT_NONE};
-[c E4149 0 1 2 3 4 .. ]
-[n E4149 . EVENT_NONE EVENT_FIRE EVENT_TEST EVENT_SHUTDOWN EVENT_SYSTEM_START  ]
-"87
-[; ;newmain.c: 87: typedef struct {
-[s S370 `E4149 1 `ul 1 `f 1 `f 1 `f 1 `f 1 `f 1 ]
-[n S370 . type start_time start_temperature start_flame_intensity start_co_ppm start_total_flow water_used ]
 [t ~ __interrupt . k ]
 [t T36 __interrupt high_priority ]
 "8419 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h
@@ -57,63 +49,66 @@ Version 4.0 HI-TECH Software Intermediate Code
 "203 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include/pic18.h
 [v __delay `JF3171 ~T0 @X0 0 e ]
 [p i __delay ]
-"115 newmain.c
-[; ;newmain.c: 115: void UART_Init(void);
+"81 newmain.c
+[; ;newmain.c: 81: void UART_Init(void);
 [v _UART_Init `(v ~T0 @X0 0 ef ]
-"105
-[; ;newmain.c: 105: void ADC_Init(void);
+"76
+[; ;newmain.c: 76: void ADC_Init(void);
 [v _ADC_Init `(v ~T0 @X0 0 ef ]
-"117
-[; ;newmain.c: 117: void Interrupt_Init(void);
+"82
+[; ;newmain.c: 82: void Interrupt_Init(void);
 [v _Interrupt_Init `(v ~T0 @X0 0 ef ]
-"124
-[; ;newmain.c: 124: void Send_Event_Data(EventType type);
-[v _Send_Event_Data `(v ~T0 @X0 0 ef1`E4149 ]
-"108
-[; ;newmain.c: 108: void Calibrate_Flame_Sensor(void);
-[v _Calibrate_Flame_Sensor `(v ~T0 @X0 0 ef ]
-"109
-[; ;newmain.c: 109: void Calibrate_MQ2(void);
-[v _Calibrate_MQ2 `(v ~T0 @X0 0 ef ]
-"120
-[; ;newmain.c: 120: char UART_Data_Ready(void);
-[v _UART_Data_Ready `(uc ~T0 @X0 0 ef ]
-"119
-[; ;newmain.c: 119: char UART_Read(void);
-[v _UART_Read `(uc ~T0 @X0 0 ef ]
-"118
-[; ;newmain.c: 118: void Handle_Test_Command(void);
-[v _Handle_Test_Command `(v ~T0 @X0 0 ef ]
-"110
-[; ;newmain.c: 110: void Read_LM35(void);
-[v _Read_LM35 `(v ~T0 @X0 0 ef ]
-"111
-[; ;newmain.c: 111: void Read_Flame_Sensor(void);
-[v _Read_Flame_Sensor `(v ~T0 @X0 0 ef ]
-"112
-[; ;newmain.c: 112: void Read_MQ2_Sensor(void);
-[v _Read_MQ2_Sensor `(v ~T0 @X0 0 ef ]
-"113
-[; ;newmain.c: 113: void Calculate_Flow(void);
-[v _Calculate_Flow `(v ~T0 @X0 0 ef ]
-"116
-[; ;newmain.c: 116: void Update_Actuators(void);
+"77
+[; ;newmain.c: 77: unsigned int ADC_Read(unsigned char channel);
+[v _ADC_Read `(ui ~T0 @X0 0 ef1`uc ]
+"83
+[; ;newmain.c: 83: void Handle_Commands(void);
+[v _Handle_Commands `(v ~T0 @X0 0 ef ]
+"78
+[; ;newmain.c: 78: void Read_Sensors(void);
+[v _Read_Sensors `(v ~T0 @X0 0 ef ]
+"79
+[; ;newmain.c: 79: void Update_Actuators(void);
 [v _Update_Actuators `(v ~T0 @X0 0 ef ]
-"121
-[; ;newmain.c: 121: void Start_Event(EventType type);
-[v _Start_Event `(v ~T0 @X0 0 ef1`E4149 ]
-"122
-[; ;newmain.c: 122: void End_Event();
-[v _End_Event `(v ~T0 @X0 0 e? ]
-"123
-[; ;newmain.c: 123: void Check_Flow_Reset();
-[v _Check_Flow_Reset `(v ~T0 @X0 0 e? ]
-"114
-[; ;newmain.c: 114: void Send_Sensor_Data(void);
-[v _Send_Sensor_Data `(v ~T0 @X0 0 ef ]
+"84
+[; ;newmain.c: 84: void Handle_Fire_Events(void);
+[v _Handle_Fire_Events `(v ~T0 @X0 0 ef ]
+"85
+[; ;newmain.c: 85: void Handle_Test_Events(void);
+[v _Handle_Test_Events `(v ~T0 @X0 0 ef ]
+"86
+[; ;newmain.c: 86: void Handle_Shutdown_Events(void);
+[v _Handle_Shutdown_Events `(v ~T0 @X0 0 ef ]
+"80
+[; ;newmain.c: 80: void Send_Data(void);
+[v _Send_Data `(v ~T0 @X0 0 ef ]
+"4474 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4474:     struct {
+[s S178 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S178 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF SPPIF ]
+"4484
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4484:     struct {
+[s S179 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S179 . . TX1IF RC1IF . PSPIF ]
+"4473
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4473: typedef union {
+[u S177 `S178 1 `S179 1 ]
+[n S177 . . . ]
+"4492
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4492: extern volatile PIR1bits_t PIR1bits __attribute__((address(0xF9E)));
+[v _PIR1bits `VS177 ~T0 @X0 0 e@3998 ]
+"5414
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 5414: extern volatile unsigned char RCREG __attribute__((address(0xFAE)));
+[v _RCREG `Vuc ~T0 @X0 0 e@4014 ]
+"33 C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/string.h
+[; ;C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/string.h: 33: char *strcpy (char *restrict, const char *restrict);
+[v _strcpy `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
 "121 C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/stdio.h
 [; ;C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/stdio.h: 121: int sprintf(char *restrict, const char *restrict, ...);
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
+"87 newmain.c
+[; ;newmain.c: 87: void Send_History_Event(const char* event_type, const char* extra_data);
+[v _Send_History_Event `(v ~T0 @X0 0 ef2`*Cuc`*Cuc ]
 "5157 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 5157:     struct {
 [s S210 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -140,6 +135,73 @@ Version 4.0 HI-TECH Software Intermediate Code
 "5402
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 5402: extern volatile unsigned char TXREG __attribute__((address(0xFAD)));
 [v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
+"88 newmain.c
+[; ;newmain.c: 88: float Apply_Filter(float new_value, float* samples);
+[v _Apply_Filter `(f ~T0 @X0 0 ef2`f`*f ]
+[v F4009 `(f ~T0 @X0 1 tf2`f`f ]
+"327 C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/math.h
+[; ;C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/math.h: 327: __attribute__((nonreentrant)) float powf(float, float);
+[v _powf `JF4009 ~T0 @X0 0 e ]
+"10881 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 10881: extern volatile __bit TRISA0 __attribute__((address(0x7C90)));
+[v _TRISA0 `Vb ~T0 @X0 0 e@31888 ]
+"10884
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 10884: extern volatile __bit TRISA1 __attribute__((address(0x7C91)));
+[v _TRISA1 `Vb ~T0 @X0 0 e@31889 ]
+"10887
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 10887: extern volatile __bit TRISA2 __attribute__((address(0x7C92)));
+[v _TRISA2 `Vb ~T0 @X0 0 e@31890 ]
+"6672
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6672:     struct {
+[s S273 :1 `uc 1 :1 `uc 1 ]
+[n S273 . . GO_NOT_DONE ]
+"6676
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6676:     struct {
+[s S274 :1 `uc 1 :1 `uc 1 :4 `uc 1 ]
+[n S274 . ADON GO_nDONE CHS ]
+"6681
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6681:     struct {
+[s S275 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S275 . . GO_DONE CHS0 CHS1 CHS2 CHS3 ]
+"6689
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6689:     struct {
+[s S276 :1 `uc 1 :1 `uc 1 ]
+[n S276 . . DONE ]
+"6693
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6693:     struct {
+[s S277 :1 `uc 1 :1 `uc 1 ]
+[n S277 . . GO ]
+"6697
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6697:     struct {
+[s S278 :1 `uc 1 :1 `uc 1 ]
+[n S278 . . NOT_DONE ]
+"6701
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6701:     struct {
+[s S279 :1 `uc 1 :1 `uc 1 ]
+[n S279 . . nDONE ]
+"6705
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6705:     struct {
+[s S280 :1 `uc 1 :1 `uc 1 ]
+[n S280 . . GODONE ]
+"6671
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6671: typedef union {
+[u S272 `S273 1 `S274 1 `S275 1 `S276 1 `S277 1 `S278 1 `S279 1 `S280 1 ]
+[n S272 . . . . . . . . . ]
+"6710
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6710: extern volatile ADCON0bits_t ADCON0bits __attribute__((address(0xFC2)));
+[v _ADCON0bits `VS272 ~T0 @X0 0 e@4034 ]
+"6581
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6581: extern volatile unsigned char ADCON1 __attribute__((address(0xFC1)));
+[v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
+"6510
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6510: extern volatile unsigned char ADCON2 __attribute__((address(0xFC0)));
+[v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
+"6799
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6799: extern volatile unsigned char ADRESH __attribute__((address(0xFC4)));
+[v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
+"6792
+[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6792: extern volatile unsigned char ADRESL __attribute__((address(0xFC3)));
+[v _ADRESL `Vuc ~T0 @X0 0 e@4035 ]
 "3636
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 3636:     struct {
 [s S148 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -232,71 +294,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "8614
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 8614: extern volatile INTCONbits_t INTCONbits __attribute__((address(0xFF2)));
 [v _INTCONbits `VS359 ~T0 @X0 0 e@4082 ]
-"10881
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 10881: extern volatile __bit TRISA0 __attribute__((address(0x7C90)));
-[v _TRISA0 `Vb ~T0 @X0 0 e@31888 ]
-"10884
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 10884: extern volatile __bit TRISA1 __attribute__((address(0x7C91)));
-[v _TRISA1 `Vb ~T0 @X0 0 e@31889 ]
-"10887
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 10887: extern volatile __bit TRISA2 __attribute__((address(0x7C92)));
-[v _TRISA2 `Vb ~T0 @X0 0 e@31890 ]
-"6672
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6672:     struct {
-[s S273 :1 `uc 1 :1 `uc 1 ]
-[n S273 . . GO_NOT_DONE ]
-"6676
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6676:     struct {
-[s S274 :1 `uc 1 :1 `uc 1 :4 `uc 1 ]
-[n S274 . ADON GO_nDONE CHS ]
-"6681
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6681:     struct {
-[s S275 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S275 . . GO_DONE CHS0 CHS1 CHS2 CHS3 ]
-"6689
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6689:     struct {
-[s S276 :1 `uc 1 :1 `uc 1 ]
-[n S276 . . DONE ]
-"6693
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6693:     struct {
-[s S277 :1 `uc 1 :1 `uc 1 ]
-[n S277 . . GO ]
-"6697
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6697:     struct {
-[s S278 :1 `uc 1 :1 `uc 1 ]
-[n S278 . . NOT_DONE ]
-"6701
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6701:     struct {
-[s S279 :1 `uc 1 :1 `uc 1 ]
-[n S279 . . nDONE ]
-"6705
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6705:     struct {
-[s S280 :1 `uc 1 :1 `uc 1 ]
-[n S280 . . GODONE ]
-"6671
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6671: typedef union {
-[u S272 `S273 1 `S274 1 `S275 1 `S276 1 `S277 1 `S278 1 `S279 1 `S280 1 ]
-[n S272 . . . . . . . . . ]
-"6710
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6710: extern volatile ADCON0bits_t ADCON0bits __attribute__((address(0xFC2)));
-[v _ADCON0bits `VS272 ~T0 @X0 0 e@4034 ]
-"6581
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6581: extern volatile unsigned char ADCON1 __attribute__((address(0xFC1)));
-[v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
-"6510
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6510: extern volatile unsigned char ADCON2 __attribute__((address(0xFC0)));
-[v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
-"6799
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6799: extern volatile unsigned char ADRESH __attribute__((address(0xFC4)));
-[v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
-"6792
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 6792: extern volatile unsigned char ADRESL __attribute__((address(0xFC3)));
-[v _ADRESL `Vuc ~T0 @X0 0 e@4035 ]
-[v F4009 `(f ~T0 @X0 1 tf2`f`f ]
-"327 C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/math.h
-[; ;C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/math.h: 327: __attribute__((nonreentrant)) float powf(float, float);
-[v _powf `JF4009 ~T0 @X0 0 e ]
-"10935 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h
+"10935
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 10935: extern volatile __bit TRISC6 __attribute__((address(0x7CA6)));
 [v _TRISC6 `Vb ~T0 @X0 0 e@31910 ]
 "10938
@@ -336,24 +334,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "4977
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4977: extern volatile RCSTAbits_t RCSTAbits __attribute__((address(0xFAB)));
 [v _RCSTAbits `VS195 ~T0 @X0 0 e@4011 ]
-"4474
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4474:     struct {
-[s S178 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S178 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF SPPIF ]
-"4484
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4484:     struct {
-[s S179 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S179 . . TX1IF RC1IF . PSPIF ]
-"4473
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4473: typedef union {
-[u S177 `S178 1 `S179 1 ]
-[n S177 . . . ]
-"4492
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 4492: extern volatile PIR1bits_t PIR1bits __attribute__((address(0xF9E)));
-[v _PIR1bits `VS177 ~T0 @X0 0 e@3998 ]
-"5414
-[; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 5414: extern volatile unsigned char RCREG __attribute__((address(0xFAE)));
-[v _RCREG `Vuc ~T0 @X0 0 e@4014 ]
 "54 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 54: __asm("SPPDATA equ 0F62h");
 [; <" SPPDATA equ 0F62h ;# ">
@@ -864,1582 +844,1233 @@ Version 4.0 HI-TECH Software Intermediate Code
 "8893
 [; ;C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc/pic18f4550.h: 8893: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
-"10 newmain.c
+"11 newmain.c
 [p x FOSC  =  INTOSCIO_EC   WDT  =  OFF   PWRT  =  ON   MCLRE  =  ON   LVP  =  OFF   XINST  =  OFF ]
-"37
-[; ;newmain.c: 37: float temperature = 0.0;
+"36
+[; ;newmain.c: 36: float temperature = 0.0;
 [v _temperature `f ~T0 @X0 1 e ]
 [i _temperature
 -> .0.0 `f
 ]
-"38
-[; ;newmain.c: 38: float flame_intensity = 0.0;
+"37
+[; ;newmain.c: 37: float flame_intensity = 0.0;
 [v _flame_intensity `f ~T0 @X0 1 e ]
 [i _flame_intensity
 -> .0.0 `f
 ]
-"39
-[; ;newmain.c: 39: float flame_base_voltage = 0.0;
+"38
+[; ;newmain.c: 38: float flame_base_voltage = 0.0;
 [v _flame_base_voltage `f ~T0 @X0 1 e ]
 [i _flame_base_voltage
 -> .0.0 `f
 ]
-"40
-[; ;newmain.c: 40: bool flame_calibrated = 0;
-[v _flame_calibrated `uc ~T0 @X0 1 e ]
-[i _flame_calibrated
--> -> 0 `i `uc
-]
-"41
-[; ;newmain.c: 41: bool flame_detected = 0;
+"39
+[; ;newmain.c: 39: bool flame_detected = 0;
 [v _flame_detected `uc ~T0 @X0 1 e ]
 [i _flame_detected
 -> -> 0 `i `uc
 ]
-"42
-[; ;newmain.c: 42: float co_ppm = 0.0;
+"40
+[; ;newmain.c: 40: float co_ppm = 0.0;
 [v _co_ppm `f ~T0 @X0 1 e ]
 [i _co_ppm
 -> .0.0 `f
 ]
-"43
-[; ;newmain.c: 43: float MQ2_Ro = 10.0;
+"41
+[; ;newmain.c: 41: float MQ2_Ro = 10.0;
 [v _MQ2_Ro `f ~T0 @X0 1 e ]
 [i _MQ2_Ro
 -> .10.0 `f
 ]
-"44
-[; ;newmain.c: 44: float flow_rate = 0.0;
+"42
+[; ;newmain.c: 42: float flow_rate = 0.0;
 [v _flow_rate `f ~T0 @X0 1 e ]
 [i _flow_rate
 -> .0.0 `f
 ]
-"45
-[; ;newmain.c: 45: float total_flow = 0.0;
+"43
+[; ;newmain.c: 43: float total_flow = 0.0;
 [v _total_flow `f ~T0 @X0 1 e ]
 [i _total_flow
 -> .0.0 `f
 ]
-"46
-[; ;newmain.c: 46: volatile unsigned int pulse_count = 0;
+"44
+[; ;newmain.c: 44: volatile unsigned int pulse_count = 0;
 [v _pulse_count `Vui ~T0 @X0 1 e ]
 [i _pulse_count
 -> -> 0 `i `ui
 ]
-"47
-[; ;newmain.c: 47: bool pump_active = 0;
+"45
+[; ;newmain.c: 45: bool pump_active = 0;
 [v _pump_active `uc ~T0 @X0 1 e ]
 [i _pump_active
 -> -> 0 `i `uc
 ]
-"48
-[; ;newmain.c: 48: bool alarm_active = 0;
+"46
+[; ;newmain.c: 46: bool alarm_active = 0;
 [v _alarm_active `uc ~T0 @X0 1 e ]
 [i _alarm_active
 -> -> 0 `i `uc
 ]
-"49
-[; ;newmain.c: 49: bool fire_alarm = 0;
+"47
+[; ;newmain.c: 47: bool fire_alarm = 0;
 [v _fire_alarm `uc ~T0 @X0 1 e ]
 [i _fire_alarm
 -> -> 0 `i `uc
 ]
-"50
-[; ;newmain.c: 50: bool prev_fire_alarm = 0;
+"48
+[; ;newmain.c: 48: bool prev_fire_alarm = 0;
 [v _prev_fire_alarm `uc ~T0 @X0 1 e ]
 [i _prev_fire_alarm
 -> -> 0 `i `uc
 ]
+"52
+[; ;newmain.c: 52: float temp_samples[5] = {25.0, 25.0, 25.0, 25.0, 25.0};
+[v _temp_samples `f ~T0 @X0 -> 5 `i e ]
+[i _temp_samples
+:U ..
+-> .25.0 `f
+-> .25.0 `f
+-> .25.0 `f
+-> .25.0 `f
+-> .25.0 `f
+..
+]
+"53
+[; ;newmain.c: 53: float co_samples[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+[v _co_samples `f ~T0 @X0 -> 5 `i e ]
+[i _co_samples
+:U ..
+-> .0.0 `f
+-> .0.0 `f
+-> .0.0 `f
+-> .0.0 `f
+-> .0.0 `f
+..
+]
 "54
-[; ;newmain.c: 54: float temp_filter[7] = {0};
-[v _temp_filter `f ~T0 @X0 -> 7 `i e ]
-[i _temp_filter
-:U ..
--> -> 0 `i `f
-..
-]
-"55
-[; ;newmain.c: 55: float co_filter[7] = {0};
-[v _co_filter `f ~T0 @X0 -> 7 `i e ]
-[i _co_filter
-:U ..
--> -> 0 `i `f
-..
-]
-"56
-[; ;newmain.c: 56: unsigned char filter_index = 0;
-[v _filter_index `uc ~T0 @X0 1 e ]
-[i _filter_index
+[; ;newmain.c: 54: unsigned char sample_index = 0;
+[v _sample_index `uc ~T0 @X0 1 e ]
+[i _sample_index
 -> -> 0 `i `uc
 ]
-"61
-[; ;newmain.c: 61: unsigned long calibrationCounter = 0;
-[v _calibrationCounter `ul ~T0 @X0 1 e ]
-[i _calibrationCounter
--> -> -> 0 `i `l `ul
-]
-"64
-[; ;newmain.c: 64: bool shutdown_system = 0;
+"57
+[; ;newmain.c: 57: bool shutdown_system = 0;
 [v _shutdown_system `uc ~T0 @X0 1 e ]
 [i _shutdown_system
 -> -> 0 `i `uc
 ]
-"65
-[; ;newmain.c: 65: bool trigger_test = 0;
+"58
+[; ;newmain.c: 58: bool trigger_test = 0;
 [v _trigger_test `uc ~T0 @X0 1 e ]
 [i _trigger_test
 -> -> 0 `i `uc
 ]
-"66
-[; ;newmain.c: 66: unsigned long test_start_time = 0;
+"59
+[; ;newmain.c: 59: unsigned long test_start_time = 0;
 [v _test_start_time `ul ~T0 @X0 1 e ]
 [i _test_start_time
 -> -> -> 0 `i `l `ul
 ]
-"67
-[; ;newmain.c: 67: unsigned long test_last_toggle = 0;
-[v _test_last_toggle `ul ~T0 @X0 1 e ]
-[i _test_last_toggle
--> -> -> 0 `i `l `ul
-]
-"68
-[; ;newmain.c: 68: const unsigned long TEST_DURATION = 10000;
+"60
+[; ;newmain.c: 60: const unsigned long TEST_DURATION = 10000;
 [v _TEST_DURATION `Cul ~T0 @X0 1 e ]
 [i _TEST_DURATION
 -> -> -> 10000 `i `l `ul
 ]
-"69
-[; ;newmain.c: 69: const unsigned long TEST_BLINK_INTERVAL = 500;
-[v _TEST_BLINK_INTERVAL `Cul ~T0 @X0 1 e ]
-[i _TEST_BLINK_INTERVAL
--> -> -> 500 `i `l `ul
-]
-"72
-[; ;newmain.c: 72: unsigned long system_millis = 0;
+"63
+[; ;newmain.c: 63: unsigned long system_millis = 0;
 [v _system_millis `ul ~T0 @X0 1 e ]
 [i _system_millis
 -> -> -> 0 `i `l `ul
 ]
-"98
-[; ;newmain.c: 98: EventHistory current_event = {EVENT_NONE};
-[v _current_event `S370 ~T0 @X0 1 e ]
-[i _current_event
-:U ..
-:U ..
-. `E4149 0
-..
-..
-]
-"99
-[; ;newmain.c: 99: bool event_active = 0;
-[v _event_active `uc ~T0 @X0 1 e ]
-[i _event_active
--> -> 0 `i `uc
-]
-"100
-[; ;newmain.c: 100: unsigned long last_flow_reset_time = 0;
-[v _last_flow_reset_time `ul ~T0 @X0 1 e ]
-[i _last_flow_reset_time
+"66
+[; ;newmain.c: 66: unsigned long fire_start_time = 0;
+[v _fire_start_time `ul ~T0 @X0 1 e ]
+[i _fire_start_time
 -> -> -> 0 `i `l `ul
 ]
-"101
-[; ;newmain.c: 101: bool system_started = 0;
-[v _system_started `uc ~T0 @X0 1 e ]
-[i _system_started
--> -> 0 `i `uc
+"67
+[; ;newmain.c: 67: float fire_start_temp = 0.0;
+[v _fire_start_temp `f ~T0 @X0 1 e ]
+[i _fire_start_temp
+-> .0.0 `f
+]
+"68
+[; ;newmain.c: 68: float fire_start_flame = 0.0;
+[v _fire_start_flame `f ~T0 @X0 1 e ]
+[i _fire_start_flame
+-> .0.0 `f
+]
+"69
+[; ;newmain.c: 69: float fire_start_co = 0.0;
+[v _fire_start_co `f ~T0 @X0 1 e ]
+[i _fire_start_co
+-> .0.0 `f
+]
+"70
+[; ;newmain.c: 70: float fire_start_flow = 0.0;
+[v _fire_start_flow `f ~T0 @X0 1 e ]
+[i _fire_start_flow
+-> .0.0 `f
+]
+"71
+[; ;newmain.c: 71: char fire_trigger_sensor[20] = "";
+[v _fire_trigger_sensor `uc ~T0 @X0 -> 20 `i e ]
+[i _fire_trigger_sensor
+:U ..
+-> 0 `c
+..
+]
+"73
+[; ;newmain.c: 73: unsigned long test_start_flow = 0.0;
+[v _test_start_flow `ul ~T0 @X0 1 e ]
+[i _test_start_flow
+-> .0.0 `ul
 ]
 [v $root$_HighISR `(v ~T0 @X0 0 e ]
-"127
-[; ;newmain.c: 127: void __attribute__((picinterrupt(("high_priority")))) HighISR(void) {
+"91
+[; ;newmain.c: 91: void __attribute__((picinterrupt(("high_priority")))) HighISR(void) {
 [v _HighISR `(v ~T36 @X0 1 ef ]
 {
 [e :U _HighISR ]
 [f ]
-"128
-[; ;newmain.c: 128:     if (INTCON3bits.INT1IF) {
-[e $ ! != -> . . _INTCON3bits 0 0 `i -> 0 `i 372  ]
+"92
+[; ;newmain.c: 92:     if (INTCON3bits.INT1IF) {
+[e $ ! != -> . . _INTCON3bits 0 0 `i -> 0 `i 371  ]
 {
-"129
-[; ;newmain.c: 129:         pulse_count++;
+"93
+[; ;newmain.c: 93:         pulse_count++;
 [e ++ _pulse_count -> -> 1 `i `Vui ]
-"130
-[; ;newmain.c: 130:         INTCON3bits.INT1IF = 0;
+"94
+[; ;newmain.c: 94:         INTCON3bits.INT1IF = 0;
 [e = . . _INTCON3bits 0 0 -> -> 0 `i `uc ]
-"131
-[; ;newmain.c: 131:     }
+"95
+[; ;newmain.c: 95:     }
 }
-[e :U 372 ]
-"132
-[; ;newmain.c: 132: }
-[e :UE 371 ]
+[e :U 371 ]
+"96
+[; ;newmain.c: 96: }
+[e :UE 370 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"134
-[; ;newmain.c: 134: void main(void) {
+"98
+[; ;newmain.c: 98: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"135
-[; ;newmain.c: 135:     OSCCON = 0x70;
+"100
+[; ;newmain.c: 100:     OSCCON = 0x70;
 [e = _OSCCON -> -> 112 `i `uc ]
-"136
-[; ;newmain.c: 136:     TRISB = 0x02;
+"101
+[; ;newmain.c: 101:     TRISB = 0x02;
 [e = _TRISB -> -> 2 `i `uc ]
-"137
-[; ;newmain.c: 137:     PORTB = 0x00;
+"102
+[; ;newmain.c: 102:     PORTB = 0x00;
 [e = _PORTB -> -> 0 `i `uc ]
-"138
-[; ;newmain.c: 138:     PORTBbits.RB5 = 1;
+"103
+[; ;newmain.c: 103:     PORTBbits.RB5 = 1;
 [e = . . _PORTBbits 0 5 -> -> 1 `i `uc ]
-"139
-[; ;newmain.c: 139:     PORTBbits.RB0 = 0;
+"104
+[; ;newmain.c: 104:     PORTBbits.RB0 = 0;
 [e = . . _PORTBbits 0 0 -> -> 0 `i `uc ]
-"142
-[; ;newmain.c: 142:     for(int i = 0; i < 7; i++) {
+"106
+[; ;newmain.c: 106:     _delay((unsigned long)((2000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"107
+[; ;newmain.c: 107:     UART_Init();
+[e ( _UART_Init ..  ]
+"108
+[; ;newmain.c: 108:     ADC_Init();
+[e ( _ADC_Init ..  ]
+"109
+[; ;newmain.c: 109:     Interrupt_Init();
+[e ( _Interrupt_Init ..  ]
+"112
+[; ;newmain.c: 112:     for(int i = 0; i < 50; i++) {
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 7 `i 374  ]
-[e $U 375  ]
-[e :U 374 ]
+[e $ < _i -> 50 `i 373  ]
+[e $U 374  ]
+[e :U 373 ]
 {
-"143
-[; ;newmain.c: 143:         temp_filter[i] = co_filter[i] = 25.0;
-[e = *U + &U _temp_filter * -> -> _i `ui `ux -> -> # *U &U _temp_filter `ui `ux = *U + &U _co_filter * -> -> _i `ui `ux -> -> # *U &U _co_filter `ui `ux -> .25.0 `f ]
-"144
-[; ;newmain.c: 144:     }
+"113
+[; ;newmain.c: 113:         unsigned int adc_value = ADC_Read(1);
+[v _adc_value `ui ~T0 @X0 1 a ]
+[e = _adc_value ( _ADC_Read (1 -> -> 1 `i `uc ]
+"114
+[; ;newmain.c: 114:         flame_base_voltage += (adc_value * 5.0) / 1024.0;
+[e =+ _flame_base_voltage -> / * -> _adc_value `d .5.0 .1024.0 `f ]
+"115
+[; ;newmain.c: 115:         _delay((unsigned long)((100)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"116
+[; ;newmain.c: 116:     }
 }
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 7 `i 374  ]
-[e :U 375 ]
+[e $ < _i -> 50 `i 373  ]
+[e :U 374 ]
 }
-"146
-[; ;newmain.c: 146:     _delay((unsigned long)((2000)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"147
-[; ;newmain.c: 147:     UART_Init();
-[e ( _UART_Init ..  ]
-"148
-[; ;newmain.c: 148:     ADC_Init();
-[e ( _ADC_Init ..  ]
-"149
-[; ;newmain.c: 149:     Interrupt_Init();
-[e ( _Interrupt_Init ..  ]
-"152
-[; ;newmain.c: 152:     Send_Event_Data(EVENT_SYSTEM_START);
-[e ( _Send_Event_Data (1 . `E4149 4 ]
-"153
-[; ;newmain.c: 153:     system_started = 1;
-[e = _system_started -> -> 1 `i `uc ]
-"155
-[; ;newmain.c: 155:     Calibrate_Flame_Sensor();
-[e ( _Calibrate_Flame_Sensor ..  ]
-"156
-[; ;newmain.c: 156:     Calibrate_MQ2();
-[e ( _Calibrate_MQ2 ..  ]
-"158
-[; ;newmain.c: 158:     unsigned int sensor_counter = 0;
-[v _sensor_counter `ui ~T0 @X0 1 a ]
-[e = _sensor_counter -> -> 0 `i `ui ]
-"159
-[; ;newmain.c: 159:     pulse_count = 0;
-[e = _pulse_count -> -> 0 `i `ui ]
-"161
-[; ;newmain.c: 161:     while(1) {
-[e :U 378 ]
+"117
+[; ;newmain.c: 117:     flame_base_voltage /= 50.0;
+[e =/ _flame_base_voltage .50.0 ]
+"120
+[; ;newmain.c: 120:     for(int i = 0; i < 50; i++) {
 {
-"163
-[; ;newmain.c: 163:         system_millis += 250;
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 50 `i 376  ]
+[e $U 377  ]
+[e :U 376 ]
+{
+"121
+[; ;newmain.c: 121:         unsigned int adc_value = ADC_Read(2);
+[v _adc_value `ui ~T0 @X0 1 a ]
+[e = _adc_value ( _ADC_Read (1 -> -> 2 `i `uc ]
+"122
+[; ;newmain.c: 122:         float voltage = (adc_value * 5.0) / 1024.0;
+[v _voltage `f ~T0 @X0 1 a ]
+[e = _voltage -> / * -> _adc_value `d .5.0 .1024.0 `f ]
+"123
+[; ;newmain.c: 123:         MQ2_Ro += (5.0 - voltage) / voltage;
+[e =+ _MQ2_Ro -> / - .5.0 -> _voltage `d -> _voltage `d `f ]
+"124
+[; ;newmain.c: 124:         _delay((unsigned long)((100)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"125
+[; ;newmain.c: 125:     }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 50 `i 376  ]
+[e :U 377 ]
+}
+"126
+[; ;newmain.c: 126:     MQ2_Ro /= 50.0;
+[e =/ _MQ2_Ro .50.0 ]
+"128
+[; ;newmain.c: 128:     unsigned int cycle_count = 0;
+[v _cycle_count `ui ~T0 @X0 1 a ]
+[e = _cycle_count -> -> 0 `i `ui ]
+"130
+[; ;newmain.c: 130:     while(1) {
+[e :U 380 ]
+{
+"131
+[; ;newmain.c: 131:         system_millis += 250;
 [e =+ _system_millis -> -> -> 250 `i `l `ul ]
-"166
-[; ;newmain.c: 166:         if(UART_Data_Ready()) {
-[e $ ! != -> ( _UART_Data_Ready ..  `i -> 0 `i 380  ]
+"133
+[; ;newmain.c: 133:         Handle_Commands();
+[e ( _Handle_Commands ..  ]
+"135
+[; ;newmain.c: 135:         if(!shutdown_system) {
+[e $ ! ! != -> _shutdown_system `i -> 0 `i 382  ]
 {
-"167
-[; ;newmain.c: 167:             char cmd = UART_Read();
-[v _cmd `uc ~T0 @X0 1 a ]
-[e = _cmd ( _UART_Read ..  ]
-"168
-[; ;newmain.c: 168:             switch(cmd) {
-[e $U 382  ]
+"136
+[; ;newmain.c: 136:             Read_Sensors();
+[e ( _Read_Sensors ..  ]
+"137
+[; ;newmain.c: 137:             if(!trigger_test) {
+[e $ ! ! != -> _trigger_test `i -> 0 `i 383  ]
 {
-"169
-[; ;newmain.c: 169:                 case 'T':
+"138
+[; ;newmain.c: 138:                 Update_Actuators();
+[e ( _Update_Actuators ..  ]
+"139
+[; ;newmain.c: 139:             }
+}
 [e :U 383 ]
-"170
-[; ;newmain.c: 170:                     if(!trigger_test) {
-[e $ ! ! != -> _trigger_test `i -> 0 `i 384  ]
+"140
+[; ;newmain.c: 140:         }
+}
+[e :U 382 ]
+"142
+[; ;newmain.c: 142:         Handle_Fire_Events();
+[e ( _Handle_Fire_Events ..  ]
+"143
+[; ;newmain.c: 143:         Handle_Test_Events();
+[e ( _Handle_Test_Events ..  ]
+"144
+[; ;newmain.c: 144:         Handle_Shutdown_Events();
+[e ( _Handle_Shutdown_Events ..  ]
+"147
+[; ;newmain.c: 147:         if(cycle_count >= 4) {
+[e $ ! >= _cycle_count -> -> 4 `i `ui 384  ]
 {
-"171
-[; ;newmain.c: 171:                         trigger_test = 1;
-[e = _trigger_test -> -> 1 `i `uc ]
-"172
-[; ;newmain.c: 172:                         test_start_time = system_millis;
-[e = _test_start_time _system_millis ]
-"173
-[; ;newmain.c: 173:                         test_last_toggle = system_millis;
-[e = _test_last_toggle _system_millis ]
-"174
-[; ;newmain.c: 174:                     }
+"148
+[; ;newmain.c: 148:             Send_Data();
+[e ( _Send_Data ..  ]
+"149
+[; ;newmain.c: 149:             cycle_count = 0;
+[e = _cycle_count -> -> 0 `i `ui ]
+"150
+[; ;newmain.c: 150:         }
 }
 [e :U 384 ]
-"175
-[; ;newmain.c: 175:                     break;
-[e $U 381  ]
-"176
-[; ;newmain.c: 176:                 case 'S':
-[e :U 385 ]
-"177
-[; ;newmain.c: 177:                     shutdown_system = 1;
-[e = _shutdown_system -> -> 1 `i `uc ]
-"178
-[; ;newmain.c: 178:                     break;
-[e $U 381  ]
-"179
-[; ;newmain.c: 179:                 case 'R':
-[e :U 386 ]
-"180
-[; ;newmain.c: 180:                     shutdown_system = 0;
-[e = _shutdown_system -> -> 0 `i `uc ]
-"181
-[; ;newmain.c: 181:                     break;
-[e $U 381  ]
-"182
-[; ;newmain.c: 182:             }
+"152
+[; ;newmain.c: 152:         cycle_count++;
+[e ++ _cycle_count -> -> 1 `i `ui ]
+"153
+[; ;newmain.c: 153:         sample_index = (sample_index + 1) % 5;
+[e = _sample_index -> % + -> _sample_index `i -> 1 `i -> 5 `i `uc ]
+"154
+[; ;newmain.c: 154:         _delay((unsigned long)((250)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 250 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"155
+[; ;newmain.c: 155:     }
 }
-[e $U 381  ]
-[e :U 382 ]
-[e [\ _cmd , $ -> -> 84 `ui `i 383
- , $ -> -> 83 `ui `i 385
- , $ -> -> 82 `ui `i 386
- 381 ]
+[e :U 379 ]
+[e $U 380  ]
 [e :U 381 ]
-"183
-[; ;newmain.c: 183:         }
+"156
+[; ;newmain.c: 156: }
+[e :UE 372 ]
 }
-[e :U 380 ]
-"186
-[; ;newmain.c: 186:         if(trigger_test) {
-[e $ ! != -> _trigger_test `i -> 0 `i 387  ]
+"158
+[; ;newmain.c: 158: void Handle_Commands(void) {
+[v _Handle_Commands `(v ~T0 @X0 1 ef ]
 {
+[e :U _Handle_Commands ]
+[f ]
+"159
+[; ;newmain.c: 159:     if(PIR1bits.RCIF) {
+[e $ ! != -> . . _PIR1bits 0 5 `i -> 0 `i 386  ]
+{
+"160
+[; ;newmain.c: 160:         char cmd = RCREG;
+[v _cmd `uc ~T0 @X0 1 a ]
+[e = _cmd -> _RCREG `uc ]
+"161
+[; ;newmain.c: 161:         switch(cmd) {
+[e $U 388  ]
+{
+"162
+[; ;newmain.c: 162:             case 'T':
+[e :U 389 ]
+"163
+[; ;newmain.c: 163:                 if(!trigger_test) {
+[e $ ! ! != -> _trigger_test `i -> 0 `i 390  ]
+{
+"164
+[; ;newmain.c: 164:                     trigger_test = 1;
+[e = _trigger_test -> -> 1 `i `uc ]
+"165
+[; ;newmain.c: 165:                     test_start_time = system_millis;
+[e = _test_start_time _system_millis ]
+"166
+[; ;newmain.c: 166:                     test_start_flow = total_flow;
+[e = _test_start_flow -> _total_flow `ul ]
+"167
+[; ;newmain.c: 167:                 }
+}
+[e :U 390 ]
+"168
+[; ;newmain.c: 168:                 break;
+[e $U 387  ]
+"169
+[; ;newmain.c: 169:             case 'S':
+[e :U 391 ]
+"170
+[; ;newmain.c: 170:                 shutdown_system = 1;
+[e = _shutdown_system -> -> 1 `i `uc ]
+"171
+[; ;newmain.c: 171:                 break;
+[e $U 387  ]
+"172
+[; ;newmain.c: 172:             case 'R':
+[e :U 392 ]
+"173
+[; ;newmain.c: 173:                 shutdown_system = 0;
+[e = _shutdown_system -> -> 0 `i `uc ]
+"174
+[; ;newmain.c: 174:                 break;
+[e $U 387  ]
+"175
+[; ;newmain.c: 175:         }
+}
+[e $U 387  ]
+[e :U 388 ]
+[e [\ _cmd , $ -> -> 84 `ui `i 389
+ , $ -> -> 83 `ui `i 391
+ , $ -> -> 82 `ui `i 392
+ 387 ]
+[e :U 387 ]
+"176
+[; ;newmain.c: 176:     }
+}
+[e :U 386 ]
+"179
+[; ;newmain.c: 179:     if(trigger_test) {
+[e $ ! != -> _trigger_test `i -> 0 `i 393  ]
+{
+"180
+[; ;newmain.c: 180:         PORTBbits.RB0 = 1;
+[e = . . _PORTBbits 0 0 -> -> 1 `i `uc ]
+"181
+[; ;newmain.c: 181:         pump_active = 1;
+[e = _pump_active -> -> 1 `i `uc ]
+"184
+[; ;newmain.c: 184:         static unsigned long last_blink = 0;
+[v F4180 `ul ~T0 @X0 1 s last_blink ]
+[i F4180
+-> -> -> 0 `i `l `ul
+]
+"185
+[; ;newmain.c: 185:         if(system_millis - last_blink >= 500) {
+[e $ ! >= - _system_millis F4180 -> -> -> 500 `i `l `ul 394  ]
+{
+"186
+[; ;newmain.c: 186:             PORTBbits.RB5 = !PORTBbits.RB5;
+[e = . . _PORTBbits 0 5 -> -> ! != -> . . _PORTBbits 0 5 `i -> 0 `i `i `uc ]
 "187
-[; ;newmain.c: 187:             Handle_Test_Command();
-[e ( _Handle_Test_Command ..  ]
+[; ;newmain.c: 187:             last_blink = system_millis;
+[e = F4180 _system_millis ]
 "188
 [; ;newmain.c: 188:         }
 }
-[e :U 387 ]
-"191
-[; ;newmain.c: 191:         if(!shutdown_system) {
-[e $ ! ! != -> _shutdown_system `i -> 0 `i 388  ]
-{
-"192
-[; ;newmain.c: 192:             Read_LM35();
-[e ( _Read_LM35 ..  ]
-"193
-[; ;newmain.c: 193:             Read_Flame_Sensor();
-[e ( _Read_Flame_Sensor ..  ]
-"194
-[; ;newmain.c: 194:             Read_MQ2_Sensor();
-[e ( _Read_MQ2_Sensor ..  ]
-"195
-[; ;newmain.c: 195:             Calculate_Flow();
-[e ( _Calculate_Flow ..  ]
-"197
-[; ;newmain.c: 197:             if(!trigger_test) {
-[e $ ! ! != -> _trigger_test `i -> 0 `i 389  ]
-{
-"198
-[; ;newmain.c: 198:                 Update_Actuators();
-[e ( _Update_Actuators ..  ]
-"199
-[; ;newmain.c: 199:             }
-}
-[e :U 389 ]
-"200
-[; ;newmain.c: 200:         }
-}
-[e :U 388 ]
-"203
-[; ;newmain.c: 203:         if (fire_alarm && !event_active) {
-[e $ ! && != -> _fire_alarm `i -> 0 `i ! != -> _event_active `i -> 0 `i 390  ]
-{
-"204
-[; ;newmain.c: 204:             Start_Event(EVENT_FIRE);
-[e ( _Start_Event (1 . `E4149 1 ]
-"205
-[; ;newmain.c: 205:         }
-}
-[e $U 391  ]
-"206
-[; ;newmain.c: 206:         else if (trigger_test && !event_active) {
-[e :U 390 ]
-[e $ ! && != -> _trigger_test `i -> 0 `i ! != -> _event_active `i -> 0 `i 392  ]
-{
-"207
-[; ;newmain.c: 207:             Start_Event(EVENT_TEST);
-[e ( _Start_Event (1 . `E4149 2 ]
-"208
-[; ;newmain.c: 208:         }
-}
-[e $U 393  ]
-"209
-[; ;newmain.c: 209:         else if (shutdown_system && !event_active) {
-[e :U 392 ]
-[e $ ! && != -> _shutdown_system `i -> 0 `i ! != -> _event_active `i -> 0 `i 394  ]
-{
-"210
-[; ;newmain.c: 210:             Start_Event(EVENT_SHUTDOWN);
-[e ( _Start_Event (1 . `E4149 3 ]
-"211
-[; ;newmain.c: 211:         }
-}
-[e $U 395  ]
-"212
-[; ;newmain.c: 212:         else if (!fire_alarm && !trigger_test && !shutdown_system && event_active) {
 [e :U 394 ]
-[e $ ! && && && ! != -> _fire_alarm `i -> 0 `i ! != -> _trigger_test `i -> 0 `i ! != -> _shutdown_system `i -> 0 `i != -> _event_active `i -> 0 `i 396  ]
+"189
+[; ;newmain.c: 189:         alarm_active = 1;
+[e = _alarm_active -> -> 1 `i `uc ]
+"192
+[; ;newmain.c: 192:         if((system_millis - test_start_time) >= TEST_DURATION) {
+[e $ ! >= - _system_millis _test_start_time _TEST_DURATION 395  ]
+{
+"193
+[; ;newmain.c: 193:             trigger_test = 0;
+[e = _trigger_test -> -> 0 `i `uc ]
+"194
+[; ;newmain.c: 194:             PORTBbits.RB0 = 0;
+[e = . . _PORTBbits 0 0 -> -> 0 `i `uc ]
+"195
+[; ;newmain.c: 195:             PORTBbits.RB5 = 1;
+[e = . . _PORTBbits 0 5 -> -> 1 `i `uc ]
+"196
+[; ;newmain.c: 196:             pump_active = 0;
+[e = _pump_active -> -> 0 `i `uc ]
+"197
+[; ;newmain.c: 197:             alarm_active = 0;
+[e = _alarm_active -> -> 0 `i `uc ]
+"198
+[; ;newmain.c: 198:         }
+}
+[e :U 395 ]
+"199
+[; ;newmain.c: 199:     }
+}
+[e :U 393 ]
+"200
+[; ;newmain.c: 200: }
+[e :UE 385 ]
+}
+"202
+[; ;newmain.c: 202: void Handle_Fire_Events(void) {
+[v _Handle_Fire_Events `(v ~T0 @X0 1 ef ]
+{
+[e :U _Handle_Fire_Events ]
+[f ]
+"204
+[; ;newmain.c: 204:     if(fire_alarm && !prev_fire_alarm) {
+[e $ ! && != -> _fire_alarm `i -> 0 `i ! != -> _prev_fire_alarm `i -> 0 `i 397  ]
+{
+"205
+[; ;newmain.c: 205:         fire_start_time = system_millis;
+[e = _fire_start_time _system_millis ]
+"206
+[; ;newmain.c: 206:         fire_start_temp = temperature;
+[e = _fire_start_temp _temperature ]
+"207
+[; ;newmain.c: 207:         fire_start_flame = flame_intensity;
+[e = _fire_start_flame _flame_intensity ]
+"208
+[; ;newmain.c: 208:         fire_start_co = co_ppm;
+[e = _fire_start_co _co_ppm ]
+"209
+[; ;newmain.c: 209:         fire_start_flow = total_flow;
+[e = _fire_start_flow _total_flow ]
+"212
+[; ;newmain.c: 212:         if(flame_detected) {
+[e $ ! != -> _flame_detected `i -> 0 `i 398  ]
 {
 "213
-[; ;newmain.c: 213:             End_Event();
-[e ( _End_Event ..  ]
+[; ;newmain.c: 213:             strcpy(fire_trigger_sensor, "flame_sensor");
+[e ( _strcpy (2 , &U _fire_trigger_sensor :s 1C ]
 "214
-[; ;newmain.c: 214:         }
+[; ;newmain.c: 214:         } else if(temperature >= 40.0) {
 }
-[e :U 396 ]
-[e :U 395 ]
-[e :U 393 ]
-[e :U 391 ]
-"217
-[; ;newmain.c: 217:         Check_Flow_Reset();
-[e ( _Check_Flow_Reset ..  ]
-"219
-[; ;newmain.c: 219:         filter_index = (filter_index + 1) % 7;
-[e = _filter_index -> % + -> _filter_index `i -> 1 `i -> 7 `i `uc ]
-"221
-[; ;newmain.c: 221:         if(sensor_counter >= 4) {
-[e $ ! >= _sensor_counter -> -> 4 `i `ui 397  ]
-{
-"222
-[; ;newmain.c: 222:             Send_Sensor_Data();
-[e ( _Send_Sensor_Data ..  ]
-"223
-[; ;newmain.c: 223:             sensor_counter = 0;
-[e = _sensor_counter -> -> 0 `i `ui ]
-"225
-[; ;newmain.c: 225:             calibrationCounter += 1000;
-[e =+ _calibrationCounter -> -> -> 1000 `i `l `ul ]
-"226
-[; ;newmain.c: 226:             if(calibrationCounter >= 300000) {
-[e $ ! >= _calibrationCounter -> -> 300000 `l `ul 398  ]
-{
-"227
-[; ;newmain.c: 227:                 Calibrate_MQ2();
-[e ( _Calibrate_MQ2 ..  ]
-"228
-[; ;newmain.c: 228:             }
-}
+[e $U 399  ]
 [e :U 398 ]
-"229
-[; ;newmain.c: 229:             if(calibrationCounter >= 600000) {
-[e $ ! >= _calibrationCounter -> -> 600000 `l `ul 399  ]
+[e $ ! >= -> _temperature `d .40.0 400  ]
 {
-"230
-[; ;newmain.c: 230:                 Calibrate_Flame_Sensor();
-[e ( _Calibrate_Flame_Sensor ..  ]
-"231
-[; ;newmain.c: 231:                 calibrationCounter = 0;
-[e = _calibrationCounter -> -> -> 0 `i `l `ul ]
-"232
-[; ;newmain.c: 232:             }
+"215
+[; ;newmain.c: 215:             strcpy(fire_trigger_sensor, "temperature_sensor");
+[e ( _strcpy (2 , &U _fire_trigger_sensor :s 2C ]
+"216
+[; ;newmain.c: 216:         } else if(co_ppm >= 50.0) {
 }
+[e $U 401  ]
+[e :U 400 ]
+[e $ ! >= -> _co_ppm `d .50.0 402  ]
+{
+"217
+[; ;newmain.c: 217:             strcpy(fire_trigger_sensor, "co_sensor");
+[e ( _strcpy (2 , &U _fire_trigger_sensor :s 3C ]
+"218
+[; ;newmain.c: 218:         }
+}
+[e :U 402 ]
+[e :U 401 ]
 [e :U 399 ]
-"233
-[; ;newmain.c: 233:         }
+"221
+[; ;newmain.c: 221:         char start_data[100];
+[v _start_data `uc ~T0 @X0 -> 100 `i a ]
+"222
+[; ;newmain.c: 222:         sprintf(start_data, ",\"sensor\":\"%s\"", fire_trigger_sensor);
+[e ( _sprintf (1 , (. , &U _start_data :s 4C &U _fire_trigger_sensor ]
+"223
+[; ;newmain.c: 223:         Send_History_Event("fire_start", start_data);
+[e ( _Send_History_Event (2 , :s 5C -> &U _start_data `*Cuc ]
+"224
+[; ;newmain.c: 224:     }
 }
 [e :U 397 ]
-"235
-[; ;newmain.c: 235:         sensor_counter++;
-[e ++ _sensor_counter -> -> 1 `i `ui ]
+"227
+[; ;newmain.c: 227:     if(!fire_alarm && prev_fire_alarm) {
+[e $ ! && ! != -> _fire_alarm `i -> 0 `i != -> _prev_fire_alarm `i -> 0 `i 403  ]
+{
+"228
+[; ;newmain.c: 228:         unsigned long duration = (system_millis - fire_start_time) / 1000;
+[v _duration `ul ~T0 @X0 1 a ]
+[e = _duration / - _system_millis _fire_start_time -> -> -> 1000 `i `l `ul ]
+"229
+[; ;newmain.c: 229:         float water_used = total_flow - fire_start_flow;
+[v _water_used `f ~T0 @X0 1 a ]
+[e = _water_used - _total_flow _fire_start_flow ]
+"231
+[; ;newmain.c: 231:         char end_data[150];
+[v _end_data `uc ~T0 @X0 -> 150 `i a ]
+"232
+[; ;newmain.c: 232:         sprintf(end_data, ",\"duration\":%lu,\"water\":%.2f", duration, water_used);
+[e ( _sprintf (1 , , (. , &U _end_data :s 6C _duration -> _water_used `d ]
+"233
+[; ;newmain.c: 233:         Send_History_Event("fire_end", end_data);
+[e ( _Send_History_Event (2 , :s 7C -> &U _end_data `*Cuc ]
 "236
-[; ;newmain.c: 236:         _delay((unsigned long)((250)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 250 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;newmain.c: 236:         _delay((unsigned long)((5000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 5000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "237
-[; ;newmain.c: 237:     }
-}
-[e :U 377 ]
-[e $U 378  ]
-[e :U 379 ]
-"238
-[; ;newmain.c: 238: }
-[e :UE 373 ]
-}
-"241
-[; ;newmain.c: 241: void Send_Event_Data(EventType type) {
-[v _Send_Event_Data `(v ~T0 @X0 1 ef1`E4149 ]
-{
-[e :U _Send_Event_Data ]
-[v _type `E4149 ~T0 @X0 1 r1 ]
-[f ]
-"242
-[; ;newmain.c: 242:     const char* event_type_str = "";
-[v _event_type_str `*Cuc ~T0 @X0 1 a ]
-[e = _event_type_str :s 1C ]
-"243
-[; ;newmain.c: 243:     switch(type) {
-[e $U 402  ]
-{
-"244
-[; ;newmain.c: 244:         case EVENT_FIRE: event_type_str = "fire"; break;
-[e :U 403 ]
-[e = _event_type_str :s 2C ]
-[e $U 401  ]
-"245
-[; ;newmain.c: 245:         case EVENT_TEST: event_type_str = "test"; break;
-[e :U 404 ]
-[e = _event_type_str :s 3C ]
-[e $U 401  ]
-"246
-[; ;newmain.c: 246:         case EVENT_SHUTDOWN: event_type_str = "shutdown"; break;
-[e :U 405 ]
-[e = _event_type_str :s 4C ]
-[e $U 401  ]
-"247
-[; ;newmain.c: 247:         case EVENT_SYSTEM_START: event_type_str = "system_start"; break;
-[e :U 406 ]
-[e = _event_type_str :s 5C ]
-[e $U 401  ]
-"248
-[; ;newmain.c: 248:         default: event_type_str = "unknown";
-[e :U 407 ]
-[e = _event_type_str :s 6C ]
-"249
-[; ;newmain.c: 249:     }
-}
-[e $U 401  ]
-[e :U 402 ]
-[e [\ -> _type `ui , $ -> . `E4149 1 `ui 403
- , $ -> . `E4149 2 `ui 404
- , $ -> . `E4149 3 `ui 405
- , $ -> . `E4149 4 `ui 406
- 407 ]
-[e :U 401 ]
-"251
-[; ;newmain.c: 251:     char event_buffer[100];
-[v _event_buffer `uc ~T0 @X0 -> 100 `i a ]
-"252
-[; ;newmain.c: 252:     sprintf(event_buffer, "{\"event\":\"%s\",\"time\":%lu}\r\n",
-[e ( _sprintf (1 , , (. , &U _event_buffer :s 7C _event_type_str _system_millis ]
-"256
-[; ;newmain.c: 256:     while(!TXSTAbits.TRMT);
-[e $U 408  ]
-[e :U 409 ]
-[e :U 408 ]
-[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 409  ]
-[e :U 410 ]
-"257
-[; ;newmain.c: 257:     for(int i = 0; event_buffer[i]; i++) {
-{
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $U 414  ]
-[e :U 411 ]
-{
-"258
-[; ;newmain.c: 258:         TXREG = event_buffer[i];
-[e = _TXREG -> *U + &U _event_buffer * -> -> _i `ui `ux -> -> # *U &U _event_buffer `ui `ux `uc ]
-"259
-[; ;newmain.c: 259:         while(!TXSTAbits.TRMT);
-[e $U 415  ]
-[e :U 416 ]
-[e :U 415 ]
-[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 416  ]
-[e :U 417 ]
-"260
-[; ;newmain.c: 260:     }
-}
-[e ++ _i -> 1 `i ]
-[e :U 414 ]
-[e $ != -> *U + &U _event_buffer * -> -> _i `ui `ux -> -> # *U &U _event_buffer `ui `ux `i -> 0 `i 411  ]
-[e :U 412 ]
-}
-"261
-[; ;newmain.c: 261: }
-[e :UE 400 ]
-}
-"263
-[; ;newmain.c: 263: void Start_Event(EventType type) {
-[v _Start_Event `(v ~T0 @X0 1 ef1`E4149 ]
-{
-[e :U _Start_Event ]
-[v _type `E4149 ~T0 @X0 1 r1 ]
-[f ]
-"264
-[; ;newmain.c: 264:     current_event.type = type;
-[e = . _current_event 0 _type ]
-"265
-[; ;newmain.c: 265:     current_event.start_time = system_millis;
-[e = . _current_event 1 _system_millis ]
-"266
-[; ;newmain.c: 266:     current_event.start_temperature = temperature;
-[e = . _current_event 2 _temperature ]
-"267
-[; ;newmain.c: 267:     current_event.start_flame_intensity = flame_intensity;
-[e = . _current_event 3 _flame_intensity ]
-"268
-[; ;newmain.c: 268:     current_event.start_co_ppm = co_ppm;
-[e = . _current_event 4 _co_ppm ]
-"269
-[; ;newmain.c: 269:     current_event.start_total_flow = total_flow;
-[e = . _current_event 5 _total_flow ]
-"270
-[; ;newmain.c: 270:     current_event.water_used = 0.0;
-[e = . _current_event 6 -> .0.0 `f ]
-"271
-[; ;newmain.c: 271:     event_active = 1;
-[e = _event_active -> -> 1 `i `uc ]
-"274
-[; ;newmain.c: 274:     Send_Event_Data(type);
-[e ( _Send_Event_Data (1 _type ]
-"275
-[; ;newmain.c: 275: }
-[e :UE 418 ]
-}
-"277
-[; ;newmain.c: 277: void End_Event() {
-[v _End_Event `(v ~T0 @X0 1 ef ]
-{
-[e :U _End_Event ]
-[f ]
-"278
-[; ;newmain.c: 278:     if (!event_active) return;
-[e $ ! ! != -> _event_active `i -> 0 `i 420  ]
-[e $UE 419  ]
-[e :U 420 ]
-"281
-[; ;newmain.c: 281:     current_event.water_used = total_flow - current_event.start_total_flow;
-[e = . _current_event 6 - _total_flow . _current_event 5 ]
-"284
-[; ;newmain.c: 284:     char event_buffer[200];
-[v _event_buffer `uc ~T0 @X0 -> 200 `i a ]
-"285
-[; ;newmain.c: 285:     const char* event_type_str = "";
-[v _event_type_str `*Cuc ~T0 @X0 1 a ]
-[e = _event_type_str :s 8C ]
-"286
-[; ;newmain.c: 286:     switch(current_event.type) {
-[e $U 422  ]
-{
-"287
-[; ;newmain.c: 287:         case EVENT_FIRE: event_type_str = "fire_end"; break;
-[e :U 423 ]
-[e = _event_type_str :s 9C ]
-[e $U 421  ]
-"288
-[; ;newmain.c: 288:         case EVENT_TEST: event_type_str = "test_end"; break;
-[e :U 424 ]
-[e = _event_type_str :s 10C ]
-[e $U 421  ]
-"289
-[; ;newmain.c: 289:         case EVENT_SHUTDOWN: event_type_str = "shutdown_end"; break;
-[e :U 425 ]
-[e = _event_type_str :s 11C ]
-[e $U 421  ]
-"290
-[; ;newmain.c: 290:         default: event_type_str = "unknown";
-[e :U 426 ]
-[e = _event_type_str :s 12C ]
-"291
-[; ;newmain.c: 291:     }
-}
-[e $U 421  ]
-[e :U 422 ]
-[e [\ -> . _current_event 0 `ui , $ -> . `E4149 1 `ui 423
- , $ -> . `E4149 2 `ui 424
- , $ -> . `E4149 3 `ui 425
- 426 ]
-[e :U 421 ]
-"293
-[; ;newmain.c: 293:     sprintf(event_buffer,
-[e ( _sprintf (1 , , , , , , (. , &U _event_buffer :s 13C _event_type_str . _current_event 1 -> . _current_event 2 `d -> . _current_event 3 `d -> . _current_event 4 `d -> . _current_event 6 `d ]
-"303
-[; ;newmain.c: 303:     while(!TXSTAbits.TRMT);
-[e $U 427  ]
-[e :U 428 ]
-[e :U 427 ]
-[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 428  ]
-[e :U 429 ]
-"304
-[; ;newmain.c: 304:     for(int i = 0; event_buffer[i]; i++) {
-{
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $U 433  ]
-[e :U 430 ]
-{
-"305
-[; ;newmain.c: 305:         TXREG = event_buffer[i];
-[e = _TXREG -> *U + &U _event_buffer * -> -> _i `ui `ux -> -> # *U &U _event_buffer `ui `ux `uc ]
-"306
-[; ;newmain.c: 306:         while(!TXSTAbits.TRMT);
-[e $U 434  ]
-[e :U 435 ]
-[e :U 434 ]
-[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 435  ]
-[e :U 436 ]
-"307
-[; ;newmain.c: 307:     }
-}
-[e ++ _i -> 1 `i ]
-[e :U 433 ]
-[e $ != -> *U + &U _event_buffer * -> -> _i `ui `ux -> -> # *U &U _event_buffer `ui `ux `i -> 0 `i 430  ]
-[e :U 431 ]
-}
-"310
-[; ;newmain.c: 310:     event_active = 0;
-[e = _event_active -> -> 0 `i `uc ]
-"311
-[; ;newmain.c: 311:     current_event.type = EVENT_NONE;
-[e = . _current_event 0 . `E4149 0 ]
-"314
-[; ;newmain.c: 314:     last_flow_reset_time = system_millis;
-[e = _last_flow_reset_time _system_millis ]
-"315
-[; ;newmain.c: 315: }
-[e :UE 419 ]
-}
-"317
-[; ;newmain.c: 317: void Check_Flow_Reset() {
-[v _Check_Flow_Reset `(v ~T0 @X0 1 ef ]
-{
-[e :U _Check_Flow_Reset ]
-[f ]
-"318
-[; ;newmain.c: 318:     if (last_flow_reset_time > 0 &&
-[e $ ! && > _last_flow_reset_time -> -> -> 0 `i `l `ul >= - _system_millis _last_flow_reset_time -> -> -> 5000 `i `l `ul 438  ]
-"319
-[; ;newmain.c: 319:         (system_millis - last_flow_reset_time) >= 5000) {
-{
-"320
-[; ;newmain.c: 320:         total_flow = 0.0;
+[; ;newmain.c: 237:         total_flow = 0.0;
 [e = _total_flow -> .0.0 `f ]
-"321
-[; ;newmain.c: 321:         pulse_count = 0;
+"238
+[; ;newmain.c: 238:         pulse_count = 0;
 [e = _pulse_count -> -> 0 `i `ui ]
-"322
-[; ;newmain.c: 322:         last_flow_reset_time = 0;
-[e = _last_flow_reset_time -> -> -> 0 `i `l `ul ]
-"323
-[; ;newmain.c: 323:     }
+"239
+[; ;newmain.c: 239:     }
 }
-[e :U 438 ]
-"324
-[; ;newmain.c: 324: }
-[e :UE 437 ]
+[e :U 403 ]
+"241
+[; ;newmain.c: 241:     prev_fire_alarm = fire_alarm;
+[e = _prev_fire_alarm _fire_alarm ]
+"242
+[; ;newmain.c: 242: }
+[e :UE 396 ]
 }
-"327
-[; ;newmain.c: 327: void Handle_Test_Command(void) {
-[v _Handle_Test_Command `(v ~T0 @X0 1 ef ]
+"244
+[; ;newmain.c: 244: void Handle_Test_Events(void) {
+[v _Handle_Test_Events `(v ~T0 @X0 1 ef ]
 {
-[e :U _Handle_Test_Command ]
+[e :U _Handle_Test_Events ]
 [f ]
-"329
-[; ;newmain.c: 329:     trigger_test = 1;
-[e = _trigger_test -> -> 1 `i `uc ]
-"332
-[; ;newmain.c: 332:     PORTBbits.RB0 = 1;
-[e = . . _PORTBbits 0 0 -> -> 1 `i `uc ]
-"333
-[; ;newmain.c: 333:     pump_active = 1;
-[e = _pump_active -> -> 1 `i `uc ]
-"336
-[; ;newmain.c: 336:     if(system_millis - test_last_toggle >= TEST_BLINK_INTERVAL) {
-[e $ ! >= - _system_millis _test_last_toggle _TEST_BLINK_INTERVAL 440  ]
+"245
+[; ;newmain.c: 245:     static bool prev_test = 0;
+[v F4187 `uc ~T0 @X0 1 s prev_test ]
+[i F4187
+-> -> 0 `i `uc
+]
+"248
+[; ;newmain.c: 248:     if(trigger_test && !prev_test) {
+[e $ ! && != -> _trigger_test `i -> 0 `i ! != -> F4187 `i -> 0 `i 405  ]
 {
-"337
-[; ;newmain.c: 337:         PORTBbits.RB5 = !PORTBbits.RB5;
-[e = . . _PORTBbits 0 5 -> -> ! != -> . . _PORTBbits 0 5 `i -> 0 `i `i `uc ]
-"338
-[; ;newmain.c: 338:         test_last_toggle = system_millis;
-[e = _test_last_toggle _system_millis ]
-"339
-[; ;newmain.c: 339:     }
+"249
+[; ;newmain.c: 249:         Send_History_Event("test_start", "");
+[e ( _Send_History_Event (2 , :s 8C :s 9C ]
+"250
+[; ;newmain.c: 250:     }
 }
-[e :U 440 ]
+[e :U 405 ]
+"253
+[; ;newmain.c: 253:     if(!trigger_test && prev_test) {
+[e $ ! && ! != -> _trigger_test `i -> 0 `i != -> F4187 `i -> 0 `i 406  ]
+{
+"254
+[; ;newmain.c: 254:         float water_used = total_flow - test_start_flow;
+[v _water_used `f ~T0 @X0 1 a ]
+[e = _water_used - _total_flow -> _test_start_flow `f ]
+"256
+[; ;newmain.c: 256:         char test_data[50];
+[v _test_data `uc ~T0 @X0 -> 50 `i a ]
+"257
+[; ;newmain.c: 257:         sprintf(test_data, ",\"water\":%.2f", water_used);
+[e ( _sprintf (1 , (. , &U _test_data :s 10C -> _water_used `d ]
+"258
+[; ;newmain.c: 258:         Send_History_Event("test_end", test_data);
+[e ( _Send_History_Event (2 , :s 11C -> &U _test_data `*Cuc ]
+"261
+[; ;newmain.c: 261:         _delay((unsigned long)((3000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"262
+[; ;newmain.c: 262:         total_flow = 0.0;
+[e = _total_flow -> .0.0 `f ]
+"263
+[; ;newmain.c: 263:         pulse_count = 0;
+[e = _pulse_count -> -> 0 `i `ui ]
+"264
+[; ;newmain.c: 264:     }
+}
+[e :U 406 ]
+"266
+[; ;newmain.c: 266:     prev_test = trigger_test;
+[e = F4187 _trigger_test ]
+"267
+[; ;newmain.c: 267: }
+[e :UE 404 ]
+}
+"269
+[; ;newmain.c: 269: void Handle_Shutdown_Events(void) {
+[v _Handle_Shutdown_Events `(v ~T0 @X0 1 ef ]
+{
+[e :U _Handle_Shutdown_Events ]
+[f ]
+"270
+[; ;newmain.c: 270:     static bool prev_shutdown = 0;
+[v F4191 `uc ~T0 @X0 1 s prev_shutdown ]
+[i F4191
+-> -> 0 `i `uc
+]
+"273
+[; ;newmain.c: 273:     if(shutdown_system && !prev_shutdown) {
+[e $ ! && != -> _shutdown_system `i -> 0 `i ! != -> F4191 `i -> 0 `i 408  ]
+{
+"274
+[; ;newmain.c: 274:         Send_History_Event("shutdown", "");
+[e ( _Send_History_Event (2 , :s 12C :s 13C ]
+"275
+[; ;newmain.c: 275:     }
+}
+[e :U 408 ]
+"278
+[; ;newmain.c: 278:     if(!shutdown_system && prev_shutdown) {
+[e $ ! && ! != -> _shutdown_system `i -> 0 `i != -> F4191 `i -> 0 `i 409  ]
+{
+"279
+[; ;newmain.c: 279:         Send_History_Event("resume", "");
+[e ( _Send_History_Event (2 , :s 14C :s 15C ]
+"280
+[; ;newmain.c: 280:     }
+}
+[e :U 409 ]
+"282
+[; ;newmain.c: 282:     prev_shutdown = shutdown_system;
+[e = F4191 _shutdown_system ]
+"283
+[; ;newmain.c: 283: }
+[e :UE 407 ]
+}
+"285
+[; ;newmain.c: 285: void Send_History_Event(const char* event_type, const char* extra_data) {
+[v _Send_History_Event `(v ~T0 @X0 1 ef2`*Cuc`*Cuc ]
+{
+[e :U _Send_History_Event ]
+[v _event_type `*Cuc ~T0 @X0 1 r1 ]
+[v _extra_data `*Cuc ~T0 @X0 1 r2 ]
+[f ]
+"286
+[; ;newmain.c: 286:     char buffer[200];
+[v _buffer `uc ~T0 @X0 -> 200 `i a ]
+"287
+[; ;newmain.c: 287:     sprintf(buffer, "{\"event\":\"%s\",\"time\":%lu%s}\r\n",
+[e ( _sprintf (1 , , , (. , &U _buffer :s 16C _event_type _system_millis _extra_data ]
+"290
+[; ;newmain.c: 290:     while(!TXSTAbits.TRMT);
+[e $U 411  ]
+[e :U 412 ]
+[e :U 411 ]
+[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 412  ]
+[e :U 413 ]
+"291
+[; ;newmain.c: 291:     for(int i = 0; buffer[i]; i++) {
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $U 417  ]
+[e :U 414 ]
+{
+"292
+[; ;newmain.c: 292:         TXREG = buffer[i];
+[e = _TXREG -> *U + &U _buffer * -> -> _i `ui `ux -> -> # *U &U _buffer `ui `ux `uc ]
+"293
+[; ;newmain.c: 293:         while(!TXSTAbits.TRMT);
+[e $U 418  ]
+[e :U 419 ]
+[e :U 418 ]
+[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 419  ]
+[e :U 420 ]
+"294
+[; ;newmain.c: 294:     }
+}
+[e ++ _i -> 1 `i ]
+[e :U 417 ]
+[e $ != -> *U + &U _buffer * -> -> _i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 0 `i 414  ]
+[e :U 415 ]
+}
+"295
+[; ;newmain.c: 295: }
+[e :UE 410 ]
+}
+"297
+[; ;newmain.c: 297: void Read_Sensors(void) {
+[v _Read_Sensors `(v ~T0 @X0 1 ef ]
+{
+[e :U _Read_Sensors ]
+[f ]
+"299
+[; ;newmain.c: 299:     unsigned int temp_adc = ADC_Read(0);
+[v _temp_adc `ui ~T0 @X0 1 a ]
+[e = _temp_adc ( _ADC_Read (1 -> -> 0 `i `uc ]
+"300
+[; ;newmain.c: 300:     float raw_temp = (temp_adc * 5.0 / 1024.0) / 0.01;
+[v _raw_temp `f ~T0 @X0 1 a ]
+[e = _raw_temp -> / / * -> _temp_adc `d .5.0 .1024.0 .0.01 `f ]
+"301
+[; ;newmain.c: 301:     temperature = Apply_Filter(raw_temp, temp_samples);
+[e = _temperature ( _Apply_Filter (2 , _raw_temp &U _temp_samples ]
+"304
+[; ;newmain.c: 304:     unsigned int flame_adc = ADC_Read(1);
+[v _flame_adc `ui ~T0 @X0 1 a ]
+[e = _flame_adc ( _ADC_Read (1 -> -> 1 `i `uc ]
+"305
+[; ;newmain.c: 305:     float flame_voltage = (flame_adc * 5.0) / 1024.0;
+[v _flame_voltage `f ~T0 @X0 1 a ]
+[e = _flame_voltage -> / * -> _flame_adc `d .5.0 .1024.0 `f ]
+"306
+[; ;newmain.c: 306:     flame_intensity = (flame_base_voltage - flame_voltage) * 100.0 / flame_base_voltage;
+[e = _flame_intensity -> / * -> - _flame_base_voltage _flame_voltage `d .100.0 -> _flame_base_voltage `d `f ]
+"308
+[; ;newmain.c: 308:     if(flame_intensity < 0) flame_intensity = 0;
+[e $ ! < _flame_intensity -> -> 0 `i `f 422  ]
+[e = _flame_intensity -> -> 0 `i `f ]
+[e :U 422 ]
+"309
+[; ;newmain.c: 309:     if(flame_intensity > 100) flame_intensity = 100;
+[e $ ! > _flame_intensity -> -> 100 `i `f 423  ]
+[e = _flame_intensity -> -> 100 `i `f ]
+[e :U 423 ]
+"312
+[; ;newmain.c: 312:     if(!flame_detected && flame_intensity >= 15.0) {
+[e $ ! && ! != -> _flame_detected `i -> 0 `i >= -> _flame_intensity `d .15.0 424  ]
+{
+"313
+[; ;newmain.c: 313:         flame_detected = 1;
+[e = _flame_detected -> -> 1 `i `uc ]
+"314
+[; ;newmain.c: 314:     } else if(flame_detected && flame_intensity <= (15.0 - 3.0)) {
+}
+[e $U 425  ]
+[e :U 424 ]
+[e $ ! && != -> _flame_detected `i -> 0 `i <= -> _flame_intensity `d - .15.0 .3.0 426  ]
+{
+"315
+[; ;newmain.c: 315:         flame_detected = 0;
+[e = _flame_detected -> -> 0 `i `uc ]
+"316
+[; ;newmain.c: 316:     }
+}
+[e :U 426 ]
+[e :U 425 ]
+"319
+[; ;newmain.c: 319:     unsigned int mq2_adc = ADC_Read(2);
+[v _mq2_adc `ui ~T0 @X0 1 a ]
+[e = _mq2_adc ( _ADC_Read (1 -> -> 2 `i `uc ]
+"320
+[; ;newmain.c: 320:     float mq2_voltage = (mq2_adc * 5.0) / 1024.0;
+[v _mq2_voltage `f ~T0 @X0 1 a ]
+[e = _mq2_voltage -> / * -> _mq2_adc `d .5.0 .1024.0 `f ]
+"321
+[; ;newmain.c: 321:     float Rs = (5.0 - mq2_voltage) / mq2_voltage;
+[v _Rs `f ~T0 @X0 1 a ]
+[e = _Rs -> / - .5.0 -> _mq2_voltage `d -> _mq2_voltage `d `f ]
+"324
+[; ;newmain.c: 324:     float temp_factor = 1.0 + 0.02 * (temperature - 25.0);
+[v _temp_factor `f ~T0 @X0 1 a ]
+[e = _temp_factor -> + .1.0 * .0.02 - -> _temperature `d .25.0 `f ]
+"325
+[; ;newmain.c: 325:     Rs /= temp_factor;
+[e =/ _Rs _temp_factor ]
+"327
+[; ;newmain.c: 327:     float rs_ro_ratio = Rs / MQ2_Ro;
+[v _rs_ro_ratio `f ~T0 @X0 1 a ]
+[e = _rs_ro_ratio / _Rs _MQ2_Ro ]
+"328
+[; ;newmain.c: 328:     float raw_co = 0.0;
+[v _raw_co `f ~T0 @X0 1 a ]
+[e = _raw_co -> .0.0 `f ]
+"330
+[; ;newmain.c: 330:     if(rs_ro_ratio > 0.1) {
+[e $ ! > -> _rs_ro_ratio `d .0.1 427  ]
+{
+"331
+[; ;newmain.c: 331:         raw_co = 15.0 * powf(rs_ro_ratio,-1.5);
+[e = _raw_co -> * .15.0 -> ( _powf (2 , _rs_ro_ratio -> -U .1.5 `f `d `f ]
+"332
+[; ;newmain.c: 332:     }
+}
+[e :U 427 ]
+"334
+[; ;newmain.c: 334:     if(raw_co < 0) raw_co = 0;
+[e $ ! < _raw_co -> -> 0 `i `f 428  ]
+[e = _raw_co -> -> 0 `i `f ]
+[e :U 428 ]
+"335
+[; ;newmain.c: 335:     if(raw_co > 1000) raw_co = 1000;
+[e $ ! > _raw_co -> -> 1000 `i `f 429  ]
+[e = _raw_co -> -> 1000 `i `f ]
+[e :U 429 ]
+"337
+[; ;newmain.c: 337:     co_ppm = Apply_Filter(raw_co, co_samples);
+[e = _co_ppm ( _Apply_Filter (2 , _raw_co &U _co_samples ]
 "340
-[; ;newmain.c: 340:     alarm_active = 1;
-[e = _alarm_active -> -> 1 `i `uc ]
+[; ;newmain.c: 340:     static unsigned int last_pulse = 0;
+[v F4208 `ui ~T0 @X0 1 s last_pulse ]
+[i F4208
+-> -> 0 `i `ui
+]
+"341
+[; ;newmain.c: 341:     static unsigned long last_flow_time = 0;
+[v F4209 `ul ~T0 @X0 1 s last_flow_time ]
+[i F4209
+-> -> -> 0 `i `l `ul
+]
 "343
-[; ;newmain.c: 343:     if((system_millis - test_start_time) >= TEST_DURATION) {
-[e $ ! >= - _system_millis _test_start_time _TEST_DURATION 441  ]
+[; ;newmain.c: 343:     if(system_millis - last_flow_time >= 1000) {
+[e $ ! >= - _system_millis F4209 -> -> -> 1000 `i `l `ul 430  ]
 {
 "344
-[; ;newmain.c: 344:         trigger_test = 0;
-[e = _trigger_test -> -> 0 `i `uc ]
+[; ;newmain.c: 344:         unsigned int pulses = pulse_count - last_pulse;
+[v _pulses `ui ~T0 @X0 1 a ]
+[e = _pulses - _pulse_count F4208 ]
 "345
-[; ;newmain.c: 345:         PORTBbits.RB0 = 0;
-[e = . . _PORTBbits 0 0 -> -> 0 `i `uc ]
+[; ;newmain.c: 345:         flow_rate = (pulses / (float)450) * 60.0;
+[e = _flow_rate -> * -> / -> _pulses `f -> -> 450 `i `f `d .60.0 `f ]
 "346
-[; ;newmain.c: 346:         PORTBbits.RB5 = 1;
-[e = . . _PORTBbits 0 5 -> -> 1 `i `uc ]
-"347
-[; ;newmain.c: 347:         pump_active = 0;
-[e = _pump_active -> -> 0 `i `uc ]
+[; ;newmain.c: 346:         total_flow += flow_rate / 60.0;
+[e =+ _total_flow -> / -> _flow_rate `d .60.0 `f ]
 "348
-[; ;newmain.c: 348:         alarm_active = 0;
-[e = _alarm_active -> -> 0 `i `uc ]
+[; ;newmain.c: 348:         last_pulse = pulse_count;
+[e = F4208 _pulse_count ]
 "349
-[; ;newmain.c: 349:     }
-}
-[e :U 441 ]
+[; ;newmain.c: 349:         last_flow_time = system_millis;
+[e = F4209 _system_millis ]
 "350
-[; ;newmain.c: 350: }
-[e :UE 439 ]
+[; ;newmain.c: 350:     }
 }
-"352
-[; ;newmain.c: 352: void Interrupt_Init(void) {
-[v _Interrupt_Init `(v ~T0 @X0 1 ef ]
-{
-[e :U _Interrupt_Init ]
-[f ]
+[e :U 430 ]
+"351
+[; ;newmain.c: 351: }
+[e :UE 421 ]
+}
 "353
-[; ;newmain.c: 353:     TRISBbits.TRISB1 = 1;
-[e = . . _TRISBbits 0 1 -> -> 1 `i `uc ]
+[; ;newmain.c: 353: float Apply_Filter(float new_value, float* samples) {
+[v _Apply_Filter `(f ~T0 @X0 1 ef2`f`*f ]
+{
+[e :U _Apply_Filter ]
+[v _new_value `f ~T0 @X0 1 r1 ]
+[v _samples `*f ~T0 @X0 1 r2 ]
+[f ]
 "354
-[; ;newmain.c: 354:     INTCON2bits.INTEDG1 = 0;
-[e = . . _INTCON2bits 1 5 -> -> 0 `i `uc ]
-"355
-[; ;newmain.c: 355:     INTCON3bits.INT1IE = 1;
-[e = . . _INTCON3bits 0 3 -> -> 1 `i `uc ]
+[; ;newmain.c: 354:     samples[sample_index] = new_value;
+[e = *U + _samples * -> _sample_index `ux -> -> # *U _samples `ui `ux _new_value ]
 "356
-[; ;newmain.c: 356:     INTCON3bits.INT1IP = 1;
-[e = . . _INTCON3bits 0 6 -> -> 1 `i `uc ]
+[; ;newmain.c: 356:     float sum = 0;
+[v _sum `f ~T0 @X0 1 a ]
+[e = _sum -> -> 0 `i `f ]
+"357
+[; ;newmain.c: 357:     for(int i = 0; i < 5; i++) {
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 5 `i 432  ]
+[e $U 433  ]
+[e :U 432 ]
+{
 "358
-[; ;newmain.c: 358:     RCONbits.IPEN = 1;
-[e = . . _RCONbits 5 7 -> -> 1 `i `uc ]
+[; ;newmain.c: 358:         sum += samples[i];
+[e =+ _sum *U + _samples * -> _i `x -> -> # *U _samples `i `x ]
 "359
-[; ;newmain.c: 359:     INTCONbits.GIEH = 1;
-[e = . . _INTCONbits 2 2 -> -> 1 `i `uc ]
+[; ;newmain.c: 359:     }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 5 `i 432  ]
+[e :U 433 ]
+}
 "360
-[; ;newmain.c: 360:     INTCONbits.GIEL = 1;
-[e = . . _INTCONbits 2 1 -> -> 1 `i `uc ]
+[; ;newmain.c: 360:     return sum / 5;
+[e ) / _sum -> -> 5 `i `f ]
+[e $UE 431  ]
 "361
 [; ;newmain.c: 361: }
-[e :UE 442 ]
+[e :UE 431 ]
 }
 "363
-[; ;newmain.c: 363: void ADC_Init(void) {
+[; ;newmain.c: 363: void Update_Actuators(void) {
+[v _Update_Actuators `(v ~T0 @X0 1 ef ]
+{
+[e :U _Update_Actuators ]
+[f ]
+"365
+[; ;newmain.c: 365:     fire_alarm = flame_detected ||
+[e = _fire_alarm -> -> || || != -> _flame_detected `i -> 0 `i >= -> _temperature `d .40.0 >= -> _co_ppm `d .50.0 `i `uc ]
+"369
+[; ;newmain.c: 369:     if(fire_alarm) {
+[e $ ! != -> _fire_alarm `i -> 0 `i 436  ]
+{
+"370
+[; ;newmain.c: 370:         PORTBbits.RB0 = 1;
+[e = . . _PORTBbits 0 0 -> -> 1 `i `uc ]
+"371
+[; ;newmain.c: 371:         pump_active = 1;
+[e = _pump_active -> -> 1 `i `uc ]
+"374
+[; ;newmain.c: 374:         static unsigned long last_blink = 0;
+[v F4217 `ul ~T0 @X0 1 s last_blink ]
+[i F4217
+-> -> -> 0 `i `l `ul
+]
+"375
+[; ;newmain.c: 375:         if(system_millis - last_blink >= 500) {
+[e $ ! >= - _system_millis F4217 -> -> -> 500 `i `l `ul 437  ]
+{
+"376
+[; ;newmain.c: 376:             PORTBbits.RB5 = !PORTBbits.RB5;
+[e = . . _PORTBbits 0 5 -> -> ! != -> . . _PORTBbits 0 5 `i -> 0 `i `i `uc ]
+"377
+[; ;newmain.c: 377:             last_blink = system_millis;
+[e = F4217 _system_millis ]
+"378
+[; ;newmain.c: 378:         }
+}
+[e :U 437 ]
+"379
+[; ;newmain.c: 379:         alarm_active = 1;
+[e = _alarm_active -> -> 1 `i `uc ]
+"380
+[; ;newmain.c: 380:     } else {
+}
+[e $U 438  ]
+[e :U 436 ]
+{
+"381
+[; ;newmain.c: 381:         PORTBbits.RB0 = 0;
+[e = . . _PORTBbits 0 0 -> -> 0 `i `uc ]
+"382
+[; ;newmain.c: 382:         pump_active = 0;
+[e = _pump_active -> -> 0 `i `uc ]
+"383
+[; ;newmain.c: 383:         PORTBbits.RB5 = 1;
+[e = . . _PORTBbits 0 5 -> -> 1 `i `uc ]
+"384
+[; ;newmain.c: 384:         alarm_active = 0;
+[e = _alarm_active -> -> 0 `i `uc ]
+"385
+[; ;newmain.c: 385:     }
+}
+[e :U 438 ]
+"386
+[; ;newmain.c: 386: }
+[e :UE 435 ]
+}
+"388
+[; ;newmain.c: 388: void Send_Data(void) {
+[v _Send_Data `(v ~T0 @X0 1 ef ]
+{
+[e :U _Send_Data ]
+[f ]
+"389
+[; ;newmain.c: 389:     char buffer[150];
+[v _buffer `uc ~T0 @X0 -> 150 `i a ]
+"390
+[; ;newmain.c: 390:     sprintf(buffer,
+[e ( _sprintf (1 , , , , , , , , , , (. , &U _buffer :s 17C -> _temperature `d -> _flame_detected `i -> _flame_intensity `d -> _co_ppm `d -> _flow_rate `d -> _total_flow `d -> _pump_active `i -> _alarm_active `i -> _trigger_test `i -> _shutdown_system `i ]
+"395
+[; ;newmain.c: 395:     while(!TXSTAbits.TRMT);
+[e $U 440  ]
+[e :U 441 ]
+[e :U 440 ]
+[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 441  ]
+[e :U 442 ]
+"396
+[; ;newmain.c: 396:     for(int i = 0; buffer[i]; i++) {
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $U 446  ]
+[e :U 443 ]
+{
+"397
+[; ;newmain.c: 397:         TXREG = buffer[i];
+[e = _TXREG -> *U + &U _buffer * -> -> _i `ui `ux -> -> # *U &U _buffer `ui `ux `uc ]
+"398
+[; ;newmain.c: 398:         while(!TXSTAbits.TRMT);
+[e $U 447  ]
+[e :U 448 ]
+[e :U 447 ]
+[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 448  ]
+[e :U 449 ]
+"399
+[; ;newmain.c: 399:     }
+}
+[e ++ _i -> 1 `i ]
+[e :U 446 ]
+[e $ != -> *U + &U _buffer * -> -> _i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 0 `i 443  ]
+[e :U 444 ]
+}
+"400
+[; ;newmain.c: 400: }
+[e :UE 439 ]
+}
+"402
+[; ;newmain.c: 402: void ADC_Init(void) {
 [v _ADC_Init `(v ~T0 @X0 1 ef ]
 {
 [e :U _ADC_Init ]
 [f ]
-"364
-[; ;newmain.c: 364:     TRISA0 = TRISA1 = TRISA2 = 1;
+"403
+[; ;newmain.c: 403:     TRISA0 = TRISA1 = TRISA2 = 1;
 [e = _TRISA0 -> = _TRISA1 -> = _TRISA2 -> -> 1 `i `b `b `b ]
-"365
-[; ;newmain.c: 365:     ADCON0bits.ADON = 1;
+"404
+[; ;newmain.c: 404:     ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-"366
-[; ;newmain.c: 366:     ADCON1 = 0x0C;
+"405
+[; ;newmain.c: 405:     ADCON1 = 0x0C;
 [e = _ADCON1 -> -> 12 `i `uc ]
-"367
-[; ;newmain.c: 367:     ADCON2 = 0xBE;
+"406
+[; ;newmain.c: 406:     ADCON2 = 0xBE;
 [e = _ADCON2 -> -> 190 `i `uc ]
-"368
-[; ;newmain.c: 368: }
-[e :UE 443 ]
+"407
+[; ;newmain.c: 407: }
+[e :UE 450 ]
 }
-"370
-[; ;newmain.c: 370: unsigned int ADC_Read(unsigned char channel) {
+"409
+[; ;newmain.c: 409: unsigned int ADC_Read(unsigned char channel) {
 [v _ADC_Read `(ui ~T0 @X0 1 ef1`uc ]
 {
 [e :U _ADC_Read ]
 [v _channel `uc ~T0 @X0 1 r1 ]
 [f ]
-"371
-[; ;newmain.c: 371:     ADCON0bits.CHS = channel;
-[e = . . _ADCON0bits 1 2 _channel ]
-"372
-[; ;newmain.c: 372:     _delay((unsigned long)((30)*(8000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 30 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"373
-[; ;newmain.c: 373:     ADCON0bits.GO = 1;
-[e = . . _ADCON0bits 4 1 -> -> 1 `i `uc ]
-"374
-[; ;newmain.c: 374:     while(ADCON0bits.GO);
-[e $U 445  ]
-[e :U 446 ]
-[e :U 445 ]
-[e $ != -> . . _ADCON0bits 4 1 `i -> 0 `i 446  ]
-[e :U 447 ]
-"375
-[; ;newmain.c: 375:     return (ADRESH << 8) | ADRESL;
-[e ) -> | << -> _ADRESH `i -> 8 `i -> _ADRESL `i `ui ]
-[e $UE 444  ]
-"376
-[; ;newmain.c: 376: }
-[e :UE 444 ]
-}
-"378
-[; ;newmain.c: 378: unsigned int ADC_Read_Average(unsigned char channel, unsigned char samples) {
-[v _ADC_Read_Average `(ui ~T0 @X0 1 ef2`uc`uc ]
-{
-[e :U _ADC_Read_Average ]
-[v _channel `uc ~T0 @X0 1 r1 ]
-[v _samples `uc ~T0 @X0 1 r2 ]
-[f ]
-"379
-[; ;newmain.c: 379:     unsigned long sum = 0;
-[v _sum `ul ~T0 @X0 1 a ]
-[e = _sum -> -> -> 0 `i `l `ul ]
-"380
-[; ;newmain.c: 380:     for(unsigned char i = 0; i < samples; i++) {
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $U 452  ]
-[e :U 449 ]
-{
-"381
-[; ;newmain.c: 381:         sum += ADC_Read(channel);
-[e =+ _sum -> ( _ADC_Read (1 _channel `ul ]
-"382
-[; ;newmain.c: 382:         _delay((unsigned long)((25)*(8000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 25 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"383
-[; ;newmain.c: 383:     }
-}
-[e ++ _i -> -> 1 `i `uc ]
-[e :U 452 ]
-[e $ < -> _i `i -> _samples `i 449  ]
-[e :U 450 ]
-}
-"384
-[; ;newmain.c: 384:     return (unsigned int)(sum / samples);
-[e ) -> / _sum -> _samples `ul `ui ]
-[e $UE 448  ]
-"385
-[; ;newmain.c: 385: }
-[e :UE 448 ]
-}
-"387
-[; ;newmain.c: 387: void Calibrate_Flame_Sensor() {
-[v _Calibrate_Flame_Sensor `(v ~T0 @X0 1 ef ]
-{
-[e :U _Calibrate_Flame_Sensor ]
-[f ]
-"388
-[; ;newmain.c: 388:     float sum = 0;
-[v _sum `f ~T0 @X0 1 a ]
-[e = _sum -> -> 0 `i `f ]
-"389
-[; ;newmain.c: 389:     for(unsigned char i = 0; i < 20; i++) {
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 20 `i 454  ]
-[e $U 455  ]
-[e :U 454 ]
-{
-"390
-[; ;newmain.c: 390:         unsigned int adc_value = ADC_Read(1);
-[v _adc_value `ui ~T0 @X0 1 a ]
-[e = _adc_value ( _ADC_Read (1 -> -> 1 `i `uc ]
-"391
-[; ;newmain.c: 391:         sum += (adc_value * 5.0) / 1024.0;
-[e =+ _sum -> / * -> _adc_value `d .5.0 .1024.0 `f ]
-"392
-[; ;newmain.c: 392:         _delay((unsigned long)((150)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"393
-[; ;newmain.c: 393:     }
-}
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 20 `i 454  ]
-[e :U 455 ]
-}
-"394
-[; ;newmain.c: 394:     flame_base_voltage = sum / 20.0;
-[e = _flame_base_voltage -> / -> _sum `d .20.0 `f ]
-"395
-[; ;newmain.c: 395:     flame_calibrated = 1;
-[e = _flame_calibrated -> -> 1 `i `uc ]
-"396
-[; ;newmain.c: 396:     flame_detected = 0;
-[e = _flame_detected -> -> 0 `i `uc ]
-"397
-[; ;newmain.c: 397:     flame_intensity = 0.0;
-[e = _flame_intensity -> .0.0 `f ]
-"398
-[; ;newmain.c: 398: }
-[e :UE 453 ]
-}
-"400
-[; ;newmain.c: 400: void Calibrate_MQ2() {
-[v _Calibrate_MQ2 `(v ~T0 @X0 1 ef ]
-{
-[e :U _Calibrate_MQ2 ]
-[f ]
-"401
-[; ;newmain.c: 401:     float sum = 0;
-[v _sum `f ~T0 @X0 1 a ]
-[e = _sum -> -> 0 `i `f ]
-"402
-[; ;newmain.c: 402:     for(unsigned char i = 0; i < 70; i++) {
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 70 `i 458  ]
-[e $U 459  ]
-[e :U 458 ]
-{
-"403
-[; ;newmain.c: 403:         unsigned int adc_value = ADC_Read(2);
-[v _adc_value `ui ~T0 @X0 1 a ]
-[e = _adc_value ( _ADC_Read (1 -> -> 2 `i `uc ]
-"404
-[; ;newmain.c: 404:         float voltage = (adc_value * 5.0) / 1024.0;
-[v _voltage `f ~T0 @X0 1 a ]
-[e = _voltage -> / * -> _adc_value `d .5.0 .1024.0 `f ]
-"405
-[; ;newmain.c: 405:         float Rs = (5.0 - voltage) / voltage;
-[v _Rs `f ~T0 @X0 1 a ]
-[e = _Rs -> / - .5.0 -> _voltage `d -> _voltage `d `f ]
-"406
-[; ;newmain.c: 406:         sum += Rs;
-[e =+ _sum _Rs ]
-"407
-[; ;newmain.c: 407:         _delay((unsigned long)((200)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"408
-[; ;newmain.c: 408:     }
-}
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 70 `i 458  ]
-[e :U 459 ]
-}
-"409
-[; ;newmain.c: 409:     MQ2_Ro = sum / 70.0;
-[e = _MQ2_Ro -> / -> _sum `d .70.0 `f ]
 "410
-[; ;newmain.c: 410: }
-[e :UE 457 ]
-}
+[; ;newmain.c: 410:     ADCON0bits.CHS = channel;
+[e = . . _ADCON0bits 1 2 _channel ]
+"411
+[; ;newmain.c: 411:     _delay((unsigned long)((30)*(8000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 30 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
 "412
-[; ;newmain.c: 412: void Read_LM35(void) {
-[v _Read_LM35 `(v ~T0 @X0 1 ef ]
-{
-[e :U _Read_LM35 ]
-[f ]
+[; ;newmain.c: 412:     ADCON0bits.GO = 1;
+[e = . . _ADCON0bits 4 1 -> -> 1 `i `uc ]
 "413
-[; ;newmain.c: 413:     unsigned int adc_value = ADC_Read_Average(0, 10);
-[v _adc_value `ui ~T0 @X0 1 a ]
-[e = _adc_value ( _ADC_Read_Average (2 , -> -> 0 `i `uc -> -> 10 `i `uc ]
+[; ;newmain.c: 413:     while(ADCON0bits.GO);
+[e $U 452  ]
+[e :U 453 ]
+[e :U 452 ]
+[e $ != -> . . _ADCON0bits 4 1 `i -> 0 `i 453  ]
+[e :U 454 ]
 "414
-[; ;newmain.c: 414:     float raw_temp = (adc_value * 5.0 / 1024.0) / 0.01;
-[v _raw_temp `f ~T0 @X0 1 a ]
-[e = _raw_temp -> / / * -> _adc_value `d .5.0 .1024.0 .0.01 `f ]
-"416
-[; ;newmain.c: 416:     temp_filter[filter_index] = raw_temp;
-[e = *U + &U _temp_filter * -> _filter_index `ux -> -> # *U &U _temp_filter `ui `ux _raw_temp ]
+[; ;newmain.c: 414:     return (ADRESH << 8) | ADRESL;
+[e ) -> | << -> _ADRESH `i -> 8 `i -> _ADRESL `i `ui ]
+[e $UE 451  ]
+"415
+[; ;newmain.c: 415: }
+[e :UE 451 ]
+}
 "417
-[; ;newmain.c: 417:     temperature = 0;
-[e = _temperature -> -> 0 `i `f ]
+[; ;newmain.c: 417: void Interrupt_Init(void) {
+[v _Interrupt_Init `(v ~T0 @X0 1 ef ]
+{
+[e :U _Interrupt_Init ]
+[f ]
 "418
-[; ;newmain.c: 418:     for(int i = 0; i < 7; i++) {
-{
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $ < _i -> 7 `i 462  ]
-[e $U 463  ]
-[e :U 462 ]
-{
+[; ;newmain.c: 418:     TRISBbits.TRISB1 = 1;
+[e = . . _TRISBbits 0 1 -> -> 1 `i `uc ]
 "419
-[; ;newmain.c: 419:         temperature += temp_filter[i];
-[e =+ _temperature *U + &U _temp_filter * -> -> _i `ui `ux -> -> # *U &U _temp_filter `ui `ux ]
+[; ;newmain.c: 419:     INTCON2bits.INTEDG1 = 0;
+[e = . . _INTCON2bits 1 5 -> -> 0 `i `uc ]
 "420
-[; ;newmain.c: 420:     }
-}
-[e ++ _i -> 1 `i ]
-[e $ < _i -> 7 `i 462  ]
-[e :U 463 ]
-}
+[; ;newmain.c: 420:     INTCON3bits.INT1IE = 1;
+[e = . . _INTCON3bits 0 3 -> -> 1 `i `uc ]
 "421
-[; ;newmain.c: 421:     temperature /= 7;
-[e =/ _temperature -> -> 7 `i `f ]
+[; ;newmain.c: 421:     INTCON3bits.INT1IP = 1;
+[e = . . _INTCON3bits 0 6 -> -> 1 `i `uc ]
 "422
-[; ;newmain.c: 422: }
-[e :UE 461 ]
-}
+[; ;newmain.c: 422:     RCONbits.IPEN = 1;
+[e = . . _RCONbits 5 7 -> -> 1 `i `uc ]
+"423
+[; ;newmain.c: 423:     INTCONbits.GIEH = 1;
+[e = . . _INTCONbits 2 2 -> -> 1 `i `uc ]
 "424
-[; ;newmain.c: 424: void Read_Flame_Sensor(void) {
-[v _Read_Flame_Sensor `(v ~T0 @X0 1 ef ]
-{
-[e :U _Read_Flame_Sensor ]
-[f ]
+[; ;newmain.c: 424:     INTCONbits.GIEL = 1;
+[e = . . _INTCONbits 2 1 -> -> 1 `i `uc ]
 "425
-[; ;newmain.c: 425:     if(!flame_calibrated) {
-[e $ ! ! != -> _flame_calibrated `i -> 0 `i 466  ]
-{
-"426
-[; ;newmain.c: 426:         Calibrate_Flame_Sensor();
-[e ( _Calibrate_Flame_Sensor ..  ]
+[; ;newmain.c: 425: }
+[e :UE 455 ]
+}
 "427
-[; ;newmain.c: 427:         return;
-[e $UE 465  ]
-"428
-[; ;newmain.c: 428:     }
-}
-[e :U 466 ]
-"430
-[; ;newmain.c: 430:     unsigned int adc_value = ADC_Read_Average(1, 10);
-[v _adc_value `ui ~T0 @X0 1 a ]
-[e = _adc_value ( _ADC_Read_Average (2 , -> -> 1 `i `uc -> -> 10 `i `uc ]
-"431
-[; ;newmain.c: 431:     float voltage = (adc_value * 5.0) / 1024.0;
-[v _voltage `f ~T0 @X0 1 a ]
-[e = _voltage -> / * -> _adc_value `d .5.0 .1024.0 `f ]
-"432
-[; ;newmain.c: 432:     float intensity = (flame_base_voltage - voltage) * 100.0 / flame_base_voltage;
-[v _intensity `f ~T0 @X0 1 a ]
-[e = _intensity -> / * -> - _flame_base_voltage _voltage `d .100.0 -> _flame_base_voltage `d `f ]
-"434
-[; ;newmain.c: 434:     if(intensity < 0) intensity = 0;
-[e $ ! < _intensity -> -> 0 `i `f 467  ]
-[e = _intensity -> -> 0 `i `f ]
-[e :U 467 ]
-"435
-[; ;newmain.c: 435:     if(intensity > 100) intensity = 100;
-[e $ ! > _intensity -> -> 100 `i `f 468  ]
-[e = _intensity -> -> 100 `i `f ]
-[e :U 468 ]
-"437
-[; ;newmain.c: 437:     static bool last_detected = 0;
-[v F4239 `uc ~T0 @X0 1 s last_detected ]
-[i F4239
--> -> 0 `i `uc
-]
-"439
-[; ;newmain.c: 439:     if (!last_detected && intensity >= 18.0) {
-[e $ ! && ! != -> F4239 `i -> 0 `i >= -> _intensity `d .18.0 469  ]
-{
-"440
-[; ;newmain.c: 440:         flame_detected = 1;
-[e = _flame_detected -> -> 1 `i `uc ]
-"441
-[; ;newmain.c: 441:         last_detected = 1;
-[e = F4239 -> -> 1 `i `uc ]
-"442
-[; ;newmain.c: 442:     }
-}
-[e $U 470  ]
-"443
-[; ;newmain.c: 443:     else if (last_detected && intensity <= 12.0) {
-[e :U 469 ]
-[e $ ! && != -> F4239 `i -> 0 `i <= -> _intensity `d .12.0 471  ]
-{
-"444
-[; ;newmain.c: 444:         flame_detected = 0;
-[e = _flame_detected -> -> 0 `i `uc ]
-"445
-[; ;newmain.c: 445:         last_detected = 0;
-[e = F4239 -> -> 0 `i `uc ]
-"446
-[; ;newmain.c: 446:     }
-}
-[e :U 471 ]
-[e :U 470 ]
-"448
-[; ;newmain.c: 448:     flame_intensity = flame_detected ? intensity : 0.0;
-[e = _flame_intensity -> ? != -> _flame_detected `i -> 0 `i : -> _intensity `d .0.0 `f ]
-"449
-[; ;newmain.c: 449: }
-[e :UE 465 ]
-}
-"451
-[; ;newmain.c: 451: void Read_MQ2_Sensor(void) {
-[v _Read_MQ2_Sensor `(v ~T0 @X0 1 ef ]
-{
-[e :U _Read_MQ2_Sensor ]
-[f ]
-"452
-[; ;newmain.c: 452:     static bool calibrated = 0;
-[v F4241 `uc ~T0 @X0 1 s calibrated ]
-[i F4241
--> -> 0 `i `uc
-]
-"453
-[; ;newmain.c: 453:     if(!calibrated) {
-[e $ ! ! != -> F4241 `i -> 0 `i 473  ]
-{
-"454
-[; ;newmain.c: 454:         Calibrate_MQ2();
-[e ( _Calibrate_MQ2 ..  ]
-"455
-[; ;newmain.c: 455:         calibrated = 1;
-[e = F4241 -> -> 1 `i `uc ]
-"456
-[; ;newmain.c: 456:     }
-}
-[e :U 473 ]
-"458
-[; ;newmain.c: 458:     unsigned int adc_value = ADC_Read_Average(2, 10);
-[v _adc_value `ui ~T0 @X0 1 a ]
-[e = _adc_value ( _ADC_Read_Average (2 , -> -> 2 `i `uc -> -> 10 `i `uc ]
-"459
-[; ;newmain.c: 459:     float voltage = (adc_value * 5.0) / 1024.0;
-[v _voltage `f ~T0 @X0 1 a ]
-[e = _voltage -> / * -> _adc_value `d .5.0 .1024.0 `f ]
-"460
-[; ;newmain.c: 460:     float Rs = (5.0 - voltage) / voltage;
-[v _Rs `f ~T0 @X0 1 a ]
-[e = _Rs -> / - .5.0 -> _voltage `d -> _voltage `d `f ]
-"462
-[; ;newmain.c: 462:     float temp_factor = 1.0 + 0.025 * (temperature - 25.0);
-[v _temp_factor `f ~T0 @X0 1 a ]
-[e = _temp_factor -> + .1.0 * .0.025 - -> _temperature `d .25.0 `f ]
-"463
-[; ;newmain.c: 463:     Rs /= temp_factor;
-[e =/ _Rs _temp_factor ]
-"465
-[; ;newmain.c: 465:     float rs_ro_ratio = Rs / MQ2_Ro;
-[v _rs_ro_ratio `f ~T0 @X0 1 a ]
-[e = _rs_ro_ratio / _Rs _MQ2_Ro ]
-"466
-[; ;newmain.c: 466:     float ppm = 0.0;
-[v _ppm `f ~T0 @X0 1 a ]
-[e = _ppm -> .0.0 `f ]
-"468
-[; ;newmain.c: 468:     if(rs_ro_ratio > 0.15) {
-[e $ ! > -> _rs_ro_ratio `d .0.15 474  ]
-{
-"469
-[; ;newmain.c: 469:         ppm = 12.0 * powf(rs_ro_ratio,-1.8);
-[e = _ppm -> * .12.0 -> ( _powf (2 , _rs_ro_ratio -> -U .1.8 `f `d `f ]
-"470
-[; ;newmain.c: 470:     }
-}
-[e :U 474 ]
-"471
-[; ;newmain.c: 471:     if(rs_ro_ratio > 0.05 && rs_ro_ratio <= 0.15) {
-[e $ ! && > -> _rs_ro_ratio `d .0.05 <= -> _rs_ro_ratio `d .0.15 475  ]
-{
-"472
-[; ;newmain.c: 472:         ppm = 80.0 * powf(rs_ro_ratio,-3.2);
-[e = _ppm -> * .80.0 -> ( _powf (2 , _rs_ro_ratio -> -U .3.2 `f `d `f ]
-"473
-[; ;newmain.c: 473:     }
-}
-[e :U 475 ]
-"475
-[; ;newmain.c: 475:     ppm = ppm < 0 ? 0 : (ppm > 10000 ? 10000 : ppm);
-[e = _ppm ? < _ppm -> -> 0 `i `f : -> -> 0 `i `f ? > _ppm -> -> 10000 `i `f : -> -> 10000 `i `f _ppm ]
-"477
-[; ;newmain.c: 477:     co_filter[filter_index] = ppm;
-[e = *U + &U _co_filter * -> _filter_index `ux -> -> # *U &U _co_filter `ui `ux _ppm ]
-"478
-[; ;newmain.c: 478:     co_ppm = 0;
-[e = _co_ppm -> -> 0 `i `f ]
-"479
-[; ;newmain.c: 479:     for(int i = 0; i < 7; i++) {
-{
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $ < _i -> 7 `i 476  ]
-[e $U 477  ]
-[e :U 476 ]
-{
-"480
-[; ;newmain.c: 480:         co_ppm += co_filter[i];
-[e =+ _co_ppm *U + &U _co_filter * -> -> _i `ui `ux -> -> # *U &U _co_filter `ui `ux ]
-"481
-[; ;newmain.c: 481:     }
-}
-[e ++ _i -> 1 `i ]
-[e $ < _i -> 7 `i 476  ]
-[e :U 477 ]
-}
-"482
-[; ;newmain.c: 482:     co_ppm /= 7;
-[e =/ _co_ppm -> -> 7 `i `f ]
-"483
-[; ;newmain.c: 483: }
-[e :UE 472 ]
-}
-"485
-[; ;newmain.c: 485: void Calculate_Flow(void) {
-[v _Calculate_Flow `(v ~T0 @X0 1 ef ]
-{
-[e :U _Calculate_Flow ]
-[f ]
-"486
-[; ;newmain.c: 486:     static unsigned int last_pulse_count = 0;
-[v F4250 `ui ~T0 @X0 1 s last_pulse_count ]
-[i F4250
--> -> 0 `i `ui
-]
-"487
-[; ;newmain.c: 487:     static unsigned long last_calc_time = 0;
-[v F4251 `ul ~T0 @X0 1 s last_calc_time ]
-[i F4251
--> -> -> 0 `i `l `ul
-]
-"490
-[; ;newmain.c: 490:     if(system_millis - last_calc_time >= 1000) {
-[e $ ! >= - _system_millis F4251 -> -> -> 1000 `i `l `ul 480  ]
-{
-"491
-[; ;newmain.c: 491:         unsigned int pulses = pulse_count - last_pulse_count;
-[v _pulses `ui ~T0 @X0 1 a ]
-[e = _pulses - _pulse_count F4250 ]
-"492
-[; ;newmain.c: 492:         flow_rate = (pulses / (float)450) * 60.0;
-[e = _flow_rate -> * -> / -> _pulses `f -> -> 450 `i `f `d .60.0 `f ]
-"493
-[; ;newmain.c: 493:         total_flow += flow_rate / 60.0;
-[e =+ _total_flow -> / -> _flow_rate `d .60.0 `f ]
-"495
-[; ;newmain.c: 495:         last_pulse_count = pulse_count;
-[e = F4250 _pulse_count ]
-"496
-[; ;newmain.c: 496:         last_calc_time = system_millis;
-[e = F4251 _system_millis ]
-"497
-[; ;newmain.c: 497:     }
-}
-[e :U 480 ]
-"498
-[; ;newmain.c: 498: }
-[e :UE 479 ]
-}
-"500
-[; ;newmain.c: 500: void Update_Actuators(void) {
-[v _Update_Actuators `(v ~T0 @X0 1 ef ]
-{
-[e :U _Update_Actuators ]
-[f ]
-"501
-[; ;newmain.c: 501:     prev_fire_alarm = fire_alarm;
-[e = _prev_fire_alarm _fire_alarm ]
-"503
-[; ;newmain.c: 503:     bool temp_alarm = temperature >= 42.0;
-[v _temp_alarm `uc ~T0 @X0 1 a ]
-[e = _temp_alarm -> -> >= -> _temperature `d .42.0 `i `uc ]
-"504
-[; ;newmain.c: 504:     bool co_alarm = co_ppm >= 55.0;
-[v _co_alarm `uc ~T0 @X0 1 a ]
-[e = _co_alarm -> -> >= -> _co_ppm `d .55.0 `i `uc ]
-"506
-[; ;newmain.c: 506:     fire_alarm = flame_detected || temp_alarm || co_alarm;
-[e = _fire_alarm -> -> || || != -> _flame_detected `i -> 0 `i != -> _temp_alarm `i -> 0 `i != -> _co_alarm `i -> 0 `i `i `uc ]
-"508
-[; ;newmain.c: 508:     if (!fire_alarm &&
-[e $ ! && ! != -> _fire_alarm `i -> 0 `i || > -> _temperature `d .38.0 > -> _co_ppm `d .45.0 482  ]
-"510
-[; ;newmain.c: 510:          co_ppm > 45.0)) {
-{
-"511
-[; ;newmain.c: 511:         fire_alarm = 1;
-[e = _fire_alarm -> -> 1 `i `uc ]
-"512
-[; ;newmain.c: 512:     }
-}
-[e :U 482 ]
-"514
-[; ;newmain.c: 514:     if(fire_alarm) {
-[e $ ! != -> _fire_alarm `i -> 0 `i 483  ]
-{
-"515
-[; ;newmain.c: 515:         PORTBbits.RB0 = 1;
-[e = . . _PORTBbits 0 0 -> -> 1 `i `uc ]
-"516
-[; ;newmain.c: 516:         pump_active = 1;
-[e = _pump_active -> -> 1 `i `uc ]
-"519
-[; ;newmain.c: 519:         static unsigned long last_blink = 0;
-[v F4256 `ul ~T0 @X0 1 s last_blink ]
-[i F4256
--> -> -> 0 `i `l `ul
-]
-"520
-[; ;newmain.c: 520:         if(system_millis - last_blink >= 500) {
-[e $ ! >= - _system_millis F4256 -> -> -> 500 `i `l `ul 484  ]
-{
-"521
-[; ;newmain.c: 521:             PORTBbits.RB5 = !PORTBbits.RB5;
-[e = . . _PORTBbits 0 5 -> -> ! != -> . . _PORTBbits 0 5 `i -> 0 `i `i `uc ]
-"522
-[; ;newmain.c: 522:             last_blink = system_millis;
-[e = F4256 _system_millis ]
-"523
-[; ;newmain.c: 523:         }
-}
-[e :U 484 ]
-"524
-[; ;newmain.c: 524:         alarm_active = 1;
-[e = _alarm_active -> -> 1 `i `uc ]
-"525
-[; ;newmain.c: 525:     } else {
-}
-[e $U 485  ]
-[e :U 483 ]
-{
-"526
-[; ;newmain.c: 526:         PORTBbits.RB0 = 0;
-[e = . . _PORTBbits 0 0 -> -> 0 `i `uc ]
-"527
-[; ;newmain.c: 527:         pump_active = 0;
-[e = _pump_active -> -> 0 `i `uc ]
-"528
-[; ;newmain.c: 528:         PORTBbits.RB5 = 1;
-[e = . . _PORTBbits 0 5 -> -> 1 `i `uc ]
-"529
-[; ;newmain.c: 529:         alarm_active = 0;
-[e = _alarm_active -> -> 0 `i `uc ]
-"530
-[; ;newmain.c: 530:     }
-}
-[e :U 485 ]
-"531
-[; ;newmain.c: 531: }
-[e :UE 481 ]
-}
-"533
-[; ;newmain.c: 533: void Send_Sensor_Data(void) {
-[v _Send_Sensor_Data `(v ~T0 @X0 1 ef ]
-{
-[e :U _Send_Sensor_Data ]
-[f ]
-"534
-[; ;newmain.c: 534:     char buffer[200];
-[v _buffer `uc ~T0 @X0 -> 200 `i a ]
-"535
-[; ;newmain.c: 535:     sprintf(buffer, "{\"t\":%.1f,\"fd\":%d,\"fi\":%.1f,\"co\":%.1f,\"fr\":%.2f,\"tf\":%.2f,\"p\":%d,\"a\":%d,\"cmd\":{\"test\":%d,\"shutdown\":%d}}\r\n",
-[e ( _sprintf (1 , , , , , , , , , , (. , &U _buffer :s 14C -> _temperature `d -> _flame_detected `i -> _flame_intensity `d -> _co_ppm `d -> _flow_rate `d -> _total_flow `d -> _pump_active `i -> _alarm_active `i -> _trigger_test `i -> _shutdown_system `i ]
-"546
-[; ;newmain.c: 546:     while(!TXSTAbits.TRMT);
-[e $U 487  ]
-[e :U 488 ]
-[e :U 487 ]
-[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 488  ]
-[e :U 489 ]
-"547
-[; ;newmain.c: 547:     for(int i = 0; buffer[i]; i++) {
-{
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $U 493  ]
-[e :U 490 ]
-{
-"548
-[; ;newmain.c: 548:         TXREG = buffer[i];
-[e = _TXREG -> *U + &U _buffer * -> -> _i `ui `ux -> -> # *U &U _buffer `ui `ux `uc ]
-"549
-[; ;newmain.c: 549:         while(!TXSTAbits.TRMT);
-[e $U 494  ]
-[e :U 495 ]
-[e :U 494 ]
-[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 495  ]
-[e :U 496 ]
-"550
-[; ;newmain.c: 550:     }
-}
-[e ++ _i -> 1 `i ]
-[e :U 493 ]
-[e $ != -> *U + &U _buffer * -> -> _i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 0 `i 490  ]
-[e :U 491 ]
-}
-"551
-[; ;newmain.c: 551: }
-[e :UE 486 ]
-}
-"553
-[; ;newmain.c: 553: void UART_Init(void) {
+[; ;newmain.c: 427: void UART_Init(void) {
 [v _UART_Init `(v ~T0 @X0 1 ef ]
 {
 [e :U _UART_Init ]
 [f ]
-"554
-[; ;newmain.c: 554:     TRISC6 = 0;
+"428
+[; ;newmain.c: 428:     TRISC6 = 0;
 [e = _TRISC6 -> -> 0 `i `b ]
-"555
-[; ;newmain.c: 555:     TRISC7 = 1;
+"429
+[; ;newmain.c: 429:     TRISC7 = 1;
 [e = _TRISC7 -> -> 1 `i `b ]
-"556
-[; ;newmain.c: 556:     SPBRG = 51;
+"430
+[; ;newmain.c: 430:     SPBRG = 51;
 [e = _SPBRG -> -> 51 `i `uc ]
-"557
-[; ;newmain.c: 557:     TXSTAbits.BRGH = 1;
+"431
+[; ;newmain.c: 431:     TXSTAbits.BRGH = 1;
 [e = . . _TXSTAbits 0 2 -> -> 1 `i `uc ]
-"558
-[; ;newmain.c: 558:     TXSTAbits.SYNC = 0;
+"432
+[; ;newmain.c: 432:     TXSTAbits.SYNC = 0;
 [e = . . _TXSTAbits 0 4 -> -> 0 `i `uc ]
-"559
-[; ;newmain.c: 559:     TXSTAbits.TXEN = 1;
+"433
+[; ;newmain.c: 433:     TXSTAbits.TXEN = 1;
 [e = . . _TXSTAbits 0 5 -> -> 1 `i `uc ]
-"560
-[; ;newmain.c: 560:     RCSTAbits.SPEN = 1;
+"434
+[; ;newmain.c: 434:     RCSTAbits.SPEN = 1;
 [e = . . _RCSTAbits 0 7 -> -> 1 `i `uc ]
-"561
-[; ;newmain.c: 561:     RCSTAbits.CREN = 1;
+"435
+[; ;newmain.c: 435:     RCSTAbits.CREN = 1;
 [e = . . _RCSTAbits 0 4 -> -> 1 `i `uc ]
-"562
-[; ;newmain.c: 562: }
-[e :UE 497 ]
-}
-"564
-[; ;newmain.c: 564: char UART_Read(void) {
-[v _UART_Read `(uc ~T0 @X0 1 ef ]
-{
-[e :U _UART_Read ]
-[f ]
-"565
-[; ;newmain.c: 565:     if(PIR1bits.RCIF) {
-[e $ ! != -> . . _PIR1bits 0 5 `i -> 0 `i 499  ]
-{
-"566
-[; ;newmain.c: 566:         return RCREG;
-[e ) -> _RCREG `uc ]
-[e $UE 498  ]
-"567
-[; ;newmain.c: 567:     }
-}
-[e :U 499 ]
-"568
-[; ;newmain.c: 568:     return 0;
-[e ) -> -> 0 `i `uc ]
-[e $UE 498  ]
-"569
-[; ;newmain.c: 569: }
-[e :UE 498 ]
-}
-"571
-[; ;newmain.c: 571: char UART_Data_Ready(void) {
-[v _UART_Data_Ready `(uc ~T0 @X0 1 ef ]
-{
-[e :U _UART_Data_Ready ]
-[f ]
-"572
-[; ;newmain.c: 572:     return PIR1bits.RCIF;
-[e ) -> . . _PIR1bits 0 5 `uc ]
-[e $UE 500  ]
-"573
-[; ;newmain.c: 573: }
-[e :UE 500 ]
+"436
+[; ;newmain.c: 436: }
+[e :UE 456 ]
 }
 [p f _sprintf 8725648 ]
-[a 3C 116 101 115 116 0 ]
-[a 5C 115 121 115 116 101 109 95 115 116 97 114 116 0 ]
-[a 6C 117 110 107 110 111 119 110 0 ]
-[a 12C 117 110 107 110 111 119 110 0 ]
-[a 4C 115 104 117 116 100 111 119 110 0 ]
-[a 2C 102 105 114 101 0 ]
-[a 10C 116 101 115 116 95 101 110 100 0 ]
-[a 11C 115 104 117 116 100 111 119 110 95 101 110 100 0 ]
-[a 9C 102 105 114 101 95 101 110 100 0 ]
-[a 14C 123 34 116 34 58 37 46 49 102 44 34 102 100 34 58 37 100 44 34 102 105 34 58 37 46 49 102 44 34 99 111 34 58 37 46 49 102 44 34 102 114 34 58 37 46 50 102 44 34 116 102 34 58 37 46 50 102 44 34 112 34 58 37 100 44 34 97 34 58 37 100 44 34 99 109 100 34 58 123 34 116 101 115 116 34 58 37 100 44 34 115 104 117 116 100 111 119 110 34 58 37 100 125 125 13 10 0 ]
-[a 7C 123 34 101 118 101 110 116 34 58 34 37 115 34 44 34 116 105 109 101 34 58 37 108 117 125 13 10 0 ]
-[a 13C 123 34 101 118 101 110 116 34 58 34 37 115 34 44 34 115 116 97 114 116 95 116 105 109 101 34 58 37 108 117 44 34 116 48 34 58 37 46 49 102 44 34 102 105 48 34 58 37 46 49 102 44 34 99 111 48 34 58 37 46 49 102 44 34 119 97 116 101 114 34 58 37 46 50 102 125 13 10 0 ]
-[a 1C 0 ]
-[a 8C 0 ]
+[a 8C 116 101 115 116 95 115 116 97 114 116 0 ]
+[a 5C 102 105 114 101 95 115 116 97 114 116 0 ]
+[a 3C 99 111 95 115 101 110 115 111 114 0 ]
+[a 2C 116 101 109 112 101 114 97 116 117 114 101 95 115 101 110 115 111 114 0 ]
+[a 1C 102 108 97 109 101 95 115 101 110 115 111 114 0 ]
+[a 12C 115 104 117 116 100 111 119 110 0 ]
+[a 6C 44 34 100 117 114 97 116 105 111 110 34 58 37 108 117 44 34 119 97 116 101 114 34 58 37 46 50 102 0 ]
+[a 10C 44 34 119 97 116 101 114 34 58 37 46 50 102 0 ]
+[a 14C 114 101 115 117 109 101 0 ]
+[a 11C 116 101 115 116 95 101 110 100 0 ]
+[a 7C 102 105 114 101 95 101 110 100 0 ]
+[a 4C 44 34 115 101 110 115 111 114 34 58 34 37 115 34 0 ]
+[a 17C 123 34 116 34 58 37 46 49 102 44 34 102 100 34 58 37 100 44 34 102 105 34 58 37 46 49 102 44 34 99 111 34 58 37 46 49 102 44 34 102 114 34 58 37 46 50 102 44 34 116 102 34 58 37 46 50 102 44 34 112 34 58 37 100 44 34 97 34 58 37 100 44 34 99 109 100 34 58 123 34 116 101 115 116 34 58 37 100 44 34 115 104 117 116 100 111 119 110 34 58 37 100 125 125 13 10 0 ]
+[a 16C 123 34 101 118 101 110 116 34 58 34 37 115 34 44 34 116 105 109 101 34 58 37 108 117 37 115 125 13 10 0 ]
+[a 9C 0 ]
+[a 13C 0 ]
+[a 15C 0 ]
