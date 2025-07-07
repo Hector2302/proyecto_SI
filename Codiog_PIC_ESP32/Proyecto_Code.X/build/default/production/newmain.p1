@@ -1158,8 +1158,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 380 ]
 {
 "131
-[; ;newmain.c: 131:         system_millis += 250;
-[e =+ _system_millis -> -> -> 250 `i `l `ul ]
+[; ;newmain.c: 131:         system_millis += 125;
+[e =+ _system_millis -> -> -> 125 `i `l `ul ]
 "133
 [; ;newmain.c: 133:         Handle_Commands();
 [e ( _Handle_Commands ..  ]
@@ -1215,8 +1215,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;newmain.c: 153:         sample_index = (sample_index + 1) % 5;
 [e = _sample_index -> % + -> _sample_index `i -> 1 `i -> 5 `i `uc ]
 "154
-[; ;newmain.c: 154:         _delay((unsigned long)((250)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 250 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;newmain.c: 154:         _delay((unsigned long)((125)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 125 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "155
 [; ;newmain.c: 155:     }
 }
@@ -1896,11 +1896,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _Send_Data ]
 [f ]
 "389
-[; ;newmain.c: 389:     char buffer[150];
-[v _buffer `uc ~T0 @X0 -> 150 `i a ]
+[; ;newmain.c: 389:     char buffer[200];
+[v _buffer `uc ~T0 @X0 -> 200 `i a ]
 "390
 [; ;newmain.c: 390:     sprintf(buffer,
-[e ( _sprintf (1 , , , , , , , , , , (. , &U _buffer :s 17C -> _temperature `d -> _flame_detected `i -> _flame_intensity `d -> _co_ppm `d -> _flow_rate `d -> _total_flow `d -> _pump_active `i -> _alarm_active `i -> _trigger_test `i -> _shutdown_system `i ]
+[e ( _sprintf (1 , , , , , , , , , , , (. , &U _buffer :s 17C -> _temperature `d -> _flame_detected `i -> _flame_intensity `d -> _co_ppm `d -> _flow_rate `d -> _total_flow `d -> _pump_active `i -> _alarm_active `i -> _fire_alarm `i -> _trigger_test `i -> _shutdown_system `i ]
 "395
 [; ;newmain.c: 395:     while(!TXSTAbits.TRMT);
 [e $U 440  ]
@@ -2069,7 +2069,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 11C 116 101 115 116 95 101 110 100 0 ]
 [a 7C 102 105 114 101 95 101 110 100 0 ]
 [a 4C 44 34 115 101 110 115 111 114 34 58 34 37 115 34 0 ]
-[a 17C 123 34 116 34 58 37 46 49 102 44 34 102 100 34 58 37 100 44 34 102 105 34 58 37 46 49 102 44 34 99 111 34 58 37 46 49 102 44 34 102 114 34 58 37 46 50 102 44 34 116 102 34 58 37 46 50 102 44 34 112 34 58 37 100 44 34 97 34 58 37 100 44 34 99 109 100 34 58 123 34 116 101 115 116 34 58 37 100 44 34 115 104 117 116 100 111 119 110 34 58 37 100 125 125 13 10 0 ]
+[a 17C 123 34 116 34 58 37 46 49 102 44 34 102 100 34 58 37 100 44 34 102 105 34 58 37 46 49 102 44 34 99 111 34 58 37 46 49 102 44 34 102 114 34 58 37 46 50 102 44 34 116 102 34 58 37 46 50 102 44 34 112 34 58 37 100 44 34 97 34 58 37 100 44 34 102 97 34 58 37 100 44 34 99 109 100 34 58 123 34 116 101 115 116 34 58 37 100 44 34 115 104 117 116 100 111 119 110 34 58 37 100 125 125 13 10 0 ]
 [a 16C 123 34 101 118 101 110 116 34 58 34 37 115 34 44 34 116 105 109 101 34 58 37 108 117 37 115 125 13 10 0 ]
 [a 9C 0 ]
 [a 13C 0 ]

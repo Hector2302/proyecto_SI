@@ -6424,7 +6424,7 @@ void main(void) {
     unsigned int cycle_count = 0;
 
     while(1) {
-        system_millis += 250;
+        system_millis += 125;
 
         Handle_Commands();
 
@@ -6447,7 +6447,7 @@ void main(void) {
 
         cycle_count++;
         sample_index = (sample_index + 1) % 5;
-        _delay((unsigned long)((250)*(8000000/4000.0)));
+        _delay((unsigned long)((125)*(8000000/4000.0)));
     }
 }
 
@@ -6682,11 +6682,11 @@ void Update_Actuators(void) {
 }
 
 void Send_Data(void) {
-    char buffer[150];
+    char buffer[200];
     sprintf(buffer,
-        "{\"t\":%.1f,\"fd\":%d,\"fi\":%.1f,\"co\":%.1f,\"fr\":%.2f,\"tf\":%.2f,\"p\":%d,\"a\":%d,\"cmd\":{\"test\":%d,\"shutdown\":%d}}\r\n",
+        "{\"t\":%.1f,\"fd\":%d,\"fi\":%.1f,\"co\":%.1f,\"fr\":%.2f,\"tf\":%.2f,\"p\":%d,\"a\":%d,\"fa\":%d,\"cmd\":{\"test\":%d,\"shutdown\":%d}}\r\n",
         temperature, flame_detected, flame_intensity, co_ppm, flow_rate, total_flow,
-        pump_active, alarm_active, trigger_test, shutdown_system);
+        pump_active, alarm_active, fire_alarm, trigger_test, shutdown_system);
 
     while(!TXSTAbits.TRMT);
     for(int i = 0; buffer[i]; i++) {

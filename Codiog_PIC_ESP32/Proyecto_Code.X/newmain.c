@@ -1,6 +1,6 @@
 /*
  * Sistema anti-incendios optimizado - PIC18F4550
- * Historial específico para eventos críticos
+ * Historial espec�fico para eventos cr�ticos
  */
 
 #include <xc.h>
@@ -87,7 +87,7 @@ void Handle_Shutdown_Events(void);
 void Send_History_Event(const char* event_type, const char* extra_data);
 float Apply_Filter(float new_value, float* samples);
 
-// Interrupción optimizada
+// Interrupci�n optimizada
 void __interrupt(high_priority) HighISR(void) {
     if (INTCON3bits.INT1IF) {
         pulse_count++;
@@ -96,7 +96,7 @@ void __interrupt(high_priority) HighISR(void) {
 }
 
 void main(void) {
-    // Configuración inicial
+    // Configuraci�n inicial
     OSCCON = 0x70;
     TRISB = 0x02;
     PORTB = 0x00;
@@ -108,7 +108,7 @@ void main(void) {
     ADC_Init();
     Interrupt_Init();
     
-    // Calibración inicial
+    // Calibraci�n inicial
     for(int i = 0; i < 50; i++) {
         unsigned int adc_value = ADC_Read(FLAME_CHANNEL);
         flame_base_voltage += (adc_value * 5.0) / 1024.0;
@@ -128,7 +128,7 @@ void main(void) {
     unsigned int cycle_count = 0;
     
     while(1) {
-        system_millis += 250;
+        system_millis += 125;  // Cambiar de 250 a 125ms
         
         Handle_Commands();
         
@@ -143,7 +143,7 @@ void main(void) {
         Handle_Test_Events();
         Handle_Shutdown_Events();
         
-        // Enviar datos cada 1 segundo
+        // Enviar datos cada 0.5 segundos (4 � 125ms = 500ms)
         if(cycle_count >= 4) {
             Send_Data();
             cycle_count = 0;
@@ -151,7 +151,7 @@ void main(void) {
         
         cycle_count++;
         sample_index = (sample_index + 1) % FILTER_SIZE;
-        __delay_ms(250);
+        __delay_ms(125);  // Cambiar de 250 a 125ms
     }
 }
 
@@ -208,7 +208,7 @@ void Handle_Fire_Events(void) {
         fire_start_co = co_ppm;
         fire_start_flow = total_flow;
         
-        // Determinar qué sensor activó la alarma
+        // Determinar qu� sensor activ� la alarma
         if(flame_detected) {
             strcpy(fire_trigger_sensor, "flame_sensor");
         } else if(temperature >= TEMP_ALARM_THRESHOLD) {
@@ -232,7 +232,7 @@ void Handle_Fire_Events(void) {
         sprintf(end_data, ",\"duration\":%lu,\"water\":%.2f", duration, water_used);
         Send_History_Event("fire_end", end_data);
         
-        // Reset flujo después de 5 segundos
+        // Reset flujo despu�s de 5 segundos
         __delay_ms(5000);
         total_flow = 0.0;
         pulse_count = 0;
@@ -257,7 +257,7 @@ void Handle_Test_Events(void) {
         sprintf(test_data, ",\"water\":%.2f", water_used);
         Send_History_Event("test_end", test_data);
         
-        // Reset flujo después de 3 segundos
+        // Reset flujo despu�s de 3 segundos
         __delay_ms(3000);
         total_flow = 0.0;
         pulse_count = 0;
@@ -308,7 +308,7 @@ void Read_Sensors(void) {
     if(flame_intensity < 0) flame_intensity = 0;
     if(flame_intensity > 100) flame_intensity = 100;
     
-    // Detección con histéresis
+    // Detecci�n con hist�resis
     if(!flame_detected && flame_intensity >= FLAME_DETECTION_THRESHOLD) {
         flame_detected = true;
     } else if(flame_detected && flame_intensity <= (FLAME_DETECTION_THRESHOLD - FLAME_HYSTERESIS)) {
@@ -320,7 +320,7 @@ void Read_Sensors(void) {
     float mq2_voltage = (mq2_adc * 5.0) / 1024.0;
     float Rs = (5.0 - mq2_voltage) / mq2_voltage;
     
-    // Compensación por temperatura
+    // Compensaci�n por temperatura
     float temp_factor = 1.0 + 0.02 * (temperature - 25.0);
     Rs /= temp_factor;
     
@@ -361,7 +361,7 @@ float Apply_Filter(float new_value, float* samples) {
 }
 
 void Update_Actuators(void) {
-    // Lógica de alarma simplificada
+    // L�gica de alarma simplificada
     fire_alarm = flame_detected || 
                  (temperature >= TEMP_ALARM_THRESHOLD) || 
                  (co_ppm >= CO_ALARM_THRESHOLD);
@@ -386,11 +386,11 @@ void Update_Actuators(void) {
 }
 
 void Send_Data(void) {
-    char buffer[150];
+    char buffer[200];
     sprintf(buffer, 
-        "{\"t\":%.1f,\"fd\":%d,\"fi\":%.1f,\"co\":%.1f,\"fr\":%.2f,\"tf\":%.2f,\"p\":%d,\"a\":%d,\"cmd\":{\"test\":%d,\"shutdown\":%d}}\r\n",
+        "{\"t\":%.1f,\"fd\":%d,\"fi\":%.1f,\"co\":%.1f,\"fr\":%.2f,\"tf\":%.2f,\"p\":%d,\"a\":%d,\"fa\":%d,\"cmd\":{\"test\":%d,\"shutdown\":%d}}\r\n",
         temperature, flame_detected, flame_intensity, co_ppm, flow_rate, total_flow,
-        pump_active, alarm_active, trigger_test, shutdown_system);
+        pump_active, alarm_active, fire_alarm, trigger_test, shutdown_system);
     
     while(!TXSTAbits.TRMT);
     for(int i = 0; buffer[i]; i++) {

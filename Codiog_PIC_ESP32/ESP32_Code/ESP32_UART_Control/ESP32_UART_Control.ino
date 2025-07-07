@@ -1,5 +1,5 @@
 /*
- * Sistema anti-incendios optimizado con Nuevo Sistema de Historial
+ * Sistema anti-incendios optimizado - PIC procesa todo
  */
 
 #include <WiFi.h>
@@ -27,11 +27,11 @@ bool firebaseConnected = false;
 unsigned long lastSensorPublish = 0;
 unsigned long lastCommandCheck = 0;
 unsigned long lastReconnectAttempt = 0;
-const unsigned int SENSOR_PUBLISH_INTERVAL = 1000;
+const unsigned int SENSOR_PUBLISH_INTERVAL = 500; // Cambiado a 0.5 segundos
 const unsigned int COMMAND_CHECK_INTERVAL = 2000;
 const unsigned int RECONNECT_INTERVAL = 30000;
 
-// Variables de sensores (recibidas del PIC)
+// Variables globales para datos del sensor (recibidos del PIC)
 float temperature = 0.0;
 bool flame_detected = false;
 float flame_intensity = 0.0;
@@ -40,17 +40,19 @@ float flow_rate = 0.0;
 float total_flow = 0.0;
 bool pump_active = false;
 bool alarm_active = false;
+bool fire_alarm = false;  // AGREGAR: Recibido del PIC
 bool trigger_test = false;
 bool shutdown_system = false;
 
 // Estados previos para detección de cambios
 bool last_trigger_test = false;
 bool last_shutdown_system = false;
-bool system_initialized = false;
 
 // Variables globales adicionales
 unsigned long lastHistoryClean = 0;
-const unsigned int HISTORY_CLEAN_INTERVAL = 5000; // 5 segundos
+unsigned long lastFlowReset = 0;  // Nuevo: para reset de total_flow
+const unsigned long HISTORY_CLEAN_INTERVAL = 1000; // Verificar cada segundo en lugar de cada 5 segundos
+const unsigned int FLOW_RESET_INTERVAL = 30000;   // Nuevo: 30 segundos para reset de total
 
 void setup() {
   Serial.begin(115200);
@@ -58,29 +60,44 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW);
   
   PIC_SERIAL.begin(9600, SERIAL_8N1, RX_PIN, TX_PIN);
-  Serial.println("ESP32 Fire System Optimized - New History System");
+  Serial.println("[DEBUG] ESP32 Fire System - PIC Processing Mode");
   
   setupWiFi();
   if(wifiConnected) {
     setupFirebase();
-    configTime(-6*3600, 0, "pool.ntp.org"); // GMT-6 para México
+    configTime(-6*3600, 0, "pool.ntp.org");
     blinkLED(3, 300);
-    Serial.println("System ready");
+    Serial.println("[DEBUG] System ready");
     
-    // Inicializar comandos en Firebase
     Firebase.RTDB.setBool(&fbdo, "/commands/trigger_test", false);
     Firebase.RTDB.setBool(&fbdo, "/commands/shutdown_system", false);
   }
 }
 
 void loop() {
-  handleWiFiReconnection();
-  handleFirebaseReconnection();
-  processPICData();
-  publishSensorData();
-  checkFirebaseCommands();
-  cleanOldHistory(); // Agregar limpieza de historial
-  delay(10);
+    static unsigned long lastPublish = 0;
+    unsigned long currentTime = millis();
+    
+    handleWiFiReconnection();
+    handleFirebaseReconnection();
+    
+    // Procesar datos del PIC continuamente
+    processPICData();
+    
+    // Publicar datos cada 500ms exactos
+    if (currentTime - lastPublish >= 500) {
+        publishSensorData();
+        lastPublish = currentTime;
+        Serial.println("[DATA] Published (0.5s)");
+    }
+    
+    // Verificar comandos de Firebase
+    checkFirebaseCommands();
+    
+    // Limpiar historial antiguo
+    cleanOldHistorySimple();
+    
+    // ELIMINAR: resetTotalFlowPeriodically(); // El PIC maneja esto
 }
 
 void setupWiFi() {
@@ -88,14 +105,13 @@ void setupWiFi() {
   wm.setConfigPortalTimeout(180);
   
   if(!wm.autoConnect("FireSystem-AP", "configpass")) {
-    Serial.println("Failed to connect, restarting...");
+    Serial.println("[ERROR] WiFi failed, restarting...");
     delay(3000);
     ESP.restart();
   }
   
   wifiConnected = true;
-  Serial.print("WiFi connected: ");
-  Serial.println(WiFi.localIP());
+  Serial.println("[DEBUG] WiFi OK: " + WiFi.localIP().toString());
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
@@ -119,10 +135,10 @@ void setupFirebase() {
   
   if(Firebase.ready()) {
     firebaseConnected = true;
-    Serial.println("\nFirebase connected");
+    Serial.println("[DEBUG] Firebase OK");
     Firebase.RTDB.setString(&fbdo, "/system/status", "online");
   } else {
-    Serial.println("\nFirebase connection failed");
+    Serial.println("[ERROR] Firebase failed");
   }
 }
 
@@ -151,46 +167,43 @@ void processPICData() {
 }
 
 void parseSensorData(const char* jsonData) {
-  // Parser JSON simple sin ArduinoJson
+  // Parser simple - PIC ya procesó todo
   char* ptr;
   
-  // Extraer temperatura
   ptr = strstr(jsonData, "\"t\":");
   if(ptr) temperature = atof(ptr + 4);
   
-  // Extraer flame_detected
   ptr = strstr(jsonData, "\"fd\":");
   if(ptr) flame_detected = (*(ptr + 5) == '1');
   
-  // Extraer flame_intensity
   ptr = strstr(jsonData, "\"fi\":");
   if(ptr) flame_intensity = atof(ptr + 5);
   
-  // Extraer co_ppm
   ptr = strstr(jsonData, "\"co\":");
   if(ptr) co_ppm = atof(ptr + 5);
   
-  // Extraer flow_rate
   ptr = strstr(jsonData, "\"fr\":");
   if(ptr) flow_rate = atof(ptr + 5);
   
-  // Extraer total_flow
   ptr = strstr(jsonData, "\"tf\":");
   if(ptr) total_flow = atof(ptr + 5);
   
-  // Extraer pump_active
   ptr = strstr(jsonData, "\"p\":");
   if(ptr) pump_active = (*(ptr + 4) == '1');
   
-  // Extraer alarm_active
   ptr = strstr(jsonData, "\"a\":");
   if(ptr) alarm_active = (*(ptr + 4) == '1');
   
-  // Extraer trigger_test
-  ptr = strstr(jsonData, "\"test\":");
-  if(ptr) trigger_test = (*(ptr + 7) == '1');
+  // AGREGAR: Recibir fire_alarm del PIC
+  ptr = strstr(jsonData, "\"fa\":");
+  if(ptr) fire_alarm = (*(ptr + 5) == '1');
   
-  // Extraer shutdown_system
+  ptr = strstr(jsonData, "\"test\":");
+  if(ptr) {
+    bool previous_test = trigger_test;
+    trigger_test = (*(ptr + 7) == '1');
+  }
+  
   ptr = strstr(jsonData, "\"shutdown\":");
   if(ptr) {
     bool previous_shutdown = shutdown_system;
@@ -201,15 +214,9 @@ void parseSensorData(const char* jsonData) {
     }
   }
   
-  // Verificar si el sistema está en estado óptimo para generar historial inicial
-  if(!system_initialized && !alarm_active && !shutdown_system && !trigger_test) {
-    saveSystemStartHistory();
-    system_initialized = true;
-  }
-  
-  Serial.printf("Sensors: T=%.1fC, Flame=%d(%.1f%%), CO=%.1fppm, Flow=%.2fL/min, Total=%.2fL, Pump=%d, Alarm=%d\n",
-               temperature, flame_detected, flame_intensity, co_ppm, flow_rate, 
-               total_flow, pump_active, alarm_active);
+  // Log simplificado para depuración
+  Serial.printf("[DATA] T=%.1f F=%d(%.1f) CO=%.1f FR=%.2f P=%d A=%d FA=%d\n",
+               temperature, flame_detected, flame_intensity, co_ppm, flow_rate, pump_active, alarm_active, fire_alarm);
 }
 
 void processHistoryEvent(const char* jsonData) {
@@ -228,48 +235,50 @@ void processHistoryEvent(const char* jsonData) {
   }
   
   // Crear timestamp
-  time_t now;
-  time(&now);
-  struct tm timeinfo;
-  char timestamp[20];
+  String timestamp = getFormattedTime();
   
-  if(localtime_r(&now, &timeinfo)) {
-    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeinfo);
-  } else {
-    strcpy(timestamp, "time-error");
-  }
-  
-  // Determinar categoría y crear path
-  String category = "";
-  String path = "";
-  
-  if(strcmp(event_type, "fire_start") == 0 || strcmp(event_type, "fire_end") == 0) {
+  // Determinar categoría del evento
+  String category = "status";
+  if(strstr(event_type, "fire")) {
     category = "fire";
-    path = "/history/fire/" + String(timestamp).substring(0,10) + "_" + String(millis());
-  }
-  else if(strcmp(event_type, "test_start") == 0 || strcmp(event_type, "test_end") == 0) {
+  } else if(strstr(event_type, "test")) {
     category = "test";
-    path = "/history/test/" + String(timestamp).substring(0,10) + "_" + String(millis());
-  }
-  else if(strcmp(event_type, "shutdown") == 0 || strcmp(event_type, "resume") == 0 || strcmp(event_type, "system_start") == 0) {
-    category = "status";
-    path = "/history/status/" + String(timestamp).substring(0,10) + "_" + String(millis());
-  }
-  else {
-    // Categoría por defecto
-    category = "status";
-    path = "/history/status/" + String(timestamp).substring(0,10) + "_" + String(millis());
   }
   
-  // Crear FirebaseJson object
-  FirebaseJson json;
-  json.set("event_type", String(event_type));
-  json.set("timestamp", String(timestamp));
-  json.set("category", category);
+  // Crear JSON del evento
+  FirebaseJson eventJson;
+  eventJson.set("event", String(event_type));
+  eventJson.set("timestamp", timestamp);
+  eventJson.set("created_millis", millis()); // Agregar timestamp en millis para limpieza
   
-  // Procesar diferentes tipos de eventos
-  if(strcmp(event_type, "fire_start") == 0) {
-    // Extraer qué sensor detectó el incendio
+  // Para eventos finales (fire_end, test_end), incluir TODOS los datos de sensores
+  if(strstr(event_type, "_end")) {
+    // Agregar todos los datos de sensores actuales
+    FirebaseJson sensorData;
+    sensorData.set("temperature", temperature);
+    sensorData.set("flame_detected", flame_detected);
+    sensorData.set("flame_intensity", flame_intensity);
+    sensorData.set("co_ppm", co_ppm);
+    sensorData.set("flow_rate", flow_rate);
+    sensorData.set("total_flow", total_flow);
+    
+    FirebaseJson actuatorData;
+    actuatorData.set("pump_active", pump_active);
+    actuatorData.set("alarm_active", alarm_active);
+    
+    FirebaseJson systemStatus;
+    bool fire_alarm = flame_detected || (temperature > 40.0) || (co_ppm > 50.0);
+    systemStatus.set("fire_alarm", fire_alarm);
+    systemStatus.set("trigger_test", trigger_test);
+    systemStatus.set("shutdown_system", shutdown_system);
+    
+    eventJson.set("sensor_data", sensorData);
+    eventJson.set("actuator_data", actuatorData);
+    eventJson.set("system_status", systemStatus);
+  }
+  
+  // Agregar datos adicionales específicos del evento
+  if(strstr(jsonData, "\"sensor\":")) {
     ptr = strstr(jsonData, "\"sensor\":\"");
     if(ptr) {
       ptr += 10;
@@ -279,70 +288,93 @@ void processHistoryEvent(const char* jsonData) {
         sensor[i++] = *ptr++;
       }
       sensor[i] = '\0';
-      json.set("trigger_sensor", String(sensor));
+      eventJson.set("trigger_sensor", String(sensor));
     }
-    
-    json.set("initial_temp", temperature);
-    json.set("initial_flame", flame_intensity);
-    json.set("initial_co", co_ppm);
-  }
-  else if(strcmp(event_type, "fire_end") == 0) {
-    // Extraer duración y datos finales
-    ptr = strstr(jsonData, "\"duration\":");
-    if(ptr) {
-      json.set("duration_seconds", atol(ptr + 11));
-    }
-    
-    json.set("final_temp", temperature);
-    json.set("final_flame", flame_intensity);
-    json.set("final_co", co_ppm);
-    
-    ptr = strstr(jsonData, "\"water\":");
-    if(ptr) {
-      json.set("water_used", atof(ptr + 8));
-    }
-  }
-  else if(strcmp(event_type, "test_start") == 0) {
-    json.set("test_duration", "10_seconds");
-    json.set("initial_temp", temperature);
-    json.set("initial_flame", flame_intensity);
-    json.set("initial_co", co_ppm);
-  }
-  else if(strcmp(event_type, "test_end") == 0) {
-    json.set("final_temp", temperature);
-    json.set("final_flame", flame_intensity);
-    json.set("final_co", co_ppm);
-    
-    ptr = strstr(jsonData, "\"water\":");
-    if(ptr) {
-      json.set("water_used", atof(ptr + 8));
-    }
-    
-    // Resetear trigger_test cuando la prueba termina
-    Firebase.RTDB.setBool(&fbdo, "/commands/trigger_test", false);
-    Serial.println("Test completed - trigger_test reset to false");
-    last_trigger_test = false;
-  }
-  else if(strcmp(event_type, "shutdown") == 0) {
-    json.set("executed_by", "admin");
-    json.set("system_temp", temperature);
-    json.set("system_co", co_ppm);
-  }
-  else if(strcmp(event_type, "resume") == 0) {
-    json.set("executed_by", "admin");
-    json.set("system_temp", temperature);
-    json.set("system_co", co_ppm);
   }
   
-  // Guardar en Firebase usando setJSON con FirebaseJson object
-  if(Firebase.RTDB.setJSON(&fbdo, path, &json)) {
-    Serial.println("History saved in category [" + category + "]: " + path + " - " + String(event_type));
-  } else {
-    Serial.println("Failed to save history: " + fbdo.errorReason());
+  if(strstr(jsonData, "\"duration\":")) {
+    ptr = strstr(jsonData, "\"duration\":");
+    if(ptr) {
+      ptr += 11;
+      int duration = atoi(ptr);
+      eventJson.set("duration_seconds", duration);
+    }
+  }
+  
+  if(strstr(jsonData, "\"water\":")) {
+    ptr = strstr(jsonData, "\"water\":");
+    if(ptr) {
+      ptr += 8;
+      float water = atof(ptr);
+      eventJson.set("water_used", water);
+    }
+  }
+  
+  // Guardar en Firebase con nombre descriptivo por categoría
+  String eventName = String(event_type) + "_" + String(millis());
+  String path = "/system/history/" + category + "/" + eventName;
+  
+  if(Firebase.RTDB.setJSON(&fbdo, path.c_str(), &eventJson)) {
+    Serial.println("[HISTORY] Event saved with sensor data: " + String(event_type) + " in category: " + category);
   }
 }
 
-void saveSystemStartHistory() {
+// Función de limpieza cada 5 segundos
+void cleanOldHistorySimple() {
+  if(!wifiConnected || !firebaseConnected) return;
+  if(millis() - lastHistoryClean < 1000) return; // Verificar cada segundo
+  
+  lastHistoryClean = millis();
+  
+  // Categorías a limpiar
+  String categories[] = {"fire", "test", "status"};
+  
+  for(int c = 0; c < 3; c++) {
+    String categoryPath = "/system/history/" + categories[c];
+    
+    // Obtener todas las entradas de esta categoría
+    if(Firebase.RTDB.getJSON(&fbdo, categoryPath.c_str())) {
+      FirebaseJson json = fbdo.to<FirebaseJson>();
+      FirebaseJsonData jsonData;
+      
+      // Obtener todas las claves (nombres de eventos)
+      size_t len = json.iteratorBegin();
+      String key, value = "";
+      int type = 0;
+      
+      for(size_t i = 0; i < len; i++) {
+        json.iteratorGet(i, type, key, value);
+        
+        // Obtener el timestamp de cada entrada
+        String entryPath = categoryPath + "/" + key + "/timestamp";
+        if(Firebase.RTDB.getString(&fbdo, entryPath.c_str())) {
+          String timestamp = fbdo.to<String>();
+          
+          // Calcular la edad de la entrada usando millis() del nombre
+          // El nombre tiene formato: "evento_millis"
+          int underscorePos = key.lastIndexOf('_');
+          if(underscorePos > 0) {
+            String millisStr = key.substring(underscorePos + 1);
+            unsigned long entryMillis = millisStr.toInt();
+            unsigned long currentMillis = millis();
+            
+            // Si han pasado más de 5 segundos (5000ms), eliminar
+            if(currentMillis - entryMillis > 5000) {
+              String fullEntryPath = categoryPath + "/" + key;
+              if(Firebase.RTDB.deleteNode(&fbdo, fullEntryPath.c_str())) {
+                Serial.println("[DEBUG] Deleted old entry: " + key + " (age: " + String(currentMillis - entryMillis) + "ms)");
+              }
+            }
+          }
+        }
+      }
+      json.iteratorEnd();
+    }
+  }
+}
+
+// Función mejorada para publicar datos del sensor
+String getFormattedTime() {
   time_t now;
   time(&now);
   struct tm timeinfo;
@@ -350,114 +382,65 @@ void saveSystemStartHistory() {
   
   if(localtime_r(&now, &timeinfo)) {
     strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeinfo);
+    return String(timestamp);
   } else {
-    strcpy(timestamp, "time-error");
-  }
-  
-  // Guardar en categoría status
-  String path = "/history/status/" + String(timestamp).substring(0,10) + "_system_start";
-  
-  // Crear FirebaseJson object
-  FirebaseJson json;
-  json.set("event_type", "system_start");
-  json.set("timestamp", String(timestamp));
-  json.set("category", "status");
-  json.set("system_status", "optimal");
-  json.set("initial_temp", temperature);
-  json.set("initial_co", co_ppm);
-  json.set("wifi_connected", true);
-  json.set("firebase_connected", true);
-  
-  // Usar setJSON con FirebaseJson object
-  if(Firebase.RTDB.setJSON(&fbdo, path, &json)) {
-    Serial.println("System start history saved in [status]: " + path);
-  }
-}
-
-// Función de limpieza actualizada para las tres categorías
-void cleanOldHistorySimple() {
-  if(!wifiConnected || !firebaseConnected) return;
-  if(millis() - lastHistoryClean < HISTORY_CLEAN_INTERVAL) return;
-  
-  lastHistoryClean = millis();
-  
-  // Limpiar cada categoría por separado
-  if(Firebase.RTDB.deleteNode(&fbdo, "/history/fire")) {
-    Serial.println("Fire history cleared after 5 seconds");
-  }
-  
-  if(Firebase.RTDB.deleteNode(&fbdo, "/history/test")) {
-    Serial.println("Test history cleared after 5 seconds");
-  }
-  
-  if(Firebase.RTDB.deleteNode(&fbdo, "/history/status")) {
-    Serial.println("Status history cleared after 5 seconds");
-  }
-}
-
-// Función alternativa para limpiar solo una categoría específica
-void cleanSpecificCategory(String category) {
-  if(!wifiConnected || !firebaseConnected) return;
-  
-  String path = "/history/" + category;
-  if(Firebase.RTDB.deleteNode(&fbdo, path)) {
-    Serial.println(category + " history cleared");
-  } else {
-    Serial.println("Failed to clear " + category + " history: " + fbdo.errorReason());
+    return "time-error";
   }
 }
 
 void publishSensorData() {
-  if(!wifiConnected || !firebaseConnected) return;
-  if(millis() - lastSensorPublish < SENSOR_PUBLISH_INTERVAL) return;
-  
-  time_t now;
-  time(&now);
-  struct tm timeinfo;
-  char timestamp[20];
-  
-  if(localtime_r(&now, &timeinfo)) {
-    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeinfo);
-  } else {
-    strcpy(timestamp, "time-error");
-  }
-  
-  // Crear FirebaseJson object
-  FirebaseJson json;
-  json.set("timestamp", String(timestamp));
-  
-  // Crear objetos anidados
-  FirebaseJson sensors;
-  sensors.set("temperature", temperature);
-  sensors.set("flame_detected", flame_detected);
-  sensors.set("flame_intensity", flame_intensity);
-  sensors.set("co_ppm", co_ppm);
-  
-  FirebaseJson flow;
-  flow.set("current_rate", flow_rate);
-  flow.set("total", total_flow);
-  
-  FirebaseJson actuators;
-  actuators.set("pump_active", pump_active);
-  actuators.set("alarm_active", alarm_active);
-  
-  FirebaseJson status;
-  status.set("fire_alarm", alarm_active);
-  
-  // Agregar objetos anidados al JSON principal
-  json.set("sensors", sensors);
-  json.set("flow", flow);
-  json.set("actuators", actuators);
-  json.set("status", status);
-  
-  // Usar setJSON con FirebaseJson object
-  if(Firebase.RTDB.setJSON(&fbdo, "/sensor_data", &json)) {
-    Serial.println("Data published to Firebase");
-  } else {
-    Serial.println("Firebase error: " + fbdo.errorReason());
-  }
-  
-  lastSensorPublish = millis();
+    static bool hasNewData = false;
+    static float lastTemp = -999;
+    static float lastCO = -999;
+    
+    // Verificar si hay datos nuevos
+    if (temperature != lastTemp || co_ppm != lastCO) {
+        hasNewData = true;
+        lastTemp = temperature;
+        lastCO = co_ppm;
+    }
+    
+    // Solo publicar si hay datos nuevos o cada 2 segundos como mínimo
+    static unsigned long lastForcePublish = 0;
+    unsigned long currentTime = millis();
+    
+    if (hasNewData || (currentTime - lastForcePublish >= 2000)) {
+        FirebaseJson json;
+        
+        FirebaseJson actuators;
+        actuators.set("alarm_active", alarm_active);
+        actuators.set("pump_active", pump_active);
+        
+        FirebaseJson flow;
+        flow.set("current_rate", flow_rate);
+        flow.set("total", total_flow);
+        
+        FirebaseJson sensors;
+        sensors.set("co_ppm", co_ppm);
+        sensors.set("flame_detected", flame_detected);
+        sensors.set("flame_intensity", flame_intensity);
+        sensors.set("temperature", temperature);
+        
+        FirebaseJson status;
+        // ELIMINAR: El PIC ya calcula fire_alarm, solo usar el valor recibido
+        status.set("fire_alarm", fire_alarm); // Esta variable viene del PIC
+        status.set("trigger_test", trigger_test);
+        status.set("shutdown_system", shutdown_system);
+        
+        json.set("actuators", actuators);
+        json.set("flow", flow);
+        json.set("sensors", sensors);
+        json.set("status", status);
+        json.set("timestamp", getFormattedTime());
+        
+        if (Firebase.RTDB.setJSON(&fbdo, "/system/sensor_data", &json)) {
+            Serial.printf("[DATA] T=%.1f F=%d(%.1f) CO=%.1f FR=%.2f P=%d A=%d\n", 
+                         temperature, flame_detected, flame_intensity, co_ppm, flow_rate, pump_active, alarm_active);
+        }
+        
+        hasNewData = false;
+        lastForcePublish = currentTime;
+    }
 }
 
 void checkFirebaseCommands() {
@@ -472,9 +455,17 @@ void checkFirebaseCommands() {
     
     if(current_trigger && !last_trigger_test) {
       PIC_SERIAL.write('T');
-      Serial.println("Sent TEST command to PIC");
+      Serial.println("[CMD] TEST sent to PIC");
       logCommand("trigger_test", "admin");
     }
+    
+    // NUEVO: Detectar cuando el test termina en el PIC y resetear Firebase
+    if(last_trigger_test && !trigger_test) {
+      // El test terminó en el PIC, resetear Firebase
+      Firebase.RTDB.setBool(&fbdo, "/commands/trigger_test", false);
+      Serial.println("[CMD] TEST finished - Firebase reset to false");
+    }
+    
     last_trigger_test = current_trigger;
   }
   
@@ -485,11 +476,11 @@ void checkFirebaseCommands() {
     if(current_shutdown != last_shutdown_system) {
       if(current_shutdown) {
         PIC_SERIAL.write('S');
-        Serial.println("Sent SHUTDOWN command to PIC");
+        Serial.println("[CMD] SHUTDOWN sent to PIC");
         Firebase.RTDB.setString(&fbdo, "/system/status", "standby");
       } else {
         PIC_SERIAL.write('R');
-        Serial.println("Sent RESUME command to PIC");
+        Serial.println("[CMD] RESUME sent to PIC");
         Firebase.RTDB.setString(&fbdo, "/system/status", "online");
       }
       logCommand(current_shutdown ? "shutdown" : "resume", "admin");
@@ -511,14 +502,12 @@ void logCommand(String command_type, String author) {
     strcpy(timestamp, "time-error");
   }
   
-  // Crear FirebaseJson object
   FirebaseJson json;
   json.set("type", command_type);
   json.set("author", author);
   json.set("timestamp", String(timestamp));
   
-  // Usar setJSON con FirebaseJson object
-  Firebase.RTDB.setJSON(&fbdo, "/commands/last_command", &json);
+  Firebase.RTDB.setJSON(&fbdo, "/system/commands/last_command", &json);
 }
 
 void handleWiFiReconnection() {
@@ -530,7 +519,7 @@ void handleWiFiReconnection() {
   digitalWrite(LED_BUILTIN, LOW);
   
   if(millis() - lastReconnectAttempt > RECONNECT_INTERVAL) {
-    Serial.println("Reconnecting to WiFi...");
+    Serial.println("[DEBUG] WiFi reconnecting...");
     WiFi.reconnect();
     lastReconnectAttempt = millis();
     
@@ -548,7 +537,7 @@ void handleFirebaseReconnection() {
   }
   
   if(millis() - lastReconnectAttempt > RECONNECT_INTERVAL) {
-    Serial.println("Reconnecting to Firebase...");
+    Serial.println("[DEBUG] Firebase reconnecting...");
     setupFirebase();
     lastReconnectAttempt = millis();
   }
@@ -563,77 +552,21 @@ void blinkLED(int times, int delayMs) {
   }
 }
 
-void cleanOldHistory() {
+// Nueva función para resetear el total_flow periódicamente
+void resetTotalFlowPeriodically() {
   if(!wifiConnected || !firebaseConnected) return;
-  if(millis() - lastHistoryClean < HISTORY_CLEAN_INTERVAL) return;
+  if(millis() - lastFlowReset < FLOW_RESET_INTERVAL) return;
   
-  lastHistoryClean = millis();
+  lastFlowReset = millis();
   
-  // Obtener timestamp actual
-  time_t now;
-  time(&now);
-  struct tm timeinfo;
+  // Enviar comando de reset al PIC
+  PIC_SERIAL.write('F'); // Nuevo comando para reset de flow total
   
-  if(localtime_r(&now, &timeinfo)) {
-    // Calcular timestamp de hace 5 segundos
-    time_t cutoff_time = now - 5;
-    struct tm cutoff_timeinfo;
-    
-    if(localtime_r(&cutoff_time, &cutoff_timeinfo)) {
-      char cutoff_timestamp[20];
-      strftime(cutoff_timestamp, sizeof(cutoff_timestamp), "%Y-%m-%d %H:%M:%S", &cutoff_timeinfo);
-      
-      // Obtener todos los eventos del historial
-      if(Firebase.RTDB.getJSON(&fbdo, "/history")) {
-        FirebaseJson json;
-        json.setJsonData(fbdo.to<String>().c_str());
-        
-        FirebaseJsonData jsonData;
-        size_t len = json.iteratorBegin();
-        String key, value = "";
-        int type = 0;
-        
-        // Iterar a través de todos los eventos
-        for(size_t i = 0; i < len; i++) {
-          json.iteratorGet(i, type, key, value);
-          
-          // Verificar si el evento es más viejo que 5 segundos
-          if(key.length() > 0) {
-            // Obtener el timestamp del evento
-            String eventPath = "/history/" + key + "/timestamp";
-            if(Firebase.RTDB.getString(&fbdo, eventPath)) {
-              String eventTimestamp = fbdo.to<String>();
-              
-              // Comparar timestamps (formato: "YYYY-MM-DD HH:MM:SS")
-              if(eventTimestamp.compareTo(String(cutoff_timestamp)) < 0) {
-                // Eliminar evento viejo
-                String deleteEventPath = "/history/" + key;
-                if(Firebase.RTDB.deleteNode(&fbdo, deleteEventPath)) {
-                  Serial.println("Deleted old history event: " + key);
-                } else {
-                  Serial.println("Failed to delete event: " + fbdo.errorReason());
-                }
-              }
-            }
-          }
-        }
-        json.iteratorEnd();
-      }
-    }
-  }
+  // También resetear la variable local
+  total_flow = 0.0;
+  
+  Serial.println("[DEBUG] Total flow reset (30s)");
+  
+  // ELIMINAR: No guardar en Firebase history
+  // El resto del código de guardado en Firebase se elimina
 }
-
-// Remove this duplicate function definition (lines 627-639):
-// void cleanOldHistorySimple() {
-//   if(!wifiConnected || !firebaseConnected) return;
-//   if(millis() - lastHistoryClean < HISTORY_CLEAN_INTERVAL) return;
-//   
-//   lastHistoryClean = millis();
-//   
-//   // Simplemente eliminar todo el nodo de historial cada 5 segundos
-//   if(Firebase.RTDB.deleteNode(&fbdo, "/history")) {
-//     Serial.println("History cleared after 5 seconds");
-//   } else {
-//     Serial.println("Failed to clear history: " + fbdo.errorReason());
-//   }
-// }
