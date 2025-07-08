@@ -19,6 +19,12 @@ class FirestoreService: ObservableObject {
     @Published var weakSignalEvents: [WeakSignalEvent] = []
     @Published var systemModeEvents: [SystemModeEvent] = []
     @Published var systemNotifications: [SystemNotification] = []
+    
+    // Add the missing @Published properties for new event types
+    @Published var fireEvents: [FireEvent] = []
+    @Published var testEvents: [TestEvent] = []
+    @Published var systemStatusEvents: [SystemStatusEvent] = []
+    
     @Published var isLoading = false
     @Published var errorMessage: String?
     
@@ -351,6 +357,126 @@ class FirestoreService: ObservableObject {
         fetchWeakSignalEvents()
         fetchSystemModeEvents()
         fetchSystemNotifications()
+        // Add calls to new functions
+        fetchFireEvents()
+        fetchTestEvents()
+        fetchSystemStatusEvents()
+    }
+    
+    // MARK: - Eventos específicos del sistema anti-incendios
+    
+    // Eventos de incendio
+    func fetchFireEvents(limit: Int = 50) {
+        isLoading = true
+        errorMessage = nil
+        
+        db.collection("fire_events")
+            .order(by: "timestamp", descending: true)
+            .limit(to: limit)
+            .getDocuments { [weak self] snapshot, error in
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                    
+                    if let error = error {
+                        self?.errorMessage = "Error fetching fire events: \(error.localizedDescription)"
+                        return
+                    }
+                    
+                    guard let documents = snapshot?.documents else {
+                        self?.fireEvents = []
+                        return
+                    }
+                    
+                    self?.fireEvents = documents.compactMap { document in
+                        var data = document.data()
+                        data["id"] = document.documentID
+                        
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            return try JSONDecoder().decode(FireEvent.self, from: jsonData)
+                        } catch {
+                            print("Error decoding fire event: \(error)")
+                            return nil
+                        }
+                    }
+                }
+            }
+    }
+    
+    // Eventos de prueba
+    func fetchTestEvents(limit: Int = 50) {
+        isLoading = true
+        errorMessage = nil
+        
+        db.collection("test_events")
+            .order(by: "timestamp", descending: true)
+            .limit(to: limit)
+            .getDocuments { [weak self] snapshot, error in
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                    
+                    if let error = error {
+                        self?.errorMessage = "Error fetching test events: \(error.localizedDescription)"
+                        return
+                    }
+                    
+                    guard let documents = snapshot?.documents else {
+                        self?.testEvents = []
+                        return
+                    }
+                    
+                    self?.testEvents = documents.compactMap { document in
+                        var data = document.data()
+                        data["id"] = document.documentID
+                        
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            return try JSONDecoder().decode(TestEvent.self, from: jsonData)
+                        } catch {
+                            print("Error decoding test event: \(error)")
+                            return nil
+                        }
+                    }
+                }
+            }
+    }
+    
+    // Eventos de estado del sistema (comandos)
+    func fetchSystemStatusEvents(limit: Int = 50) {
+        isLoading = true
+        errorMessage = nil
+        
+        db.collection("system_status_events")
+            .order(by: "timestamp", descending: true)
+            .limit(to: limit)
+            .getDocuments { [weak self] snapshot, error in
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                    
+                    if let error = error {
+                        self?.errorMessage = "Error fetching system status events: \(error.localizedDescription)"
+                        return
+                    }
+                    
+                    guard let documents = snapshot?.documents else {
+                        self?.systemStatusEvents = []
+                        return
+                    }
+                    
+                    self?.systemStatusEvents = documents.compactMap { document in
+                        var data = document.data()
+                        data["id"] = document.documentID
+                        
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            return try JSONDecoder().decode(SystemStatusEvent.self, from: jsonData)
+                        } catch {
+                            print("Error decoding system status event: \(error)")
+                            return nil
+                        }
+                    }
+                }
+            }
     }
 }
 

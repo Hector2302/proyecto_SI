@@ -96,6 +96,9 @@ void loop() {
     
     // Limpiar historial antiguo
     cleanOldHistorySimple();
+    
+    // Reset automático de total_flow cuando el sistema regresa al estado normal
+    handleEmergencyFlowReset();
 }
 
 void setupWiFi() {
@@ -532,4 +535,28 @@ void resetTotalFlowPeriodically() {
   
   // ELIMINAR: No guardar en Firebase history
   // El resto del código de guardado en Firebase se elimina
+}
+
+// Función para manejar el reset automático de total_flow cuando el sistema regresa al estado normal
+void handleEmergencyFlowReset() {
+    static bool was_emergency = false;
+    static unsigned long emergency_end_time = 0;
+    
+    bool current_emergency = fire_alarm || pump_active || alarm_active;
+    
+    // Si salimos de una emergencia, resetear el flujo después de 2 segundos
+    if(was_emergency && !current_emergency) {
+        if(emergency_end_time == 0) {
+            emergency_end_time = millis();
+        } else if(millis() - emergency_end_time >= 2000) { // 2 segundos después
+            PIC_SERIAL.write('F'); // Enviar comando de reset de flujo
+            total_flow = 0.0; // También resetear la variable local
+            emergency_end_time = 0;
+            Serial.println("[DEBUG] Emergency flow reset after 2s");
+        }
+    } else if(current_emergency) {
+        emergency_end_time = 0; // Reset el timer si volvemos a emergencia
+    }
+    
+    was_emergency = current_emergency;
 }

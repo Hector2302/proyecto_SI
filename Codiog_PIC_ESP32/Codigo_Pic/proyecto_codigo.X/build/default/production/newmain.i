@@ -6461,11 +6461,20 @@ void Handle_Commands(void) {
                     test_start_flow = total_flow;
                 }
                 break;
+
             case 'S':
                 shutdown_system = 1;
                 break;
+
             case 'R':
                 shutdown_system = 0;
+                break;
+
+
+            case 'F':
+                total_flow = 0.0;
+                pulse_count = 0;
+                flow_rate = 0.0;
                 break;
         }
     }
@@ -6645,9 +6654,21 @@ void Read_Sensors(void) {
 
         if(pulses_diff == 0) {
             flow_rate = 0.0;
+
+            static unsigned long no_flow_start = 0;
+            if(no_flow_start == 0) {
+                no_flow_start = system_millis;
+            } else if(system_millis - no_flow_start >= 5000) {
+                total_flow = 0.0;
+                pulse_count = 0;
+                no_flow_start = 0;
+            }
         } else {
             flow_rate = (pulses_diff / (float)450) * 60.0;
             total_flow += flow_rate / 60.0;
+
+            static unsigned long no_flow_start = 0;
+            no_flow_start = 0;
         }
 
         last_pulse = current_pulses;

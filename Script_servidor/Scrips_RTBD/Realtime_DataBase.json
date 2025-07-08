@@ -1,105 +1,41 @@
 {
+  "commands": {
+    "shutdown_system": false,
+    "trigger_test": false
+  },
   "system": {
-    "sensors": {
-      "temperature": 25.0,
-      "flame_detected": false,
-      "flame_intensity": 20.0,
-      "co_ppm": 5.0
-    },
-    "actuators": {
-      "alarm_active": false,
-      "pump_active": false
-    },
-    "flow": {
-      "current_rate": 0.0,
-      "total": 0.0
-    },
-    "status": {
-      "fire_alarm": false,
-      "test_mode": false,
-      "shutdown": false
-    },
     "commands": {
-      "trigger_test": false,
-      "shutdown_system": false,
       "last_command": {
-        "type": "",
-        "author": "",
-        "timestamp": ""
+        "author": "admin",
+        "timestamp": "2025-07-08 00:34:59",
+        "type": "shutdown"
       }
     },
-    "history": {
-      "fire": {
-        "fire_start": {
-          "timestamp": "2023-11-15T12:00:00.000Z",
-          "trigger_sensor": "temperature"
-        },
-        "fire_end": {
-          "timestamp": "2023-11-15T12:05:00.000Z",
-          "duration_seconds": 300,
-          "water_used": 15.5,
-          "trigger_sensor": "temperature",
-          "sensors": {
-            "temperature": 65.0,
-            "flame_detected": false,
-            "flame_intensity": 10.0,
-            "co_ppm": 25.0
-          },
-          "actuators": {
-            "alarm_active": false,
-            "pump_active": false
-          },
-          "flow": {
-            "current_rate": 0.0,
-            "total": 15.5
-          },
-          "status": {
-            "fire_alarm": false,
-            "test_mode": false,
-            "shutdown": false
-          }
-        }
+    "sensor_data": {
+      "actuators": {
+        "alarm_active": false,
+        "pump_active": false
       },
-      "test": {
-        "test_start": {
-          "timestamp": "2023-11-15T14:00:00.000Z"
-        },
-        "test_end": {
-          "timestamp": "2023-11-15T14:02:00.000Z",
-          "duration_seconds": 120,
-          "sensors": {
-            "temperature": 25.0,
-            "flame_detected": false,
-            "flame_intensity": 20.0,
-            "co_ppm": 5.0
-          },
-          "actuators": {
-            "alarm_active": false,
-            "pump_active": false
-          },
-          "flow": {
-            "current_rate": 0.0,
-            "total": 0.0
-          },
-          "status": {
-            "fire_alarm": false,
-            "test_mode": false,
-            "shutdown": false
-          }
-        }
+      "flow": {
+        "current_rate": 0,
+        "total": 0
+      },
+      "sensors": {
+        "co_ppm": 17.8,
+        "flame_detected": false,
+        "flame_intensity": 0.1,
+        "temperature": 26.3
       },
       "status": {
-        "shutdown": {
-          "timestamp": "2023-11-15T18:00:00.000Z"
-        },
-        "resume": {
-          "timestamp": "2023-11-15T18:30:00.000Z"
-        }
-      }
-    }
+        "fire_alarm": false,
+        "shutdown": false,
+        "test_mode": false
+      },
+      "timestamp": "2025-07-08 02:02:55"
+    },
+    "status": "online"
   }
 }
-
 /*
  * ESTRUCTURA DE DATOS REAL DEL SISTEMA:
  * 

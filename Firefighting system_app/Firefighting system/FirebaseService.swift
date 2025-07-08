@@ -291,10 +291,13 @@ class FirebaseService: NSObject, ObservableObject {
     func toggleSystemShutdown() {
         guard isAuthenticated, let currentData = systemData else { return }
         
-        // Corrección: Si el estado actual es "online", entonces shutdown_system debe ser true
-        // Si el estado actual es "standby" u otro, entonces shutdown_system debe ser false
-        let currentStatus = currentData.system?.status ?? "offline"
-        let newShutdownState = (currentStatus == "online")
+        // Usar el status de string del sistema y el shutdown boolean de sensor_data
+        let currentSystemStatus = currentData.system.status
+        let currentShutdownStatus = currentData.sensor_data.status.shutdown
+        
+        // Si el sistema está "online" y no está en shutdown, entonces hacer shutdown
+        // Si está en shutdown o no está "online", entonces activar
+        let newShutdownState = (currentSystemStatus == "online" && !currentShutdownStatus)
         
         let commandsRef = databaseRef.child("commands")
         commandsRef.updateChildValues([
@@ -386,47 +389,43 @@ extension FirebaseService {
         return String(format: "%.1f L/min", water)
     }
     
-    func getSystemModeText() -> String {
-        guard connectionStatus == .connected,
-              let status = systemData?.system?.status else { 
-            return getConnectionStatusText()
-        }
-        
-        switch status {
-        case "online":
-            if systemData?.sensor_data.status.fire_alarm == true {
-                return "Emergencia"
-            } else if systemData?.sensor_data.sensors.co_ppm ?? 0 > 100 {
-                return "Advertencia"
-            } else {
-                return "Normal"
-            }
-        case "offline":
-            return "En reposo"
-        default:
-            return status.capitalized
-        }
-    }
-    
     func getSystemModeColor() -> String {
         guard connectionStatus == .connected,
-              let status = systemData?.system?.status else { 
+              let systemData = systemData else { 
             return getConnectionStatusColor()
         }
         
-        switch status {
-        case "online":
-            if systemData?.sensor_data.status.fire_alarm == true {
-                return "red"
-            } else if systemData?.sensor_data.sensors.co_ppm ?? 0 > 100 {
-                return "orange"
-            } else {
-                return "green"
-            }
-        case "offline":
-            return "blue"
-        default:
+        let sensorStatus = systemData.sensor_data.status
+        
+        if sensorStatus.fire_alarm {
+            return "red"
+        } else if systemData.sensor_data.sensors.co_ppm > 100 {
+            return "orange"
+        } else if sensorStatus.shutdown {
             return "gray"
+        } else {
+            return "green"
+        }
+    }
+    
+    func getSystemModeText() -> String {
+        guard connectionStatus == .connected,
+              let systemData = systemData else { 
+            return getConnectionStatusText()
+        }
+        
+        let sensorStatus = systemData.sensor_data.status
+        
+        if sensorStatus.fire_alarm {
+            return "Emergencia"
+        } else if systemData.sensor_data.sensors.co_ppm > 100 {
+            return "Advertencia"
+        } else if sensorStatus.test_mode {
+            return "Modo Prueba"
+        } else if sensorStatus.shutdown {
+            return "En Reposo"
+        } else {
+            return "Normal"
         }
     }
     

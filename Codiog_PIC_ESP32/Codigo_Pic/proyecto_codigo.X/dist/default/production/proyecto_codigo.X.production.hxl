@@ -1,7 +1,7 @@
 ### HEXMate logfile and output summary ###
 
 ### Command-line arguments ###
- C:\Users\HECTOR~1\AppData\Local\Temp\xcAs6kc.\driver_tmp_3.o
+ C:\Users\HECTOR~1\AppData\Local\Temp\xcAsals.\driver_tmp_3.o
  -Odist/default/production\proyecto_codigo.X.production.hex
  -logfile=dist/default/production\proyecto_codigo.X.production.hxl
  -addressing=1
@@ -9,21 +9,21 @@
 
 ### Memory Usage ###
  Input file ranges:
-  0h - 3h		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAs6kc.\driver_tmp_3.o)
-  8h - 6E79h		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAs6kc.\driver_tmp_3.o)
-  7E5Ch - 7FFFh		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAs6kc.\driver_tmp_3.o)
-  200000h - 200007h		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAs6kc.\driver_tmp_3.o)
-  300000h - 30000Dh		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAs6kc.\driver_tmp_3.o)
+  0h - 3h		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAsals.\driver_tmp_3.o)
+  8h - 6F61h		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAsals.\driver_tmp_3.o)
+  7E5Ch - 7FFFh		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAsals.\driver_tmp_3.o)
+  200000h - 200007h		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAsals.\driver_tmp_3.o)
+  300000h - 30000Dh		(C:\Users\HECTOR~1\AppData\Local\Temp\xcAsals.\driver_tmp_3.o)
  Unused ranges:
   4h - 7h
-  6E7Ah - 7E5Bh
+  6F62h - 7E5Bh
   8000h - 1FFFFFh
   200008h - 2FFFFFh
 
 ### Hex Memory Map ###
  Legend:
   -- = Unused memory
-  H1 = Input file             (C:\Users\HECTOR~1\AppData\Local\Temp\xcAs6kc.\driver_tmp_3.o)
+  H1 = Input file             (C:\Users\HECTOR~1\AppData\Local\Temp\xcAsals.\driver_tmp_3.o)
 ----------------------------------------------------------
          | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 ----------------------------------------------------------
@@ -1794,7 +1794,22 @@
 00006E40 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00006E50 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00006E60 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00006E70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- -- -- --
+00006E70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006E80 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006E90 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006EA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006EB0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006EC0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006ED0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006EE0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006EF0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006F00 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006F10 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006F20 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006F30 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006F40 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006F50 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00006F60 | H1 H1 -- -- -- -- -- -- -- -- -- -- -- -- -- --
 ----------------------------------------------------------
 00007E50 | -- -- -- -- -- -- -- -- -- -- -- -- H1 H1 H1 H1
 00007E60 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1

@@ -9,16 +9,30 @@ import Foundation
 
 // MARK: - Sistema Principal
 struct FirefightingSystem: Codable {
-    let sensor_data: SensorData
+    let system: SystemData
     let commands: Commands?
-    let history: [String: HistoryEvent]?
-    let system: System?
+    
+    enum CodingKeys: String, CodingKey {
+        case system
+        case commands
+    }
+    
+    // Computed property para mantener compatibilidad con el código existente
+    var sensor_data: SensorData {
+        return system.sensor_data
+    }
+}
+
+// MARK: - Sistema de datos
+struct SystemData: Codable {
+    let sensor_data: SensorData
+    let status: String  // Cambiar a String para coincidir con Firebase
+    let commands: Commands?
     
     enum CodingKeys: String, CodingKey {
         case sensor_data = "sensor_data"
+        case status
         case commands
-        case history
-        case system
     }
 }
 
@@ -36,6 +50,32 @@ struct SensorData: Codable {
         case flow
         case status
         case timestamp
+    }
+}
+
+// MARK: - Estado de Sensores (mantener como está)
+struct SensorStatus: Codable {
+    let fire_alarm: Bool
+    let shutdown: Bool
+    let test_mode: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case fire_alarm = "fire_alarm"
+        case shutdown
+        case test_mode = "test_mode"
+    }
+}
+
+// MARK: - Estado del Sistema
+struct SystemStatus: Codable {
+    let fire_alarm: Bool
+    let test_mode: Bool
+    let shutdown: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case fire_alarm = "fire_alarm"
+        case test_mode = "test_mode"
+        case shutdown
     }
 }
 
@@ -62,15 +102,6 @@ struct Flow: Codable {
     enum CodingKeys: String, CodingKey {
         case current_rate = "current_rate"
         case total
-    }
-}
-
-// MARK: - Estado de Sensores
-struct SensorStatus: Codable {
-    let fire_alarm: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case fire_alarm = "fire_alarm"
     }
 }
 
@@ -240,7 +271,8 @@ extension FirefightingSystem {
     }
     
     var isSystemActive: Bool {
-        return system?.status == "online"
+        // Usar sensor_data.status en lugar de system.status
+        return sensor_data.status.fire_alarm == false && sensor_data.status.shutdown == false
     }
 }
 
@@ -444,5 +476,147 @@ struct FirestoreResponse<T: Codable>: Codable {
         case documents
         case totalCount = "total_count"
         case lastDocument = "last_document"
+    }
+}
+
+
+// MARK: - Modelos para eventos específicos del sistema
+
+struct FireEvent: Codable, Identifiable {
+    let id: String
+    let eventType: String
+    let category: String
+    let timestamp: String
+    let source: String
+    let eventKey: String
+    let triggerSensor: String?
+    let durationSeconds: Int?
+    let waterUsed: Double?
+    let sensorData: SensorData?
+    let actuatorData: Actuators?
+    let systemStatus: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case eventType = "event_type"
+        case category
+        case timestamp
+        case source
+        case eventKey = "event_key"
+        case triggerSensor = "trigger_sensor"
+        case durationSeconds = "duration_seconds"
+        case waterUsed = "water_used"
+        case sensorData = "sensor_data"
+        case actuatorData = "actuator_data"
+        case systemStatus = "system_status"
+    }
+    
+    var formattedDate: String {
+        let formatter = ISO8601DateFormatter()
+        guard let date = formatter.date(from: timestamp) else { return timestamp }
+        
+        let displayFormatter = DateFormatter()
+        displayFormatter.dateStyle = .medium
+        displayFormatter.timeStyle = .short
+        return displayFormatter.string(from: date)
+    }
+    
+    var eventDescription: String {
+        switch eventType {
+        case "fire_start":
+            return "🔥 Incendio Detectado"
+        case "fire_end":
+            return "✅ Incendio Extinguido"
+        default:
+            return "🔥 Evento de Incendio"
+        }
+    }
+}
+
+struct TestEvent: Codable, Identifiable {
+    let id: String
+    let eventType: String
+    let category: String
+    let timestamp: String
+    let source: String
+    let eventKey: String
+    let durationSeconds: Int?
+    let sensorData: SensorData?
+    let actuatorData: Actuators?
+    let systemStatus: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case eventType = "event_type"
+        case category
+        case timestamp
+        case source
+        case eventKey = "event_key"
+        case durationSeconds = "duration_seconds"
+        case sensorData = "sensor_data"
+        case actuatorData = "actuator_data"
+        case systemStatus = "system_status"
+    }
+    
+    var formattedDate: String {
+        let formatter = ISO8601DateFormatter()
+        guard let date = formatter.date(from: timestamp) else { return timestamp }
+        
+        let displayFormatter = DateFormatter()
+        displayFormatter.dateStyle = .medium
+        displayFormatter.timeStyle = .short
+        return displayFormatter.string(from: date)
+    }
+    
+    var eventDescription: String {
+        switch eventType {
+        case "test_start":
+            return "🔧 Prueba Iniciada"
+        case "test_end":
+            return "✅ Prueba Completada"
+        default:
+            return "🔧 Evento de Prueba"
+        }
+    }
+}
+
+struct SystemStatusEvent: Codable, Identifiable {
+    let id: String
+    let eventType: String
+    let category: String
+    let timestamp: String
+    let source: String
+    let eventKey: String
+    let durationSeconds: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case eventType = "event_type"
+        case category
+        case timestamp
+        case source
+        case eventKey = "event_key"
+        case durationSeconds = "duration_seconds"
+    }
+    
+    var formattedDate: String {
+        let formatter = ISO8601DateFormatter()
+        guard let date = formatter.date(from: timestamp) else { return timestamp }
+        
+        let displayFormatter = DateFormatter()
+        displayFormatter.dateStyle = .medium
+        displayFormatter.timeStyle = .short
+        return displayFormatter.string(from: date)
+    }
+    
+    var eventDescription: String {
+        switch eventType {
+        case "shutdown_start":
+            return "⏹️ Sistema Apagado"
+        case "shutdown_end":
+            return "▶️ Sistema Reiniciado"
+        default:
+            return "⚙️ Comando del Sistema"
+        }
     }
 }

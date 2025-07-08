@@ -498,42 +498,37 @@ struct SystemControlsSection: View {
                     .cornerRadius(10)
                 }
                 
-                // Botón de apagado/encendido
+                // Botón de apagado/encendido - FIXED
                 Button(action: {
                     firebaseService.toggleSystemShutdown()
                 }) {
                     HStack {
-                        Image(systemName: "power")
-                            .font(.title2)
-                        
-                        Text(getShutdownButtonText())
-                            .font(.headline)
-                        
-                        Spacer()
+                        Image(systemName: firebaseService.systemData?.sensor_data.status.shutdown == true ? "play.fill" : "stop.fill")
+                        Text(firebaseService.systemData?.sensor_data.status.shutdown == true ? "Activar Sistema" : "Apagar Sistema")
                     }
                     .foregroundColor(.white)
                     .padding()
-                    .background(getShutdownButtonColor())
-                    .cornerRadius(10)
+                    .background(firebaseService.systemData?.sensor_data.status.shutdown == true ? Color.green : Color.red)
+                    .cornerRadius(8)
                 }
             }
         }
     }
     
     private func getShutdownButtonText() -> String {
-        guard let status = firebaseService.systemData?.system?.status else {
+        guard let systemData = firebaseService.systemData else {
             return "Estado Desconocido"
         }
         
-        return status == "standby" ? "Activar Sistema" : "Poner en Reposo"
+        return systemData.sensor_data.status.shutdown ? "Activar Sistema" : "Poner en Reposo"
     }
     
     private func getShutdownButtonColor() -> Color {
-        guard let status = firebaseService.systemData?.system?.status else {
+        guard let systemData = firebaseService.systemData else {
             return .gray
         }
         
-        return status == "standby" ? .green : .orange
+        return systemData.sensor_data.status.shutdown ? .green : .orange
     }
 }
 

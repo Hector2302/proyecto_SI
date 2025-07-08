@@ -173,14 +173,23 @@ void Handle_Commands(void) {
                 if(!trigger_test) {
                     trigger_test = true;
                     test_start_time = system_millis;
-                    test_start_flow = total_flow;  // CORREGIDO: Ahora ambos son float
+                    test_start_flow = total_flow;
                 }
                 break;
+                
             case 'S': // Shutdown
                 shutdown_system = true;
                 break;
+                
             case 'R': // Resume
                 shutdown_system = false;
+                break;
+                
+            // AGREGAR: Comando para reset de flujo
+            case 'F': // Flow reset
+                total_flow = 0.0;
+                pulse_count = 0;
+                flow_rate = 0.0;
                 break;
         }
     }
@@ -357,12 +366,24 @@ void Read_Sensors(void) {
         unsigned int current_pulses = pulse_count;
         unsigned int pulses_diff = current_pulses - last_pulse;
         
-        // NUEVO: Si no hay diferencia de pulsos, flow_rate = 0
+        // MEJORADO: Reset automático cuando no hay flujo
         if(pulses_diff == 0) {
             flow_rate = 0.0;
+            // AGREGAR: Reset total_flow después de un período sin actividad
+            static unsigned long no_flow_start = 0;
+            if(no_flow_start == 0) {
+                no_flow_start = system_millis;
+            } else if(system_millis - no_flow_start >= 5000) { // 5 segundos sin flujo
+                total_flow = 0.0;
+                pulse_count = 0;
+                no_flow_start = 0;
+            }
         } else {
             flow_rate = (pulses_diff / (float)FLOW_PULSES_PER_LITER) * 60.0;
             total_flow += flow_rate / 60.0;
+            // Reset el contador de no flujo
+            static unsigned long no_flow_start = 0;
+            no_flow_start = 0;
         }
         
         last_pulse = current_pulses;
