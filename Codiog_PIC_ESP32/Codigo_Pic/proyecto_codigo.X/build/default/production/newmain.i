@@ -6351,7 +6351,7 @@ unsigned char sample_index = 0;
 bool shutdown_system = 0;
 bool trigger_test = 0;
 unsigned long test_start_time = 0;
-const unsigned long TEST_DURATION = 10000;
+const unsigned long TEST_DURATION = 3333;
 
 
 unsigned long system_millis = 0;
@@ -6639,11 +6639,18 @@ void Read_Sensors(void) {
     static unsigned long last_flow_time = 0;
 
     if(system_millis - last_flow_time >= 1000) {
-        unsigned int pulses = pulse_count - last_pulse;
-        flow_rate = (pulses / (float)450) * 60.0;
-        total_flow += flow_rate / 60.0;
+        unsigned int current_pulses = pulse_count;
+        unsigned int pulses_diff = current_pulses - last_pulse;
 
-        last_pulse = pulse_count;
+
+        if(pulses_diff == 0) {
+            flow_rate = 0.0;
+        } else {
+            flow_rate = (pulses_diff / (float)450) * 60.0;
+            total_flow += flow_rate / 60.0;
+        }
+
+        last_pulse = current_pulses;
         last_flow_time = system_millis;
     }
 }

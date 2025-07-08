@@ -66,7 +66,7 @@ unsigned char sample_index = 0;
 bool shutdown_system = false;
 bool trigger_test = false;
 unsigned long test_start_time = 0;
-const unsigned long TEST_DURATION = 10000;
+const unsigned long TEST_DURATION = 3333;  // CAMBIADO: de 10000 a 3333 ms (un tercio)
 
 // Tiempo del sistema
 unsigned long system_millis = 0;
@@ -346,19 +346,26 @@ void Read_Sensors(void) {
     
     // MEJORADO: Filtrado menos agresivo para CO
     static float last_co = 0.0;
-    co_ppm = (raw_co * 0.3) + (last_co * 0.7); // Filtro más responsivo
+    co_ppm = (raw_co * 0.3) + (last_co * 0.7);
     last_co = co_ppm;
     
-    // Calcular flujo
+    // CORREGIDO: Calcular flujo con reset automático
     static unsigned int last_pulse = 0;
     static unsigned long last_flow_time = 0;
     
     if(system_millis - last_flow_time >= 1000) {
-        unsigned int pulses = pulse_count - last_pulse;
-        flow_rate = (pulses / (float)FLOW_PULSES_PER_LITER) * 60.0;
-        total_flow += flow_rate / 60.0;
+        unsigned int current_pulses = pulse_count;
+        unsigned int pulses_diff = current_pulses - last_pulse;
         
-        last_pulse = pulse_count;
+        // NUEVO: Si no hay diferencia de pulsos, flow_rate = 0
+        if(pulses_diff == 0) {
+            flow_rate = 0.0;
+        } else {
+            flow_rate = (pulses_diff / (float)FLOW_PULSES_PER_LITER) * 60.0;
+            total_flow += flow_rate / 60.0;
+        }
+        
+        last_pulse = current_pulses;
         last_flow_time = system_millis;
     }
 }

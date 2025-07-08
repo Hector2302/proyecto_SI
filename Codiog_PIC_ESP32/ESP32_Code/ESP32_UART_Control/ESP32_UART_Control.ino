@@ -88,7 +88,7 @@ void loop() {
     if (currentTime - lastPublish >= 500) {
         publishSensorData();
         lastPublish = currentTime;
-        Serial.println("[DATA] Published (0.5s)");
+        // ELIMINADO: Serial.println("[DATA] Published (0.5s)");
     }
     
     // Verificar comandos de Firebase
@@ -96,8 +96,6 @@ void loop() {
     
     // Limpiar historial antiguo
     cleanOldHistorySimple();
-    
-    // ELIMINAR: resetTotalFlowPeriodically(); // El PIC maneja esto
 }
 
 void setupWiFi() {
@@ -167,56 +165,56 @@ void processPICData() {
 }
 
 void parseSensorData(const char* jsonData) {
-  // Parser simple - PIC ya procesó todo
-  char* ptr;
-  
-  ptr = strstr(jsonData, "\"t\":");
-  if(ptr) temperature = atof(ptr + 4);
-  
-  ptr = strstr(jsonData, "\"fd\":");
-  if(ptr) flame_detected = (*(ptr + 5) == '1');
-  
-  ptr = strstr(jsonData, "\"fi\":");
-  if(ptr) flame_intensity = atof(ptr + 5);
-  
-  ptr = strstr(jsonData, "\"co\":");
-  if(ptr) co_ppm = atof(ptr + 5);
-  
-  ptr = strstr(jsonData, "\"fr\":");
-  if(ptr) flow_rate = atof(ptr + 5);
-  
-  ptr = strstr(jsonData, "\"tf\":");
-  if(ptr) total_flow = atof(ptr + 5);
-  
-  ptr = strstr(jsonData, "\"p\":");
-  if(ptr) pump_active = (*(ptr + 4) == '1');
-  
-  ptr = strstr(jsonData, "\"a\":");
-  if(ptr) alarm_active = (*(ptr + 4) == '1');
-  
-  // AGREGAR: Recibir fire_alarm del PIC
-  ptr = strstr(jsonData, "\"fa\":");
-  if(ptr) fire_alarm = (*(ptr + 5) == '1');
-  
-  ptr = strstr(jsonData, "\"test\":");
-  if(ptr) {
-    bool previous_test = trigger_test;
-    trigger_test = (*(ptr + 7) == '1');
-  }
-  
-  ptr = strstr(jsonData, "\"shutdown\":");
-  if(ptr) {
-    bool previous_shutdown = shutdown_system;
-    shutdown_system = (*(ptr + 11) == '1');
+    // Parser simple - PIC ya procesó todo
+    char* ptr;
     
-    if (previous_shutdown != shutdown_system) {
-      Firebase.RTDB.setString(&fbdo, "/system/status", shutdown_system ? "standby" : "online");
+    ptr = strstr(jsonData, "\"t\":");
+    if(ptr) temperature = atof(ptr + 4);
+    
+    ptr = strstr(jsonData, "\"fd\":");
+    if(ptr) flame_detected = (*(ptr + 5) == '1');
+    
+    ptr = strstr(jsonData, "\"fi\":");
+    if(ptr) flame_intensity = atof(ptr + 5);
+    
+    ptr = strstr(jsonData, "\"co\":");
+    if(ptr) co_ppm = atof(ptr + 5);
+    
+    ptr = strstr(jsonData, "\"fr\":");
+    if(ptr) flow_rate = atof(ptr + 5);
+    
+    ptr = strstr(jsonData, "\"tf\":");
+    if(ptr) total_flow = atof(ptr + 5);
+    
+    ptr = strstr(jsonData, "\"p\":");
+    if(ptr) pump_active = (*(ptr + 4) == '1');
+    
+    ptr = strstr(jsonData, "\"a\":");
+    if(ptr) alarm_active = (*(ptr + 4) == '1');
+    
+    // AGREGAR: Recibir fire_alarm del PIC
+    ptr = strstr(jsonData, "\"fa\":");
+    if(ptr) fire_alarm = (*(ptr + 5) == '1');
+    
+    ptr = strstr(jsonData, "\"test\":");
+    if(ptr) {
+        bool previous_test = trigger_test;
+        trigger_test = (*(ptr + 7) == '1');
     }
-  }
-  
-  // Log simplificado para depuración
-  Serial.printf("[DATA] T=%.1f F=%d(%.1f) CO=%.1f FR=%.2f P=%d A=%d FA=%d\n",
-               temperature, flame_detected, flame_intensity, co_ppm, flow_rate, pump_active, alarm_active, fire_alarm);
+    
+    ptr = strstr(jsonData, "\"shutdown\":");
+    if(ptr) {
+        bool previous_shutdown = shutdown_system;
+        shutdown_system = (*(ptr + 11) == '1');
+        
+        if (previous_shutdown != shutdown_system) {
+            Firebase.RTDB.setString(&fbdo, "/system/status", shutdown_system ? "standby" : "online");
+        }
+    }
+    
+    // ELIMINADO: Log simplificado para depuración
+    // Serial.printf("[DATA] T=%.1f F=%d(%.1f) CO=%.1f FR=%.2f P=%d A=%d FA=%d\n",
+    //              temperature, flame_detected, flame_intensity, co_ppm, flow_rate, pump_active, alarm_active, fire_alarm);
 }
 
 void processHistoryEvent(const char* jsonData) {
@@ -321,57 +319,44 @@ void processHistoryEvent(const char* jsonData) {
 
 // Función de limpieza cada 5 segundos
 void cleanOldHistorySimple() {
-  if(!wifiConnected || !firebaseConnected) return;
-  if(millis() - lastHistoryClean < 1000) return; // Verificar cada segundo
-  
-  lastHistoryClean = millis();
-  
-  // Categorías a limpiar
-  String categories[] = {"fire", "test", "status"};
-  
-  for(int c = 0; c < 3; c++) {
-    String categoryPath = "/system/history/" + categories[c];
+    if(!wifiConnected || !firebaseConnected) return;
+    if(millis() - lastHistoryClean < 1000) return;
     
-    // Obtener todas las entradas de esta categoría
-    if(Firebase.RTDB.getJSON(&fbdo, categoryPath.c_str())) {
-      FirebaseJson json = fbdo.to<FirebaseJson>();
-      FirebaseJsonData jsonData;
-      
-      // Obtener todas las claves (nombres de eventos)
-      size_t len = json.iteratorBegin();
-      String key, value = "";
-      int type = 0;
-      
-      for(size_t i = 0; i < len; i++) {
-        json.iteratorGet(i, type, key, value);
+    lastHistoryClean = millis();
+    
+    // Categorías a limpiar
+    String categories[] = {"fire", "test", "status"};
+    
+    for(int c = 0; c < 3; c++) {
+        String categoryPath = "/system/history/" + categories[c];
         
-        // Calcular la edad de la entrada usando millis() del nombre
-        // El nombre tiene formato: "evento_millis"
-        int underscorePos = key.lastIndexOf('_');
-        if(underscorePos > 0) {
-          String millisStr = key.substring(underscorePos + 1);
-          unsigned long entryMillis = millisStr.toInt();
-          unsigned long currentMillis = millis();
-          
-          // Si han pasado más de 5 segundos (5000ms), eliminar SOLO la entrada
-          if(currentMillis - entryMillis > 5000) {
-            String fullEntryPath = categoryPath + "/" + key;
-            if(Firebase.RTDB.deleteNode(&fbdo, fullEntryPath.c_str())) {
-              Serial.println("[DEBUG] Deleted old entry: " + key + " (age: " + String(currentMillis - entryMillis) + "ms)");
+        if(Firebase.RTDB.getJSON(&fbdo, categoryPath.c_str())) {
+            FirebaseJson json = fbdo.to<FirebaseJson>();
+            FirebaseJsonData jsonData;
+            
+            size_t len = json.iteratorBegin();
+            String key, value = "";
+            int type = 0;
+            
+            for(size_t i = 0; i < len; i++) {
+                json.iteratorGet(i, type, key, value);
+                
+                int underscorePos = key.lastIndexOf('_');
+                if(underscorePos > 0) {
+                    String millisStr = key.substring(underscorePos + 1);
+                    unsigned long entryMillis = millisStr.toInt();
+                    unsigned long currentMillis = millis();
+                    
+                    if(currentMillis - entryMillis > 5000) {
+                        String fullEntryPath = categoryPath + "/" + key;
+                        Firebase.RTDB.deleteNode(&fbdo, fullEntryPath.c_str());
+                        // ELIMINADO: Serial.println("[DEBUG] Deleted old entry: " + key + " (age: " + String(currentMillis - entryMillis) + "ms)");
+                    }
+                }
             }
-          }
+            json.iteratorEnd();
         }
-      }
-      json.iteratorEnd();
-    } else {
-      // Si la categoría no existe, crearla con un placeholder vacío
-      String placeholderPath = categoryPath + "/placeholder";
-      FirebaseJson placeholder;
-      placeholder.set("info", "category_structure");
-      Firebase.RTDB.setJSON(&fbdo, placeholderPath.c_str(), &placeholder);
-      Serial.println("[DEBUG] Created category structure: " + categories[c]);
     }
-  }
 }
 
 // Función mejorada para publicar datos del sensor
@@ -424,49 +409,47 @@ void publishSensorData() {
 }
 
 void checkFirebaseCommands() {
-  if(!wifiConnected || !firebaseConnected) return;
-  if(millis() - lastCommandCheck < COMMAND_CHECK_INTERVAL) return;
-  
-  lastCommandCheck = millis();
-  
-  // Leer comando trigger_test
-  if(Firebase.RTDB.getBool(&fbdo, "/commands/trigger_test")) {
-    bool current_trigger = fbdo.to<bool>();
+    if(!wifiConnected || !firebaseConnected) return;
+    if(millis() - lastCommandCheck < COMMAND_CHECK_INTERVAL) return;
     
-    if(current_trigger && !last_trigger_test) {
-      PIC_SERIAL.write('T');
-      Serial.println("[CMD] TEST sent to PIC");
-      logCommand("trigger_test", "admin");
+    lastCommandCheck = millis();
+    
+    // Leer comando trigger_test
+    if(Firebase.RTDB.getBool(&fbdo, "/commands/trigger_test")) {
+        bool current_trigger = fbdo.to<bool>();
+        
+        if(current_trigger && !last_trigger_test) {
+            PIC_SERIAL.write('T');
+            // SIMPLIFICADO: Serial.println("[CMD] TEST");
+            logCommand("trigger_test", "admin");
+        }
+        
+        if(last_trigger_test && !trigger_test) {
+            Firebase.RTDB.setBool(&fbdo, "/commands/trigger_test", false);
+            // ELIMINADO: Serial.println("[CMD] TEST finished - Firebase reset to false");
+        }
+        
+        last_trigger_test = current_trigger;
     }
     
-    // NUEVO: Detectar cuando el test termina en el PIC y resetear Firebase
-    if(last_trigger_test && !trigger_test) {
-      // El test terminó en el PIC, resetear Firebase
-      Firebase.RTDB.setBool(&fbdo, "/commands/trigger_test", false);
-      Serial.println("[CMD] TEST finished - Firebase reset to false");
+    // Leer comando shutdown_system
+    if(Firebase.RTDB.getBool(&fbdo, "/commands/shutdown_system")) {
+        bool current_shutdown = fbdo.to<bool>();
+        
+        if(current_shutdown != last_shutdown_system) {
+            if(current_shutdown) {
+                PIC_SERIAL.write('S');
+                // SIMPLIFICADO: Serial.println("[CMD] SHUTDOWN");
+                Firebase.RTDB.setString(&fbdo, "/system/status", "standby");
+            } else {
+                PIC_SERIAL.write('R');
+                // SIMPLIFICADO: Serial.println("[CMD] RESUME");
+                Firebase.RTDB.setString(&fbdo, "/system/status", "online");
+            }
+            logCommand(current_shutdown ? "shutdown" : "resume", "admin");
+        }
+        last_shutdown_system = current_shutdown;
     }
-    
-    last_trigger_test = current_trigger;
-  }
-  
-  // Leer comando shutdown_system
-  if(Firebase.RTDB.getBool(&fbdo, "/commands/shutdown_system")) {
-    bool current_shutdown = fbdo.to<bool>();
-    
-    if(current_shutdown != last_shutdown_system) {
-      if(current_shutdown) {
-        PIC_SERIAL.write('S');
-        Serial.println("[CMD] SHUTDOWN sent to PIC");
-        Firebase.RTDB.setString(&fbdo, "/system/status", "standby");
-      } else {
-        PIC_SERIAL.write('R');
-        Serial.println("[CMD] RESUME sent to PIC");
-        Firebase.RTDB.setString(&fbdo, "/system/status", "online");
-      }
-      logCommand(current_shutdown ? "shutdown" : "resume", "admin");
-    }
-    last_shutdown_system = current_shutdown;
-  }
 }
 
 void logCommand(String command_type, String author) {

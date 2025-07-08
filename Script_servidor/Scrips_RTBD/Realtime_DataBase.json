@@ -1,40 +1,23 @@
 {
   "system": {
     "sensors": {
-      "temperature": {
-        "value": 25.0,
-        "unit": "Celsius",
-        "status": "ok"
-      },
-      "co_level": {
-        "ppm": 5,
-        "status": "ok"
-      },
-      "flame": {
-        "detected": false,
-        "intensity": 20,
-        "status": "ok"
-      },
-      "water_flow": {
-        "rate_lpm": 0.0,
-        "total_liters": 0.0,
-        "status": "ok"
-      }
+      "temperature": 25.0,
+      "flame_detected": false,
+      "flame_intensity": 20.0,
+      "co_ppm": 5.0
     },
     "actuators": {
-      "alarm": {
-        "active": false,
-        "duration_sec": 0
-      },
-      "pump": {
-        "active": false,
-        "runtime_sec": 0
-      }
+      "alarm_active": false,
+      "pump_active": false
+    },
+    "flow": {
+      "current_rate": 0.0,
+      "total": 0.0
     },
     "status": {
-      "mode": "normal",
-      "last_update": "2023-11-15T12:00:00.000Z",
-      "system_active": true
+      "fire_alarm": false,
+      "test_mode": false,
+      "shutdown": false
     },
     "commands": {
       "trigger_test": false,
@@ -45,84 +28,161 @@
         "timestamp": ""
       }
     },
-    "history": [
-      {
-        "event_type": "system_startup",
-        "timestamp": "2023-11-15T12:00:00.000Z",
-        "data": {
-          "initiated_by": "system"
-        }
-      }
-    ],
-    "notifications": {
-      "active": false,
-      "last_updated": "2023-11-15T12:00:00.000Z",
-      "queue": {
-        "notification_id": {
-          "type": "system_startup",
-          "title": "Sistema activado",
-          "message": "El sistema ha sido iniciado correctamente",
-          "priority": "normal",
+    "history": {
+      "fire": {
+        "fire_start": {
           "timestamp": "2023-11-15T12:00:00.000Z",
-          "read": false
+          "trigger_sensor": "temperature"
+        },
+        "fire_end": {
+          "timestamp": "2023-11-15T12:05:00.000Z",
+          "duration_seconds": 300,
+          "water_used": 15.5,
+          "trigger_sensor": "temperature",
+          "sensors": {
+            "temperature": 65.0,
+            "flame_detected": false,
+            "flame_intensity": 10.0,
+            "co_ppm": 25.0
+          },
+          "actuators": {
+            "alarm_active": false,
+            "pump_active": false
+          },
+          "flow": {
+            "current_rate": 0.0,
+            "total": 15.5
+          },
+          "status": {
+            "fire_alarm": false,
+            "test_mode": false,
+            "shutdown": false
+          }
         }
-      }
-    },
-    "statistics": {
-      "total_fires_detected": 0,
-      "total_co_alerts": 0,
-      "total_tests_performed": 0,
-      "total_water_used": 0.0,
-      "last_maintenance": "2023-11-15T12:00:00.000Z"
-    },
-    "configuration": {
-      "alarm_threshold": {
-        "temperature": 60.0,
-        "co_level": 100,
-        "flame_intensity": 500
       },
-      "notification_settings": {
-        "email_alerts": true,
-        "push_notifications": true,
-        "sms_alerts": false
+      "test": {
+        "test_start": {
+          "timestamp": "2023-11-15T14:00:00.000Z"
+        },
+        "test_end": {
+          "timestamp": "2023-11-15T14:02:00.000Z",
+          "duration_seconds": 120,
+          "sensors": {
+            "temperature": 25.0,
+            "flame_detected": false,
+            "flame_intensity": 20.0,
+            "co_ppm": 5.0
+          },
+          "actuators": {
+            "alarm_active": false,
+            "pump_active": false
+          },
+          "flow": {
+            "current_rate": 0.0,
+            "total": 0.0
+          },
+          "status": {
+            "fire_alarm": false,
+            "test_mode": false,
+            "shutdown": false
+          }
+        }
       },
-      "maintenance": {
-        "next_scheduled": "2024-01-15T12:00:00.000Z",
-        "interval_days": 60
+      "status": {
+        "shutdown": {
+          "timestamp": "2023-11-15T18:00:00.000Z"
+        },
+        "resume": {
+          "timestamp": "2023-11-15T18:30:00.000Z"
+        }
       }
     }
   }
 }
 
-
-/*Reglas de base de datos*/
+/*
+ * ESTRUCTURA DE DATOS REAL DEL SISTEMA:
+ * 
+ * 1. SENSORES (publicados cada 0.5s por ESP32):
+ *    - temperature: Temperatura en °C del LM35
+ *    - flame_detected: Boolean si se detecta llama
+ *    - flame_intensity: Intensidad de llama 0-100%
+ *    - co_ppm: Concentración de CO en PPM del MQ-2
+ * 
+ * 2. ACTUADORES (controlados por PIC):
+ *    - alarm_active: Estado de la alarma
+ *    - pump_active: Estado de la bomba
+ * 
+ * 3. FLUJO DE AGUA (medido por PIC):
+ *    - current_rate: Flujo actual en L/min
+ *    - total: Total acumulado en litros
+ * 
+ * 4. ESTADO DEL SISTEMA:
+ *    - fire_alarm: Alarma de incendio activa
+ *    - test_mode: Modo de prueba activo
+ *    - shutdown: Sistema apagado
+ * 
+ * 5. COMANDOS (desde la app):
+ *    - trigger_test: Iniciar prueba del sistema
+ *    - shutdown_system: Apagar/encender sistema
+ * 
+ * 6. HISTORIAL POR CATEGORÍAS:
+ *    - fire: Eventos de incendio (fire_start, fire_end)
+ *    - test: Eventos de prueba (test_start, test_end)
+ *    - status: Eventos de estado (shutdown, resume)
+ * 
+ * NOTA: Los eventos _end incluyen datos completos del sistema
+ */
 
 {
   "rules": {
+    ".read": "auth != null",
+    ".write": false,
     "system": {
+      "sensor_data": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1'"
+      },
       "sensors": {
-        ".read": "auth != null",                            
-        ".write": "false"                                   
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1'"
       },
       "actuators": {
         ".read": "auth != null",
-        ".write": "false"
+        ".write": "auth != null && auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1'"
+      },
+      "flow": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1'"
       },
       "status": {
         ".read": "auth != null",
-        ".write": "false"
+        ".write": "auth != null && auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1'"
       },
       "commands": {
         ".read": "auth != null",
-        ".write": "auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1'"  
+        "trigger_test": {
+          ".write": "auth != null && (auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1' || auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1')"
+        },
+        "shutdown_system": {
+          ".write": "auth != null && (auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1' || auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1')"
+        },
+        "last_command": {
+          ".write": "auth != null && auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1'"
+        }
       },
-      "logs": {
+      "history": {
         ".read": "auth != null",
-        ".write": "false"
+        ".write": "auth != null && auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1'"
+      }
+    },
+    "commands": {
+      ".read": "auth != null",
+      "trigger_test": {
+        ".write": "auth != null && (auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1' || auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1')"
       },
-      "config": {
-        ".read": "auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1'", 
-        ".write": "auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1'"
+      "shutdown_system": {
+        ".write": "auth != null && (auth.uid === 'qIrC9TYimQQL5hZzeaGN1c1aOav1' || auth.uid === 'g1Obxd3rPaXiOWHnF3brjeRSAEx1')"
       }
     }
   }

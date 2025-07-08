@@ -1,6 +1,6 @@
 import time
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from firebase_admin import credentials, initialize_app, db
 from firebase_admin import firestore
 
@@ -21,219 +21,159 @@ app = initialize_app(cred, {
 fs = firestore.client()
 
 # Estado global del procesamiento
-sensor_data_cache = {
-    'temperature': [],
-    'co_level': [],
-    'flame': []
-    # Eliminamos water_flow según los requisitos
-}
-
 processed_events = set()
-processed_notifications = set()
-
-def get_hourly_timestamp():
-    now = datetime.now(timezone.utc)
-    return now.replace(minute=0, second=0, microsecond=0)
+last_log_time = 0
+empty_history_logged = False
 
 def parse_firebase_timestamp(timestamp_str):
     try:
-        # Remove any prefix like 'detected_' that might be present
-        if '_' in timestamp_str and not timestamp_str.startswith('20'):
-            # Find the actual timestamp part after the underscore
-            parts = timestamp_str.split('_', 1)
-            if len(parts) > 1:
-                timestamp_str = parts[1]
+        if not timestamp_str or timestamp_str.strip() == '':
+            return None  # Retornar None en lugar de timestamp actual
         
-        # Corregimos el problema de parseo de fechas
         if timestamp_str.endswith('Z'):
-            # Formato ISO 8601 con Z al final (UTC)
             dt_str = timestamp_str.replace('Z', '+00:00')
             return datetime.fromisoformat(dt_str)
         elif 'T' in timestamp_str and '+' not in timestamp_str and '-' in timestamp_str:
-            # Formato ISO sin zona horaria, asumimos UTC
             return datetime.fromisoformat(timestamp_str + '+00:00')
         else:
-            # Intentamos parsear directamente
             return datetime.fromisoformat(timestamp_str).astimezone(timezone.utc)
     except Exception as e:
-        logging.error(f"Error parsing timestamp: {timestamp_str} - {str(e)}")
-        return datetime.now(timezone.utc)
-
-def process_sensor_data():
-    try:
-        # Accedemos solo a las rutas necesarias para evitar consumos innecesarios
-        ref = db.reference('system/sensors')
-        sensors = ref.get() or {}
-        
-        timestamp = datetime.now(timezone.utc).isoformat()
-        
-        # Recolectamos datos de temperatura
-        if temp := sensors.get('temperature', {}).get('value'):
-            sensor_data_cache['temperature'].append(float(temp))
-            
-        # Recolectamos datos de nivel de CO
-        if co := sensors.get('co_level', {}).get('ppm'):
-            sensor_data_cache['co_level'].append(int(co))
-            
-        # Recolectamos datos de detección de llama
-        if flame := sensors.get('flame', {}):
-            sensor_data_cache['flame'].append({
-                'detected': flame.get('detected', False),
-                'intensity': flame.get('intensity', 0)
-            })
-            
-        # Nota: Según los requisitos, no necesitamos monitorear water_flow cada minuto
-        # pero mantenemos la estructura por si se requiere en el futuro
-        
-        logging.info(f"Datos de sensores recolectados: {timestamp}")
-        
-    except Exception as e:
-        logging.error(f"Error recolectando sensores: {str(e)}")
-
-def calculate_hourly_averages():
-    try:
-        hourly_data = {
-            'timestamp': get_hourly_timestamp().isoformat(),
-            'temperature': {'avg': 0.0, 'min': 0.0, 'max': 0.0},
-            'co_level': {'avg_ppm': 0, 'max_ppm': 0},
-            'flame': {'detected_count': 0, 'avg_intensity': 0.0},
-            # Eliminamos water_flow de los promedios horarios según requisitos
-            'sample_count': 0
-        }
-        
-        if temps := sensor_data_cache['temperature']:
-            hourly_data['temperature']['avg'] = sum(temps) / len(temps)
-            hourly_data['temperature']['min'] = min(temps)
-            hourly_data['temperature']['max'] = max(temps)
-        
-        if co_levels := sensor_data_cache['co_level']:
-            hourly_data['co_level']['avg_ppm'] = sum(co_levels) // len(co_levels)
-            hourly_data['co_level']['max_ppm'] = max(co_levels)
-        
-        flame_data = [f for f in sensor_data_cache['flame'] if f['detected']]
-        if flame_data:
-            hourly_data['flame']['detected_count'] = len(flame_data)
-            hourly_data['flame']['avg_intensity'] = sum(f['intensity'] for f in flame_data) / len(flame_data)
-        
-        # Eliminamos el procesamiento de water_flow según los requisitos
-        
-        hourly_data['sample_count'] = len(sensor_data_cache['temperature'])
-        
-        doc_ref = fs.collection('sensor_averages_by_hour').document(hourly_data['timestamp'])
-        doc_ref.set(hourly_data)
-        logging.info(f"Promedios horarios guardados: {hourly_data['timestamp']}")
-        
-        for key in sensor_data_cache:
-            sensor_data_cache[key].clear()
-            
-    except Exception as e:
-        logging.error(f"Error calculando promedios: {str(e)}")
+        return None  # Retornar None en lugar de timestamp actual
 
 def process_history_events():
+    global last_log_time, empty_history_logged
+    
     try:
-        # Accedemos a la ruta de históricos del simulador anti incendios
+        # Acceder solo a la ruta de historial para minimizar consumo
         ref = db.reference('system/history')
-        history = ref.get() or []
+        history_data = ref.get()
         
-        for event in history:
-            try:
-                event_id = f"{event['event_type']}_{event['timestamp']}"
-                if event_id in processed_events:
-                    continue
-                
-                event_time = parse_firebase_timestamp(event['timestamp'])
-                now = datetime.now(timezone.utc)
-                
-                # Solo procesamos eventos recientes (últimos 10 segundos)
-                if (now - event_time).total_seconds() > 10:
-                    continue
-                
-                # Eventos de prueba o incendio se almacenan en una tabla específica
-                if event['event_type'] in ['fire_detected', 'system_test']:
+        # Manejar caso cuando history está vacío (log solo una vez)
+        if not history_data:
+            if not empty_history_logged:
+                logging.info("Historial vacío - esperando eventos...")
+                empty_history_logged = True
+            return
+        
+        # Reset flag si hay datos
+        empty_history_logged = False
+        
+        # Procesar cada categoría (fire, test, status)
+        categories = ['fire', 'test', 'status']
+        events_processed = 0
+        
+        for category in categories:
+            category_events = history_data.get(category, {})
+            
+            # Si la categoría está vacía, continuar sin log
+            if not category_events:
+                continue
+            
+            for event_key, event_data in category_events.items():
+                try:
+                    # FILTRO 1: Ignorar eventos placeholder de Firebase
+                    if 'placeholder' in event_key.lower():
+                        continue
+                    
+                    # FILTRO 2: Ignorar eventos sin datos reales
+                    if not isinstance(event_data, dict) or not event_data:
+                        continue
+                    
+                    # Crear ID único para el evento
+                    event_id = f"{category}_{event_key}"
+                    
+                    # Si ya procesamos este evento, saltarlo inmediatamente
+                    if event_id in processed_events:
+                        continue
+                    
+                    # Validar que el timestamp no esté vacío
+                    timestamp_str = event_data.get('timestamp', '')
+                    event_time = parse_firebase_timestamp(timestamp_str)
+                    
+                    # Si no hay timestamp válido, saltar SIN LOG (son placeholders)
+                    if not event_time:
+                        continue
+                    
+                    # Verificar que el evento sea reciente (últimos 10 segundos)
+                    now = datetime.now(timezone.utc)
+                    if (now - event_time).total_seconds() > 10:
+                        continue
+                    
+                    # Validar que el evento tenga datos mínimos requeridos
+                    event_type = event_data.get('event', '')
+                    if not event_type:
+                        continue
+                    
+                    # Preparar datos base del evento
                     doc_data = {
-                        'event_type': event['event_type'],
+                        'event_type': event_type,
+                        'category': category,
                         'timestamp': event_time.isoformat(),
-                        'source': 'simulador_anti_incendios',
-                        'data': event.get('data', {})
-                    }
-                    fs.collection('fire_and_test_events').document(event_id).set(doc_data)
-                    logging.info(f"Evento registrado: {event['event_type']}")
-                
-                # Eventos de error se almacenan en otra tabla
-                elif event['event_type'] == 'sensor_error':
-                    doc_data = {
-                        'sensor': event['sensor'],
-                        'status': event['status'],
-                        'timestamp': event_time.isoformat(),
-                        'last_ok_timestamp': parse_firebase_timestamp(
-                            event['last_ok_timestamp']
-                        ).isoformat(),
-                        'resolved': False
-                    }
-                    fs.collection('sensor_errors').document(event_id).set(doc_data)
-                    logging.info(f"Error de sensor registrado: {event['sensor']}")
-                
-                # Eventos de señal débil se almacenan en una tabla específica
-                elif event['event_type'] in ['weak_signal_detected', 'signal_restored']:
-                    doc_data = {
-                        'event_type': event['event_type'],
-                        'timestamp': event_time.isoformat(),
-                        'signal_strength_dbm': event.get('data', {}).get('signal_strength_dbm', 0),
-                        'duration_seconds': event.get('data', {}).get('duration_seconds', 0),
-                        'source': 'simulador_anti_incendios'
-                    }
-                    fs.collection('weak_signal_events').document(event_id).set(doc_data)
-                    logging.info(f"Evento de señal registrado: {event['event_type']}")
-                
-                # Eventos de modo reposo/reactivación se almacenan en otra tabla
-                elif event['event_type'] in ['system_shutdown', 'system_startup']:
-                    doc_data = {
-                        'event_type': event['event_type'],
-                        'timestamp': event_time.isoformat(),
-                        'initiated_by': event.get('data', {}).get('initiated_by', 'unknown'),
-                        'source': 'simulador_anti_incendios'
+                        'source': 'sistema_anti_incendios',
+                        'event_key': event_key
                     }
                     
-                    # Añadir campos específicos según el tipo de evento
-                    if event['event_type'] == 'system_shutdown':
-                        doc_data.update({
-                            'previous_mode': event.get('data', {}).get('previous_mode', 'unknown'),
-                            'alarm_active': event.get('data', {}).get('alarm_active', False),
-                            'pump_active': event.get('data', {}).get('pump_active', False)
-                        })
-                    elif event['event_type'] == 'system_startup':
-                        doc_data.update({
-                            'downtime_seconds': event.get('data', {}).get('downtime_seconds', 0),
-                            'new_mode': event.get('data', {}).get('new_mode', 'normal')
-                        })
+                    # Agregar datos específicos del evento
+                    if 'trigger_sensor' in event_data:
+                        doc_data['trigger_sensor'] = event_data['trigger_sensor']
                     
-                    fs.collection('system_mode_events').document(event_id).set(doc_data)
-                    logging.info(f"Evento de modo sistema registrado: {event['event_type']}")
-                
-                processed_events.add(event_id)
-                
-            except KeyError as e:
-                logging.warning(f"Evento incompleto: {str(e)}")
-            except Exception as e:
-                logging.error(f"Error procesando evento: {str(e)}")
-                
-        now = datetime.now(timezone.utc)
-        processed_events_copy = processed_events.copy()
-        for eid in processed_events_copy:
-            try:
-                _, _, timestamp_str = eid.split('_', 2)
-                event_time = parse_firebase_timestamp(timestamp_str)
-                if (now - event_time).total_seconds() > 15:
-                    processed_events.discard(eid)
-            except Exception as e:
-                logging.error(f"Error limpiando eventos: {str(e)}")
+                    if 'duration_seconds' in event_data:
+                        doc_data['duration_seconds'] = event_data['duration_seconds']
+                    
+                    if 'water_used' in event_data:
+                        doc_data['water_used'] = event_data['water_used']
+                    
+                    # Para eventos finales (_end), incluir todos los datos de sensores y actuadores
+                    if '_end' in event_type:
+                        if 'sensor_data' in event_data:
+                            doc_data['sensor_data'] = event_data['sensor_data']
+                        
+                        if 'actuator_data' in event_data:
+                            doc_data['actuator_data'] = event_data['actuator_data']
+                        
+                        if 'system_status' in event_data:
+                            doc_data['system_status'] = event_data['system_status']
+                    
+                    # Guardar en Firestore según la categoría
+                    if category == 'fire':
+                        collection_name = 'fire_events'
+                    elif category == 'test':
+                        collection_name = 'test_events'
+                    else:  # status
+                        collection_name = 'system_status_events'
+                    
+                    fs.collection(collection_name).document(event_id).set(doc_data)
+                    
+                    # LOG SOLO CUANDO HAY EVENTOS REALES
+                    logging.info(f"✅ Evento {category} procesado: {event_type}")
+                    events_processed += 1
+                    
+                    # Marcar como procesado SOLO después de guardarlo exitosamente
+                    processed_events.add(event_id)
+                    
+                except Exception as e:
+                    # Solo log errores críticos, no warnings
+                    logging.error(f"Error crítico procesando evento {category}: {str(e)}")
+        
+        # Log de estado solo cada 30 segundos si no hay eventos
+        current_time = time.time()
+        if events_processed == 0 and (current_time - last_log_time) > 30:
+            logging.info("🔍 Monitoreando historial - sin eventos nuevos")
+            last_log_time = current_time
+        
+        # Limpiar eventos procesados antiguos (más de 100 eventos para liberar memoria)
+        if len(processed_events) > 100:
+            # Mantener solo los últimos 50 eventos
+            processed_events_list = list(processed_events)
+            processed_events.clear()
+            processed_events.update(processed_events_list[-50:])
                 
     except Exception as e:
-        logging.error(f"Error procesando historial: {str(e)}")
+        logging.error(f"Error crítico procesando historial: {str(e)}")
 
 def process_notifications():
+    """Procesar notificaciones del sistema (simplificado)"""
     try:
-        # Acceder a las notificaciones del simulador
         ref = db.reference('system/notifications')
         notifications_data = ref.get() or {}
         
@@ -241,100 +181,77 @@ def process_notifications():
             return
         
         notification_queue = notifications_data.get('queue', {})
+        notifications_processed = 0
         
         for notification_id, notification in notification_queue.items():
             try:
-                # Verificar si ya procesamos esta notificación
-                if notification_id in processed_notifications:
+                # Filtrar placeholders
+                if 'placeholder' in notification_id.lower():
                     continue
                 
-                notification_time = parse_firebase_timestamp(notification['timestamp'])
-                now = datetime.now(timezone.utc)
+                timestamp_str = notification.get('timestamp', '')
+                notification_time = parse_firebase_timestamp(timestamp_str)
                 
-                # Solo procesar notificaciones recientes (últimos 15 segundos)
+                if not notification_time:
+                    continue
+                
+                now = datetime.now(timezone.utc)
                 if (now - notification_time).total_seconds() > 15:
                     continue
                 
-                # Preparar datos para Firestore
                 doc_data = {
                     'notification_id': notification_id,
-                    'type': notification['type'],
-                    'title': notification['title'],
-                    'message': notification['message'],
-                    'priority': notification['priority'],
+                    'type': notification.get('type', ''),
+                    'title': notification.get('title', ''),
+                    'message': notification.get('message', ''),
+                    'priority': notification.get('priority', 'normal'),
                     'timestamp': notification_time.isoformat(),
                     'read': notification.get('read', False),
-                    'source': 'simulador_anti_incendios',
-                    'related_data': {}
+                    'source': 'sistema_anti_incendios'
                 }
                 
-                # Agregar datos relacionados si existen
-                for key, value in notification.items():
-                    if key not in ['type', 'title', 'message', 'priority', 'timestamp', 'read']:
-                        doc_data['related_data'][key] = value
-                
-                # Guardar en Firestore
                 fs.collection('system_notifications').document(notification_id).set(doc_data)
-                logging.info(f"Notificación procesada: {notification['type']} - {notification['title']}")
-                
-                processed_notifications.add(notification_id)
+                logging.info(f"📢 Notificación procesada: {notification.get('type', '')}")
+                notifications_processed += 1
                 
             except Exception as e:
                 logging.error(f"Error procesando notificación {notification_id}: {str(e)}")
         
-        # Limpiar notificaciones procesadas antiguas
-        now = datetime.now(timezone.utc)
-        processed_notifications_copy = processed_notifications.copy()
-        for nid in processed_notifications_copy:
-            try:
-                # Remover notificaciones procesadas hace más de 30 segundos
-                # (asumiendo que el ID contiene timestamp o podemos obtenerlo de Firestore)
-                processed_notifications.discard(nid)
-            except Exception as e:
-                logging.error(f"Error limpiando notificaciones: {str(e)}")
+        # Solo log si hay notificaciones procesadas
+        if notifications_processed > 0:
+            logging.info(f"📊 {notifications_processed} notificaciones procesadas")
                 
     except Exception as e:
         logging.error(f"Error procesando notificaciones: {str(e)}")
 
 def main():
-    last_sensor_update = time.time()
     last_history_check = time.time()
-    last_notification_check = time.time()
     
-    logging.info("Iniciando monitoreo de simulador anti incendios...")
+    logging.info("🚀 Iniciando monitoreo optimizado del sistema anti-incendios")
+    logging.info("⚙️  Configuración: Historial cada 2s, logs solo con cambios")
     
     while True:
         try:
             current_time = time.time()
             
-            # Tomar muestra cada minuto de los sensores (excepto water_flow)
-            if current_time - last_sensor_update >= 60:
-                process_sensor_data()
-                last_sensor_update = current_time
-                
-                # Calcular promedios cada hora (cuando tengamos 60 muestras)
-                if len(sensor_data_cache['temperature']) >= 60:
-                    calculate_hourly_averages()
-            
-            # Verificar históricos cada 3 segundos
-            if current_time - last_history_check >= 3:
+            # Verificar historial cada 2 segundos
+            if current_time - last_history_check >= 2:
                 process_history_events()
                 last_history_check = current_time
             
-            # Verificar notificaciones cada 2 segundos
-            if current_time - last_notification_check >= 2:
+            # Procesar notificaciones cada 10 segundos
+            if int(current_time) % 10 == 0:
                 process_notifications()
-                last_notification_check = current_time
                 
-            time.sleep(0.1)
+            time.sleep(0.5)  # Pausa para reducir uso de CPU
             
         except KeyboardInterrupt:
-            logging.info("Deteniendo monitor...")
+            logging.info("🛑 Deteniendo monitor...")
             break
             
         except Exception as e:
             logging.error(f"Error en el loop principal: {str(e)}")
-            time.sleep(10)
+            time.sleep(5)
 
 if __name__ == '__main__':
     main()
