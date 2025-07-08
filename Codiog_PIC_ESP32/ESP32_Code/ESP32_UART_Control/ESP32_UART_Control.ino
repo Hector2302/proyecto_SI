@@ -345,30 +345,31 @@ void cleanOldHistorySimple() {
       for(size_t i = 0; i < len; i++) {
         json.iteratorGet(i, type, key, value);
         
-        // Obtener el timestamp de cada entrada
-        String entryPath = categoryPath + "/" + key + "/timestamp";
-        if(Firebase.RTDB.getString(&fbdo, entryPath.c_str())) {
-          String timestamp = fbdo.to<String>();
+        // Calcular la edad de la entrada usando millis() del nombre
+        // El nombre tiene formato: "evento_millis"
+        int underscorePos = key.lastIndexOf('_');
+        if(underscorePos > 0) {
+          String millisStr = key.substring(underscorePos + 1);
+          unsigned long entryMillis = millisStr.toInt();
+          unsigned long currentMillis = millis();
           
-          // Calcular la edad de la entrada usando millis() del nombre
-          // El nombre tiene formato: "evento_millis"
-          int underscorePos = key.lastIndexOf('_');
-          if(underscorePos > 0) {
-            String millisStr = key.substring(underscorePos + 1);
-            unsigned long entryMillis = millisStr.toInt();
-            unsigned long currentMillis = millis();
-            
-            // Si han pasado más de 5 segundos (5000ms), eliminar
-            if(currentMillis - entryMillis > 5000) {
-              String fullEntryPath = categoryPath + "/" + key;
-              if(Firebase.RTDB.deleteNode(&fbdo, fullEntryPath.c_str())) {
-                Serial.println("[DEBUG] Deleted old entry: " + key + " (age: " + String(currentMillis - entryMillis) + "ms)");
-              }
+          // Si han pasado más de 5 segundos (5000ms), eliminar SOLO la entrada
+          if(currentMillis - entryMillis > 5000) {
+            String fullEntryPath = categoryPath + "/" + key;
+            if(Firebase.RTDB.deleteNode(&fbdo, fullEntryPath.c_str())) {
+              Serial.println("[DEBUG] Deleted old entry: " + key + " (age: " + String(currentMillis - entryMillis) + "ms)");
             }
           }
         }
       }
       json.iteratorEnd();
+    } else {
+      // Si la categoría no existe, crearla con un placeholder vacío
+      String placeholderPath = categoryPath + "/placeholder";
+      FirebaseJson placeholder;
+      placeholder.set("info", "category_structure");
+      Firebase.RTDB.setJSON(&fbdo, placeholderPath.c_str(), &placeholder);
+      Serial.println("[DEBUG] Created category structure: " + categories[c]);
     }
   }
 }
@@ -389,57 +390,36 @@ String getFormattedTime() {
 }
 
 void publishSensorData() {
-    static bool hasNewData = false;
-    static float lastTemp = -999;
-    static float lastCO = -999;
+    // SIMPLIFICADO: Publicar siempre cada 0.5s
+    FirebaseJson json;
     
-    // Verificar si hay datos nuevos
-    if (temperature != lastTemp || co_ppm != lastCO) {
-        hasNewData = true;
-        lastTemp = temperature;
-        lastCO = co_ppm;
-    }
+    FirebaseJson actuators;
+    actuators.set("alarm_active", alarm_active);
+    actuators.set("pump_active", pump_active);
     
-    // Solo publicar si hay datos nuevos o cada 2 segundos como mínimo
-    static unsigned long lastForcePublish = 0;
-    unsigned long currentTime = millis();
+    FirebaseJson flow;
+    flow.set("current_rate", flow_rate);
+    flow.set("total", total_flow);
     
-    if (hasNewData || (currentTime - lastForcePublish >= 2000)) {
-        FirebaseJson json;
-        
-        FirebaseJson actuators;
-        actuators.set("alarm_active", alarm_active);
-        actuators.set("pump_active", pump_active);
-        
-        FirebaseJson flow;
-        flow.set("current_rate", flow_rate);
-        flow.set("total", total_flow);
-        
-        FirebaseJson sensors;
-        sensors.set("co_ppm", co_ppm);
-        sensors.set("flame_detected", flame_detected);
-        sensors.set("flame_intensity", flame_intensity);
-        sensors.set("temperature", temperature);
-        
-        FirebaseJson status;
-        // ELIMINAR: El PIC ya calcula fire_alarm, solo usar el valor recibido
-        status.set("fire_alarm", fire_alarm); // Esta variable viene del PIC
-        status.set("trigger_test", trigger_test);
-        status.set("shutdown_system", shutdown_system);
-        
-        json.set("actuators", actuators);
-        json.set("flow", flow);
-        json.set("sensors", sensors);
-        json.set("status", status);
-        json.set("timestamp", getFormattedTime());
-        
-        if (Firebase.RTDB.setJSON(&fbdo, "/system/sensor_data", &json)) {
-            Serial.printf("[DATA] T=%.1f F=%d(%.1f) CO=%.1f FR=%.2f P=%d A=%d\n", 
-                         temperature, flame_detected, flame_intensity, co_ppm, flow_rate, pump_active, alarm_active);
-        }
-        
-        hasNewData = false;
-        lastForcePublish = currentTime;
+    FirebaseJson sensors;
+    sensors.set("temperature", temperature);
+    sensors.set("flame_detected", flame_detected);
+    sensors.set("flame_intensity", flame_intensity);
+    sensors.set("co_ppm", co_ppm);
+    
+    FirebaseJson status;
+    status.set("fire_alarm", fire_alarm);  // Recibido del PIC
+    status.set("test_mode", trigger_test);
+    status.set("shutdown", shutdown_system);
+    
+    json.set("timestamp", getFormattedTime());
+    json.set("sensors", sensors);
+    json.set("actuators", actuators);
+    json.set("flow", flow);
+    json.set("status", status);
+    
+    if(firebaseConnected) {
+        Firebase.RTDB.setJSON(&fbdo, "/system/sensor_data", &json);
     }
 }
 
